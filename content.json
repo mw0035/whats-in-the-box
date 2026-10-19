@@ -1,0 +1,1539 @@
+{
+  "title": "What's in the box?",
+  "answer": "chocolate coin",
+  "settings": {
+    "retryLostRoutes": true
+  },
+  "tracks": {
+    "animal": {
+      "label": "Animal"
+    },
+    "color": {
+      "label": "Color"
+    },
+    "frame": {
+      "label": "Frame"
+    }
+  },
+  "colors": [
+    "red",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "brown"
+  ],
+  "frames": [
+    "kite",
+    "crescent",
+    "ring",
+    "almond",
+    "curved triangle",
+    "squircle"
+  ],
+  "animals": [
+    "owl",
+    "hippo",
+    "zebra",
+    "fox",
+    "flamingo",
+    "badger",
+    "lion",
+    "ferret",
+    "giraffe",
+    "cat",
+    "kangaroo",
+    "porcupine"
+  ],
+  "sheets": [
+    {
+      "id": 1,
+      "code": "0lpqdna",
+      "animal": "owl",
+      "color": "red",
+      "frame": "kite"
+    },
+    {
+      "id": 2,
+      "code": "2j0q8pu",
+      "animal": "hippo",
+      "color": "yellow",
+      "frame": "crescent"
+    },
+    {
+      "id": 3,
+      "code": "m31ov07",
+      "animal": "zebra",
+      "color": "green",
+      "frame": "ring"
+    },
+    {
+      "id": 4,
+      "code": "fkbdaww",
+      "animal": "fox",
+      "color": "blue",
+      "frame": "almond"
+    },
+    {
+      "id": 5,
+      "code": "56vwwtb",
+      "animal": "flamingo",
+      "color": "purple",
+      "frame": "curved triangle"
+    },
+    {
+      "id": 6,
+      "code": "am71jhr",
+      "animal": "badger",
+      "color": "brown",
+      "frame": "squircle"
+    },
+    {
+      "id": 7,
+      "code": "ty2svfh",
+      "animal": "lion",
+      "color": "red",
+      "frame": "almond"
+    },
+    {
+      "id": 8,
+      "code": "65rcthe",
+      "animal": "ferret",
+      "color": "yellow",
+      "frame": "curved triangle"
+    },
+    {
+      "id": 9,
+      "code": "f6119pm",
+      "animal": "giraffe",
+      "color": "green",
+      "frame": "squircle"
+    },
+    {
+      "id": 10,
+      "code": "pn8yk1g",
+      "animal": "cat",
+      "color": "blue",
+      "frame": "kite"
+    },
+    {
+      "id": 11,
+      "code": "27tvvag",
+      "animal": "kangaroo",
+      "color": "purple",
+      "frame": "crescent"
+    },
+    {
+      "id": 12,
+      "code": "srg2fcr",
+      "animal": "porcupine",
+      "color": "brown",
+      "frame": "ring"
+    }
+  ],
+  "candidates": [
+    "penny",
+    "gold",
+    "dollar bill",
+    "coin",
+    "chocolate coin"
+  ],
+  "decoys": {
+    "animal": "penny",
+    "color": "gold",
+    "frame": "dollar bill"
+  },
+  "clues": {
+    "A-money": {
+      "track": "animal",
+      "text": "It's connected to money.",
+      "suggests": "money in general",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "A-round": {
+      "track": "animal",
+      "text": "It's round.",
+      "suggests": "a coin",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "A-cheap": {
+      "track": "animal",
+      "text": "It's worth very little.",
+      "suggests": "a penny",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "A-face": {
+      "track": "animal",
+      "text": "It has a face stamped on it.",
+      "suggests": "a coin or penny",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C-gold": {
+      "track": "color",
+      "text": "It's gold-colored.",
+      "suggests": "gold",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C-shine": {
+      "track": "color",
+      "text": "It shines.",
+      "suggests": "gold",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C-hoard": {
+      "track": "color",
+      "text": "It would look at home in a dragon's hoard.",
+      "suggests": "gold",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C-first": {
+      "track": "color",
+      "text": "It's the color of first place.",
+      "suggests": "gold",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "F-flat": {
+      "track": "frame",
+      "text": "It's flat.",
+      "suggests": "a bill or coin",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "F-thin": {
+      "track": "frame",
+      "text": "It's thin enough to slip into an envelope.",
+      "suggests": "a dollar bill",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "F-wallet": {
+      "track": "frame",
+      "text": "It fits in a wallet.",
+      "suggests": "a dollar bill",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "F-card": {
+      "track": "frame",
+      "text": "It's often tucked inside a birthday card.",
+      "suggests": "a dollar bill",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    }
+  },
+  "trails": [
+    {
+      "id": "A1",
+      "track": "animal",
+      "starts": [
+        "owl",
+        "cat"
+      ],
+      "steps": [
+        {
+          "question": "Find what a tower is made of.",
+          "answer": "giraffe"
+        },
+        {
+          "question": "Find what a dazzle is made of. No two have the same stripes.",
+          "answer": "zebra"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "A-money"
+      }
+    },
+    {
+      "id": "A2",
+      "track": "animal",
+      "starts": [
+        "lion",
+        "fox"
+      ],
+      "steps": [
+        {
+          "question": "Find what lives in a cete and sleeps in a sett.",
+          "answer": "badger"
+        },
+        {
+          "question": "Find what a mob is made of. It can box.",
+          "answer": "kangaroo"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "A-round"
+      }
+    },
+    {
+      "id": "A3",
+      "track": "animal",
+      "starts": [
+        "zebra",
+        "giraffe"
+      ],
+      "steps": [
+        {
+          "question": "Find what a flamboyance is made of. They rest on one leg.",
+          "answer": "flamingo"
+        },
+        {
+          "question": "Find what a skulk is made of.",
+          "answer": "fox"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "A-cheap"
+      }
+    },
+    {
+      "id": "A4",
+      "track": "animal",
+      "starts": [
+        "flamingo",
+        "porcupine"
+      ],
+      "steps": [
+        {
+          "question": "Find what a parliament is made of.",
+          "answer": "owl"
+        },
+        {
+          "question": "Find what a clowder is made of.",
+          "answer": "cat"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "A-face"
+      }
+    },
+    {
+      "id": "A5",
+      "track": "animal",
+      "starts": [
+        "kangaroo",
+        "badger"
+      ],
+      "steps": [
+        {
+          "question": "Find what a prickle is made of. Don't hug it.",
+          "answer": "porcupine"
+        },
+        {
+          "question": "Find what a pride is made of.",
+          "answer": "lion"
+        }
+      ],
+      "outcome": {
+        "type": "route",
+        "route": "R1"
+      }
+    },
+    {
+      "id": "A6",
+      "track": "animal",
+      "starts": [
+        "hippo",
+        "ferret"
+      ],
+      "steps": [
+        {
+          "question": "Find the only big cat that lives in groups.",
+          "answer": "lion"
+        },
+        {
+          "question": "Find the animal whose stripes are as unique as fingerprints.",
+          "answer": "zebra"
+        }
+      ],
+      "outcome": {
+        "type": "route",
+        "route": "R2"
+      }
+    },
+    {
+      "id": "C1",
+      "track": "color",
+      "starts": [
+        "blue"
+      ],
+      "steps": [
+        {
+          "question": "Find cinnabar.",
+          "answer": "red"
+        },
+        {
+          "question": "Go back to the color you started on.",
+          "answer": "START"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "C-gold"
+      }
+    },
+    {
+      "id": "C2",
+      "track": "color",
+      "starts": [
+        "red"
+      ],
+      "steps": [
+        {
+          "question": "Find what ultramarine and vermilion make when mixed.",
+          "answer": "purple"
+        },
+        {
+          "question": "Find umber.",
+          "answer": "brown"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "C-shine"
+      }
+    },
+    {
+      "id": "C3",
+      "track": "color",
+      "starts": [
+        "green"
+      ],
+      "steps": [
+        {
+          "question": "Find orpiment.",
+          "answer": "yellow"
+        },
+        {
+          "question": "Find what orpiment and ultramarine make when mixed.",
+          "answer": "green"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "C-hoard"
+      }
+    },
+    {
+      "id": "C4",
+      "track": "color",
+      "starts": [
+        "yellow"
+      ],
+      "steps": [
+        {
+          "question": "Find Prussian blue.",
+          "answer": "blue"
+        },
+        {
+          "question": "Find what Prussian blue and Naples yellow make when mixed.",
+          "answer": "green"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "C-first"
+      }
+    },
+    {
+      "id": "C5",
+      "track": "color",
+      "starts": [
+        "purple"
+      ],
+      "steps": [
+        {
+          "question": "Find viridian.",
+          "answer": "green"
+        },
+        {
+          "question": "Go back to the color you started on.",
+          "answer": "START"
+        }
+      ],
+      "outcome": {
+        "type": "route",
+        "route": "R3"
+      }
+    },
+    {
+      "id": "C6",
+      "track": "color",
+      "starts": [
+        "brown"
+      ],
+      "steps": [
+        {
+          "question": "Find Tyrian purple.",
+          "answer": "purple"
+        },
+        {
+          "question": "Mix viridian with carmine. Find the mud you get.",
+          "answer": "brown"
+        }
+      ],
+      "outcome": {
+        "type": "route",
+        "route": "R4"
+      }
+    },
+    {
+      "id": "F1",
+      "track": "frame",
+      "starts": [
+        "ring"
+      ],
+      "steps": [
+        {
+          "question": "Find the lune.",
+          "answer": "crescent"
+        },
+        {
+          "question": "Find the deltoid.",
+          "answer": "kite"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "F-flat"
+      }
+    },
+    {
+      "id": "F2",
+      "track": "frame",
+      "starts": [
+        "kite"
+      ],
+      "steps": [
+        {
+          "question": "Find the annulus.",
+          "answer": "ring"
+        },
+        {
+          "question": "Go back to the shape you started on.",
+          "answer": "START"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "F-thin"
+      }
+    },
+    {
+      "id": "F3",
+      "track": "frame",
+      "starts": [
+        "crescent"
+      ],
+      "steps": [
+        {
+          "question": "Find the triangle that is as wide in every direction as a circle.",
+          "answer": "curved triangle"
+        },
+        {
+          "question": "Find the annulus.",
+          "answer": "ring"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "F-wallet"
+      }
+    },
+    {
+      "id": "F4",
+      "track": "frame",
+      "starts": [
+        "squircle"
+      ],
+      "steps": [
+        {
+          "question": "Find the lune.",
+          "answer": "crescent"
+        },
+        {
+          "question": "Find the vesica.",
+          "answer": "almond"
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "F-card"
+      }
+    },
+    {
+      "id": "F5",
+      "track": "frame",
+      "starts": [
+        "almond"
+      ],
+      "steps": [
+        {
+          "question": "Find the superellipse.",
+          "answer": "squircle"
+        },
+        {
+          "question": "Find the deltoid.",
+          "answer": "kite"
+        }
+      ],
+      "outcome": {
+        "type": "route",
+        "route": "R5"
+      }
+    },
+    {
+      "id": "F6",
+      "track": "frame",
+      "starts": [
+        "curved triangle"
+      ],
+      "steps": [
+        {
+          "question": "Find the vesica.",
+          "answer": "almond"
+        },
+        {
+          "question": "Go back to the shape you started on.",
+          "answer": "START"
+        }
+      ],
+      "outcome": {
+        "type": "route",
+        "route": "R6"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "id": "R1",
+      "trail": "A5",
+      "track": "animal",
+      "hops": [
+        {
+          "term": "smalt",
+          "owner": "color",
+          "accept": {
+            "category": "color",
+            "value": "blue"
+          },
+          "fallback": {
+            "question": "Find what a mob is made of.",
+            "answer": "kangaroo",
+            "clue": "A-money"
+          }
+        },
+        {
+          "term": "annulus",
+          "owner": "frame",
+          "accept": {
+            "category": "frame",
+            "value": "ring"
+          },
+          "fallback": {
+            "question": "Find what a tower is made of.",
+            "answer": "giraffe",
+            "clue": "A-face"
+          }
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "trail": "A6",
+      "track": "animal",
+      "hops": [
+        {
+          "term": "Reuleaux",
+          "owner": "frame",
+          "accept": {
+            "category": "frame",
+            "value": "curved triangle"
+          },
+          "fallback": {
+            "question": "Find what a parliament is made of.",
+            "answer": "owl",
+            "clue": "A-round"
+          }
+        },
+        {
+          "term": "bistre",
+          "owner": "color",
+          "accept": {
+            "category": "color",
+            "value": "brown"
+          },
+          "fallback": {
+            "question": "Find what a skulk is made of.",
+            "answer": "fox",
+            "clue": "A-cheap"
+          }
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "trail": "C5",
+      "track": "color",
+      "hops": [
+        {
+          "term": "cete",
+          "owner": "animal",
+          "accept": {
+            "category": "animal",
+            "value": "badger"
+          },
+          "fallback": {
+            "question": "Find madder.",
+            "answer": "red",
+            "clue": "C-shine"
+          }
+        },
+        {
+          "term": "vesica",
+          "owner": "frame",
+          "accept": {
+            "category": "frame",
+            "value": "almond"
+          },
+          "fallback": {
+            "question": "Find what gamboge and ultramarine make when mixed.",
+            "answer": "green",
+            "clue": "C-gold"
+          }
+        }
+      ]
+    },
+    {
+      "id": "R4",
+      "trail": "C6",
+      "track": "color",
+      "hops": [
+        {
+          "term": "bloat",
+          "owner": "animal",
+          "accept": {
+            "category": "animal",
+            "value": "hippo"
+          },
+          "fallback": {
+            "question": "Find carmine.",
+            "answer": "red",
+            "clue": "C-hoard"
+          }
+        },
+        {
+          "term": "deltoid",
+          "owner": "frame",
+          "accept": {
+            "category": "frame",
+            "value": "kite"
+          },
+          "fallback": {
+            "question": "Find Tyrian purple.",
+            "answer": "purple",
+            "clue": "C-first"
+          }
+        }
+      ]
+    },
+    {
+      "id": "R5",
+      "trail": "F5",
+      "track": "frame",
+      "hops": [
+        {
+          "term": "business",
+          "owner": "animal",
+          "accept": {
+            "category": "animal",
+            "value": "ferret"
+          },
+          "fallback": {
+            "question": "Find the annulus.",
+            "answer": "ring",
+            "clue": "F-flat"
+          }
+        },
+        {
+          "term": "caput mortuum",
+          "owner": "color",
+          "accept": {
+            "category": "color",
+            "value": "brown"
+          },
+          "fallback": {
+            "question": "Find the lune.",
+            "answer": "crescent",
+            "clue": "F-card"
+          }
+        }
+      ]
+    },
+    {
+      "id": "R6",
+      "trail": "F6",
+      "track": "frame",
+      "hops": [
+        {
+          "term": "clowder",
+          "owner": "animal",
+          "accept": {
+            "category": "animal",
+            "value": "cat"
+          },
+          "fallback": {
+            "question": "Find the superellipse.",
+            "answer": "squircle",
+            "clue": "F-wallet"
+          }
+        },
+        {
+          "term": "gamboge",
+          "owner": "color",
+          "accept": {
+            "category": "color",
+            "value": "yellow"
+          },
+          "fallback": {
+            "question": "Find the lune.",
+            "answer": "crescent",
+            "clue": "F-thin"
+          }
+        }
+      ]
+    }
+  ],
+  "guides": {
+    "animal": [
+      {
+        "term": "parliament",
+        "value": "owl",
+        "note": "a group of owls"
+      },
+      {
+        "term": "bloat",
+        "value": "hippo",
+        "note": "a group of hippopotamuses"
+      },
+      {
+        "term": "dazzle",
+        "value": "zebra",
+        "note": "a group of zebras"
+      },
+      {
+        "term": "skulk",
+        "value": "fox",
+        "note": "a group of foxes"
+      },
+      {
+        "term": "flamboyance",
+        "value": "flamingo",
+        "note": "a group of flamingos"
+      },
+      {
+        "term": "cete",
+        "value": "badger",
+        "note": "a group of badgers"
+      },
+      {
+        "term": "pride",
+        "value": "lion",
+        "note": "a group of lions"
+      },
+      {
+        "term": "business",
+        "value": "ferret",
+        "note": "a group of ferrets"
+      },
+      {
+        "term": "tower",
+        "value": "giraffe",
+        "note": "a group of giraffes"
+      },
+      {
+        "term": "clowder",
+        "value": "cat",
+        "note": "a group of cats"
+      },
+      {
+        "term": "mob",
+        "value": "kangaroo",
+        "note": "a group of kangaroos"
+      },
+      {
+        "term": "prickle",
+        "value": "porcupine",
+        "note": "a group of porcupines"
+      },
+      {
+        "term": "crash",
+        "value": null,
+        "note": "a group of rhinoceroses"
+      },
+      {
+        "term": "murder",
+        "value": null,
+        "note": "a group of crows"
+      },
+      {
+        "term": "smack",
+        "value": null,
+        "note": "a group of jellyfish"
+      },
+      {
+        "term": "wisdom",
+        "value": null,
+        "note": "a group of wombats"
+      },
+      {
+        "term": "romp",
+        "value": null,
+        "note": "a group of otters on land"
+      },
+      {
+        "term": "knot",
+        "value": null,
+        "note": "a group of toads"
+      },
+      {
+        "term": "leap",
+        "value": null,
+        "note": "a group of leopards"
+      },
+      {
+        "term": "band",
+        "value": null,
+        "note": "a group of gorillas"
+      },
+      {
+        "term": "cauldron",
+        "value": null,
+        "note": "a group of bats in flight"
+      },
+      {
+        "term": "ostentation",
+        "value": null,
+        "note": "a group of peafowl"
+      },
+      {
+        "term": "caravan",
+        "value": null,
+        "note": "a group of camels on the move"
+      },
+      {
+        "term": "sleuth",
+        "value": null,
+        "note": "a group of bears"
+      },
+      {
+        "term": "murmuration",
+        "value": null,
+        "note": "a group of starlings"
+      },
+      {
+        "term": "exaltation",
+        "value": null,
+        "note": "a group of larks"
+      },
+      {
+        "term": "charm",
+        "value": null,
+        "note": "a group of goldfinches"
+      },
+      {
+        "term": "kaleidoscope",
+        "value": null,
+        "note": "a group of butterflies"
+      },
+      {
+        "term": "quiver",
+        "value": null,
+        "note": "a group of cobras"
+      },
+      {
+        "term": "convocation",
+        "value": null,
+        "note": "a group of eagles"
+      },
+      {
+        "term": "cackle",
+        "value": null,
+        "note": "a group of hyenas"
+      },
+      {
+        "term": "labour",
+        "value": null,
+        "note": "a group of moles"
+      },
+      {
+        "term": "bale",
+        "value": null,
+        "note": "a group of turtles"
+      },
+      {
+        "term": "fever",
+        "value": null,
+        "note": "a group of stingrays"
+      },
+      {
+        "term": "dray",
+        "value": null,
+        "note": "a group of squirrels"
+      },
+      {
+        "term": "pod",
+        "value": null,
+        "note": "a group of dolphins"
+      },
+      {
+        "term": "gaggle",
+        "value": null,
+        "note": "a group of geese on the ground"
+      },
+      {
+        "term": "unkindness",
+        "value": null,
+        "note": "a group of ravens"
+      },
+      {
+        "term": "parade",
+        "value": null,
+        "note": "a group of elephants"
+      },
+      {
+        "term": "shiver",
+        "value": null,
+        "note": "a group of sharks"
+      }
+    ],
+    "color": [
+      {
+        "term": "vermilion",
+        "value": "red",
+        "note": "bright red pigment made from cinnabar"
+      },
+      {
+        "term": "cinnabar",
+        "value": "red",
+        "note": "red mercury mineral, ground for pigment"
+      },
+      {
+        "term": "carmine",
+        "value": "red",
+        "note": "crimson made from cochineal insects"
+      },
+      {
+        "term": "madder",
+        "value": "red",
+        "note": "red dye from the roots of the madder plant"
+      },
+      {
+        "term": "gamboge",
+        "value": "yellow",
+        "note": "deep yellow from the resin of Southeast Asian trees"
+      },
+      {
+        "term": "orpiment",
+        "value": "yellow",
+        "note": "golden-yellow arsenic mineral"
+      },
+      {
+        "term": "Indian yellow",
+        "value": "yellow",
+        "note": "warm yellow, once said to be made from the urine of mango-fed cows"
+      },
+      {
+        "term": "Naples yellow",
+        "value": "yellow",
+        "note": "pale lead-based yellow"
+      },
+      {
+        "term": "viridian",
+        "value": "green",
+        "note": "cool blue-green chromium pigment"
+      },
+      {
+        "term": "verdigris",
+        "value": "green",
+        "note": "green crust that forms on copper"
+      },
+      {
+        "term": "malachite",
+        "value": "green",
+        "note": "banded green copper mineral"
+      },
+      {
+        "term": "terre verte",
+        "value": "green",
+        "note": "'green earth', a muted clay"
+      },
+      {
+        "term": "Scheele's green",
+        "value": "green",
+        "note": "arsenic green, blamed for poisonous wallpaper"
+      },
+      {
+        "term": "smalt",
+        "value": "blue",
+        "note": "ground glass colored blue with cobalt"
+      },
+      {
+        "term": "ultramarine",
+        "value": "blue",
+        "note": "blue from crushed lapis lazuli"
+      },
+      {
+        "term": "azurite",
+        "value": "blue",
+        "note": "blue copper mineral"
+      },
+      {
+        "term": "Prussian blue",
+        "value": "blue",
+        "note": "one of the first synthetic pigments (1700s)"
+      },
+      {
+        "term": "Egyptian blue",
+        "value": "blue",
+        "note": "ancient synthetic blue"
+      },
+      {
+        "term": "Tyrian purple",
+        "value": "purple",
+        "note": "dye from sea snails, worn by emperors"
+      },
+      {
+        "term": "orchil",
+        "value": "purple",
+        "note": "purple dye made from lichens"
+      },
+      {
+        "term": "mauveine",
+        "value": "purple",
+        "note": "the first synthetic dye (1856)"
+      },
+      {
+        "term": "cobalt violet",
+        "value": "purple",
+        "note": "cool purple made from cobalt"
+      },
+      {
+        "term": "umber",
+        "value": "brown",
+        "note": "earthy brown clay"
+      },
+      {
+        "term": "sienna",
+        "value": "brown",
+        "note": "brown earth from near Siena; redder when burnt"
+      },
+      {
+        "term": "sepia",
+        "value": "brown",
+        "note": "brown ink from cuttlefish"
+      },
+      {
+        "term": "bistre",
+        "value": "brown",
+        "note": "brown made from wood soot"
+      },
+      {
+        "term": "caput mortuum",
+        "value": "brown",
+        "note": "purple-brown iron oxide; the name means 'dead head'"
+      },
+      {
+        "term": "mummy brown",
+        "value": "brown",
+        "note": "brown once made from ground-up mummies"
+      },
+      {
+        "term": "realgar",
+        "value": null,
+        "note": "orange-red arsenic mineral; poisonous"
+      },
+      {
+        "term": "minium",
+        "value": null,
+        "note": "'red lead', a bright orange pigment"
+      },
+      {
+        "term": "rose madder",
+        "value": null,
+        "note": "soft pink made from madder root"
+      },
+      {
+        "term": "carthamin",
+        "value": null,
+        "note": "pink-red from safflower petals"
+      },
+      {
+        "term": "lead white",
+        "value": null,
+        "note": "the painter's standard white for centuries"
+      },
+      {
+        "term": "bone black",
+        "value": null,
+        "note": "black made from charred bones"
+      }
+    ],
+    "frame": [
+      {
+        "term": "deltoid",
+        "value": "kite",
+        "note": "a kite or diamond shape: four sides, two pairs of equal neighbors"
+      },
+      {
+        "term": "lune",
+        "value": "crescent",
+        "note": "a crescent cut between two circular arcs"
+      },
+      {
+        "term": "annulus",
+        "value": "ring",
+        "note": "a ring: the band between two circles with the same center"
+      },
+      {
+        "term": "vesica",
+        "value": "almond",
+        "note": "the almond shape where two equal circles overlap"
+      },
+      {
+        "term": "Reuleaux triangle",
+        "value": "curved triangle",
+        "note": "a curved triangle as wide in every direction as a circle"
+      },
+      {
+        "term": "superellipse",
+        "value": "squircle",
+        "note": "a rounded square, between a square and a circle"
+      },
+      {
+        "term": "cardioid",
+        "value": null,
+        "note": "a heart-shaped curve traced by a rolling circle"
+      },
+      {
+        "term": "hexagram",
+        "value": null,
+        "note": "a six-pointed star of two overlapping triangles"
+      },
+      {
+        "term": "lemniscate",
+        "value": null,
+        "note": "a figure-eight curve, like the infinity sign"
+      },
+      {
+        "term": "astroid",
+        "value": null,
+        "note": "a four-pointed star with curved, inward-bending sides"
+      },
+      {
+        "term": "nephroid",
+        "value": null,
+        "note": "a kidney-shaped curve"
+      },
+      {
+        "term": "arbelos",
+        "value": null,
+        "note": "'shoemaker's knife': the region between three semicircles"
+      },
+      {
+        "term": "salinon",
+        "value": null,
+        "note": "'salt cellar': a shape bounded by four semicircles"
+      },
+      {
+        "term": "trefoil",
+        "value": null,
+        "note": "a three-lobed shape"
+      },
+      {
+        "term": "quatrefoil",
+        "value": null,
+        "note": "a four-lobed shape"
+      },
+      {
+        "term": "ogee",
+        "value": null,
+        "note": "an S-shaped curve, often used in arches"
+      },
+      {
+        "term": "gnomon",
+        "value": null,
+        "note": "an L-shaped figure"
+      },
+      {
+        "term": "rhomboid",
+        "value": null,
+        "note": "a slanted parallelogram with unequal neighboring sides"
+      },
+      {
+        "term": "trapezium",
+        "value": null,
+        "note": "a four-sided shape with one pair of parallel sides"
+      },
+      {
+        "term": "pentagram",
+        "value": null,
+        "note": "a five-pointed star"
+      },
+      {
+        "term": "octagram",
+        "value": null,
+        "note": "an eight-pointed star"
+      },
+      {
+        "term": "sector",
+        "value": null,
+        "note": "a pie slice of a circle"
+      }
+    ]
+  },
+  "colorMixing": [
+    "red + yellow = orange",
+    "yellow + blue = green",
+    "blue + red = purple",
+    "opposites (red + green, blue + orange, yellow + purple) = brown mud"
+  ],
+  "scoring": [
+    {
+      "points": 100,
+      "label": "Chocolate coin",
+      "when": [
+        {
+          "any": [
+            "gelt"
+          ]
+        },
+        {
+          "any": [
+            "chocolate",
+            "choc"
+          ],
+          "andAny": [
+            "coin",
+            "coins",
+            "money",
+            "gelt",
+            "penny",
+            "pennies",
+            "gold",
+            "dollar",
+            "dollars",
+            "cash",
+            "doubloon",
+            "doubloons",
+            "bill",
+            "bills",
+            "currency"
+          ]
+        }
+      ]
+    },
+    {
+      "points": 70,
+      "label": "Penny (decoy)",
+      "when": [
+        {
+          "any": [
+            "penny",
+            "pennies"
+          ]
+        }
+      ]
+    },
+    {
+      "points": 90,
+      "label": "Coin",
+      "when": [
+        {
+          "any": [
+            "coin",
+            "coins",
+            "doubloon",
+            "doubloons",
+            "token",
+            "tokens",
+            "quarter",
+            "dime",
+            "nickel"
+          ]
+        }
+      ]
+    },
+    {
+      "points": 70,
+      "label": "Gold, dollar or money (decoys)",
+      "when": [
+        {
+          "any": [
+            "gold",
+            "dollar",
+            "dollars",
+            "bill",
+            "bills",
+            "money",
+            "cash",
+            "currency"
+          ]
+        }
+      ]
+    },
+    {
+      "points": 50,
+      "label": "Chocolate or candy, no money word",
+      "when": [
+        {
+          "any": [
+            "chocolate",
+            "choc",
+            "candy",
+            "candies",
+            "sweet",
+            "sweets"
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": {
+    "opening": "What's in the box?",
+    "colorCheck": "Before we start: do you have trouble telling some colors apart?",
+    "track_animal": "You are an Animal inquirer. Your field guide helps you investigate animals.",
+    "track_color": "You are a Color inquirer. Your field guide helps you investigate colors.",
+    "track_frame": "You are a Frame inquirer. Your field guide helps you investigate the shapes of frames.",
+    "firstPrompt_animal": "Scan your favorite animal.",
+    "firstPrompt_color": "Scan your favorite color.",
+    "firstPrompt_frame": "Scan your favorite shape.",
+    "correct": "That fits.",
+    "wrongInTrack": "Your trail goes cold. Return to sheet #{n} and scan it to try again.",
+    "localOptimum": "Your trail ends here. You found a clue: \"{clue}\" It's saved in your notebook.",
+    "hop": "Next: {term}",
+    "wrongHop": "Your trail goes cold. Return to sheet #{n}.",
+    "found": "You found it. It's a chocolate coin.",
+    "submitButton": "Submit my answer",
+    "submitEntry": "What's in the box? You get one answer.",
+    "submitConfirm": "Submit \"{answer}\"? Submitting ends your search: you won't be able to scan any more. You can still talk with anyone and use your field guide to help them.",
+    "afterSubmit": "Your answer is locked in. You can't scan any more, but you can still help: talk to anyone, and your field guide and notebook stay open.",
+    "projectorCount": "Run {r}: {k} of {n} have submitted.",
+    "revealProjector": "Run {r} scores",
+    "revealPhone": "You answered \"{answer}\": {score} points.",
+    "newRun": "Run {r} is starting. You're still a{an} {track} inquirer, and your notebook still has the clues you found.",
+    "guideButton": "Field guide",
+    "notebookButton": "Notebook",
+    "notStarted": "The game hasn't started yet. Hang on.",
+    "runOver": "This run is over. Wait for the next one to start.",
+    "alreadyFound": "You've found what's in the box. Submit your answer whenever you're ready.",
+    "afterSubmitScan": "Your answer is locked in for this run, so scanning is off. You can still help others.",
+    "coldRepeat": "Your trail is still cold.",
+    "newTrail": "Scan any sheet to begin a new trail.",
+    "abandonButton": "Start a new trail",
+    "abandoned": "You left that trail.",
+    "noSubmission": "You didn't submit an answer this run.",
+    "notScored": "You answered \"{answer}\". Your instructor will score it.",
+    "submitClosed": "Answers can only be submitted while a run is in progress.",
+    "localOptimumRepeat": "Your trail ends here, at a clue you already have: \"{clue}\"",
+    "projectorWaiting": "Scan to join. The game will start soon."
+  },
+  "messageLabels": {
+    "opening": "Opening question (projector)",
+    "colorCheck": "Color-vision check",
+    "track_animal": "Track: Animal",
+    "track_color": "Track: Color",
+    "track_frame": "Track: Frame",
+    "firstPrompt_animal": "First prompt: Animal",
+    "firstPrompt_color": "First prompt: Color",
+    "firstPrompt_frame": "First prompt: Frame",
+    "correct": "Correct answer",
+    "wrongInTrack": "Wrong answer (in-track)",
+    "localOptimum": "Local optimum",
+    "hop": "Cross-track hop",
+    "wrongHop": "Wrong answer (cross-track)",
+    "found": "Global optimum",
+    "submitButton": "Submit button (always visible)",
+    "submitEntry": "Submit: entry",
+    "submitConfirm": "Submit: confirm",
+    "afterSubmit": "After submitting",
+    "projectorCount": "Projector: running count",
+    "revealProjector": "Reveal (projector)",
+    "revealPhone": "Reveal (phone)",
+    "newRun": "New run (phone)",
+    "instructorScreen": "Instructor screen",
+    "guideButton": "Field guide button",
+    "notebookButton": "Notebook button"
+  }
+}

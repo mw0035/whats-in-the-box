@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projector · What's in the box?</title>
+<link rel="stylesheet" href="/static/common.css">
+<style>
+  main { max-width: 1100px; text-align: center; }
+  #opening { font-size: 3.5em; margin-top: 0.4em; }
+  #count { font-size: 2.2em; margin: 0.4em 0; }
+  #qr img { width: min(46vh, 80vw); height: auto; }
+  #waiting { font-size: 1.8em; }
+  #dist { margin: 0 auto; max-width: 700px; font-size: 1.6em; }
+  #dist td { padding: 8px 12px; }
+  .bar { background: #111; height: 1em; display: inline-block; vertical-align: middle; }
+</style>
+</head>
+<body>
+<main>
+  <section id="login" class="hidden" style="max-width:420px;margin:40px auto;text-align:left">
+    <p>Admin password</p>
+    <input id="pw" type="password"><p><button id="go" class="primary">Open projector</button></p>
+    <p id="err" class="error hidden">Wrong password.</p>
+  </section>
+
+  <section id="screen" class="hidden">
+    <h1 id="opening"></h1>
+    <div id="qr"><img alt="QR code to join the game"></div>
+    <p id="waiting" class="muted"></p>
+    <p id="count"></p>
+    <div id="reveal" class="hidden">
+      <h2 id="revealTitle" style="font-size:2em"></h2>
+      <table id="dist"></table>
+    </div>
+  </section>
+</main>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+let key = null;
+try { key = localStorage.getItem("witb-admin"); } catch (_) {}
+const show = (id, on) => $(id).classList.toggle("hidden", !on);
+const esc = (s) => { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; };
+
+async function tick() {
+  const res = await fetch("/api/projector", { headers: { "x-admin-key": key || "" } });
+  if (res.status === 401) { show("screen", false); show("login", true); return; }
+  const v = await res.json();
+  show("login", false); show("screen", true);
+  $("opening").textContent = v.opening;
+  const img = document.querySelector("#qr img");
+  const src = "/api/admin/join-qr.svg?key=" + encodeURIComponent(key);
+  if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+  show("qr", v.status !== "revealed");
+  show("waiting", v.status === "waiting"); $("waiting").textContent = v.waitingText;
+  show("count", v.status === "playing"); $("count").textContent = v.countText;
+  show("reveal", v.status === "revealed");
+  if (v.distribution) {
+    $("revealTitle").textContent = v.revealTitle;
+    const max = Math.max(1, ...v.distribution.map((d) => d[1]));
+    $("dist").innerHTML = v.distribution.map(([label, n]) => {
+      const name = isNaN(Number(label)) ? label : label + " points";
+      return `<tr><td style="white-space:nowrap">${esc(name)}</td><td style="width:60%"><span class="bar" style="width:${(n / max) * 100}%"></span></td><td>${n}</td></tr>`;
+    }).join("");
+  }
+}
+$("go").onclick = async () => {
+  key = $("pw").value; try { localStorage.setItem("witb-admin", key); } catch (_) {}
+  const res = await fetch("/api/projector", { headers: { "x-admin-key": key } });
+  show("err", res.status === 401); if (res.status !== 401) tick();
+};
+tick(); setInterval(() => { if (!$("screen").classList.contains("hidden")) tick(); }, 2000);
+</script>
+</body>
+</html>

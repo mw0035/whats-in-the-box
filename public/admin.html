@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin · What's in the box?</title>
+<link rel="stylesheet" href="/static/common.css">
+<style> main { max-width: 900px; } td input { width: 5em; } .warn { border-color: #a00; } </style>
+</head>
+<body>
+<main>
+  <h1>What's in the box? · Admin</h1>
+
+  <section id="login" class="hidden" style="max-width:420px">
+    <p>Admin password</p>
+    <input id="pw" type="password"><p><button id="go" class="primary">Sign in</button></p>
+    <p id="err" class="error hidden">Wrong password.</p>
+  </section>
+
+  <section id="panel" class="hidden">
+    <div id="contentErrors" class="box warn hidden"><b>Problems in the game content:</b><ul id="errList"></ul></div>
+    <div id="restored" class="box hidden"></div>
+
+    <div class="box">
+      <p id="statusLine" class="prompt" style="margin:0 0 8px"></p>
+      <p id="countLine"></p>
+      <p id="trackLine" class="muted"></p>
+      <div class="row">
+        <button id="startBtn" class="primary">Start run</button>
+        <button id="revealBtn">Reveal scores now</button>
+        <button id="nextBtn" class="primary">Start next run</button>
+      </div>
+      <p class="muted">Join link: <span id="joinUrl"></span> · <a href="/projector" target="_blank">Open projector view</a></p>
+    </div>
+
+    <h2>This run</h2>
+    <table><tbody id="stats"></tbody></table>
+
+    <h2>Submitted answers</h2>
+    <p class="muted">Answers the app couldn't score are marked. Type points (0–100) and press Enter. Scores reveal automatically once everyone has submitted and every answer has points.</p>
+    <table>
+      <thead><tr><th>Player</th><th>Track</th><th>Answer</th><th>Points</th><th>Scored as</th></tr></thead>
+      <tbody id="subs"></tbody>
+    </table>
+
+    <h2>Debrief data</h2>
+    <p><button id="downloadBtn">Download debrief data</button> <span id="logInfo" class="muted"></span></p>
+    <p class="muted">Every scan, answer and clue is logged. This page also keeps its own copy, so the download includes everything even if the server restarted.</p>
+
+    <h2>New class</h2>
+    <p><button id="resetBtn">Reset the whole game</button> <span class="muted">Removes every player and score. Download the debrief data first.</span></p>
+  </section>
+</main>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const show = (id, on) => $(id).classList.toggle("hidden", !on);
+const esc = (s) => { const d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; };
+const LS = { key: "witb-admin", game: "witb-admin-game", log: "witb-admin-log" };
+const get = (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (_) { return d; } };
+const put = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} };
+let key = null; try { key = localStorage.getItem(LS.key); } catch (_) {}
+let editing = false;
+
+async function api(path, body) {
+  const res = await fetch(path, { method: body === undefined ? "GET" : "POST",
+    headers: { "content-type": "application/json", "x-admin-key": key || "" }, body: body === undefined ? undefined : JSON.stringify(body) });
+  return { status: res.status, data: await res.json().catch(() => ({})) };
+}
+
+// Log copy kept in this browser: { boots: { bootId: [events] } }
+async function syncLog(bootId) {
+  const store = get(LS.log, { boots: {} });
+  const list = store.boots[bootId] || [];
+  const since = list.length ? list[list.length - 1].seq : 0;
+  const r = await api("/api/admin/log?since=" + since);
+  if (r.status !== 200) return;
+  store.boots[bootId] = list.concat(r.data.events);
+  put(LS.log, store);
+  const total = Object.values(store.boots).reduce((n, l) => n + l.length, 0);
+  $("logInfo").textContent = `${total} events saved in this browser`;
+}
+
+async function tick() {
+  const r = await api("/api/admin/state");
+  if (r.status === 401) { show("panel", false); show("login", true); return; }
+  const v = r.data;
+  show("login", false); show("panel", true);
+
+  // After a server restart, the server may have lost the run number and status. Put them back.
+  const last = get(LS.game, null);
+  const recent = last && Date.now() - (last.at || 0) < 3 * 3600 * 1000;
+  if (recent && last.bootId !== v.bootId && (v.run < last.run || (v.run === last.run && v.status !== last.status && v.status === "waiting"))) {
+    await api("/api/admin/restore", { run: last.run, status: last.status });
+    $("restored").textContent = `The server restarted. Restored run ${last.run} (${last.status}). Players' phones restore themselves when they next check in.`;
+    show("restored", true);
+    return tick();
+  }
+  put(LS.game, { bootId: v.bootId, run: v.run, status: v.status, at: Date.now() });
+
+  show("contentErrors", v.contentErrors.length > 0);
+  $("errList").innerHTML = v.contentErrors.map((e) => `<li>${esc(e)}</li>`).join("");
+  const words = { waiting: "Waiting to start", playing: "In progress", revealed: "Scores revealed" };
+  $("statusLine").textContent = `Run ${v.run}: ${words[v.status]}`;
+  $("countLine").textContent = `${v.submitted} of ${v.players} have submitted` + (v.unscored ? ` · ${v.unscored} answer(s) need your score` : "");
+  $("trackLine").textContent = `Animal ${v.byTrack.animal} · Color ${v.byTrack.color} · Frame ${v.byTrack.frame}`;
+  show("startBtn", v.status === "waiting"); show("revealBtn", v.status === "playing"); show("nextBtn", v.status === "revealed");
+  $("nextBtn").textContent = `Start run ${v.run + 1}`;
+  $("joinUrl").textContent = v.joinUrl;
+  const s = v.stats;
+  $("stats").innerHTML = [["Scans", s.scans], ["Clues found", s.clues], ["Cross-track routes reached", s.routesReached],
+    ["Cross-track hops answered correctly", s.hopCorrect], ["Cross-track hops answered wrongly", s.hopWrong], ["Players who found the answer", s.found]]
+    .map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join("");
+  if (!editing) {
+    $("subs").innerHTML = v.submissions.map((x) => `<tr${x.points == null ? ' style="background:#fff3d6"' : ""}>
+      <td>${x.num}</td><td>${esc(x.track)}</td><td>${esc(x.answer)}</td>
+      <td><input type="number" min="0" max="100" data-num="${x.num}" value="${x.points == null ? "" : x.points}"></td>
+      <td class="muted">${x.points == null ? "Needs your score" : esc(x.label) + (x.auto ? "" : " (by hand)")}</td></tr>`).join("");
+    for (const inp of document.querySelectorAll("#subs input")) {
+      inp.onfocus = () => { editing = true; };
+      inp.onblur = () => { editing = false; };
+      inp.onkeydown = async (e) => {
+        if (e.key !== "Enter") return;
+        await api("/api/admin/score", { num: Number(inp.dataset.num), points: inp.value === "" ? null : Number(inp.value) });
+        editing = false; inp.blur(); tick();
+      };
+    }
+  }
+  syncLog(v.bootId);
+}
+
+$("go").onclick = async () => {
+  key = $("pw").value; try { localStorage.setItem(LS.key, key); } catch (_) {}
+  const r = await api("/api/admin/state"); show("err", r.status === 401); if (r.status !== 401) tick();
+};
+$("startBtn").onclick = async () => { await api("/api/admin/start", {}); tick(); };
+$("revealBtn").onclick = async () => { if (confirm("Reveal scores now, before everyone has submitted?")) { await api("/api/admin/reveal", {}); tick(); } };
+$("nextBtn").onclick = async () => { await api("/api/admin/next-run", {}); tick(); };
+$("resetBtn").onclick = async () => {
+  if (prompt('This removes every player and score. Type RESET to confirm.') !== "RESET") return;
+  await api("/api/admin/reset", { confirm: "RESET" }); put(LS.game, null); put(LS.log, { boots: {} }); tick();
+};
+$("downloadBtn").onclick = async () => {
+  const r = await api("/api/admin/export");
+  const store = get(LS.log, { boots: {} });
+  const seen = new Set(r.data.events.map((e) => e.boot + ":" + e.seq));
+  const extra = Object.values(store.boots).flat().filter((e) => !seen.has(e.boot + ":" + e.seq));
+  r.data.events = extra.concat(r.data.events).sort((a, b) => a.t.localeCompare(b.t));
+  const blob = new Blob([JSON.stringify(r.data, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = `whats-in-the-box-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-")}.json`;
+  a.click();
+};
+tick(); setInterval(() => { if (!$("panel").classList.contains("hidden")) tick(); }, 2000);
+</script>
+</body>
+</html>

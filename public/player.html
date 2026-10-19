@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What's in the box?</title>
+<link rel="stylesheet" href="/static/common.css">
+</head>
+<body>
+<main>
+  <!-- Joining -->
+  <section id="intro" class="hidden">
+    <h1 id="opening">What's in the box?</h1>
+    <p id="colorCheck"></p>
+    <div class="row">
+      <button id="colorYes">Yes</button>
+      <button id="colorNo">No</button>
+    </div>
+  </section>
+
+  <!-- Playing -->
+  <section id="play" class="hidden">
+    <p class="muted" id="who"></p>
+    <div id="result" class="box result hidden"></div>
+    <p id="prompt" class="prompt"></p>
+    <div class="row">
+      <button id="guideBtn"></button>
+      <button id="notebookBtn"></button>
+    </div>
+    <p><button id="submitBtn" class="primary" style="width:100%"></button></p>
+    <p><button id="abandonBtn" class="hidden" style="width:100%"></button></p>
+
+    <div id="guidePanel" class="box hidden">
+      <h2 id="guideTitle"></h2>
+      <input id="guideSearch" type="search" placeholder="Search" autocomplete="off">
+      <div id="mixing" class="hidden"><h2>Mixing</h2><ul id="mixingList"></ul></div>
+      <dl id="guideList"></dl>
+    </div>
+
+    <div id="notebookPanel" class="box hidden">
+      <h2 id="notebookTitle"></h2>
+      <ul id="notebookList"></ul>
+      <p id="notebookEmpty" class="muted">No clues yet.</p>
+    </div>
+
+    <div id="submitPanel" class="box hidden">
+      <p id="submitEntry"></p>
+      <input id="answer" type="text" maxlength="120" autocomplete="off">
+      <p id="submitConfirm" class="hidden"></p>
+      <div class="row">
+        <button id="submitGo" class="primary">Submit</button>
+        <button id="submitCancel">Cancel</button>
+      </div>
+    </div>
+    <p id="error" class="error hidden"></p>
+  </section>
+</main>
+
+<script>
+"use strict";
+const KEY = "witb-player";
+const $ = (id) => document.getElementById(id);
+let creds = null, labels = {}, view = null, guideLoaded = false, confirming = false;
+try { creds = JSON.parse(localStorage.getItem(KEY)); } catch (_) {}
+
+// A scanned sheet opens /s/<code>. Take the code, then tidy the address so a refresh doesn't scan again.
+let pendingScan = null;
+const m = location.pathname.match(/^\/s\/([A-Za-z0-9]+)/);
+if (m) { pendingScan = m[1]; history.replaceState(null, "", "/"); }
+
+function save() { try { localStorage.setItem(KEY, JSON.stringify(creds)); } catch (_) {} }
+
+async function api(path, body) {
+  const headers = { "content-type": "application/json" };
+  if (creds) { headers["x-player-id"] = creds.id; headers["x-player-token"] = creds.token; }
+  const res = await fetch(path, { method: body === undefined ? "GET" : "POST", headers, body: body === undefined ? undefined : JSON.stringify(body) });
+  const data = await res.json().catch(() => ({}));
+  return { status: res.status, data };
+}
+
+function show(id, on) { $(id).classList.toggle("hidden", !on); }
+function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+function render(v) {
+  view = v;
+  if (v.snap) { creds.snap = v.snap; save(); }
+  show("intro", false); show("play", true);
+  $("who").textContent = `Player ${v.num} · ${v.trackLabel} inquirer · Run ${v.run}`;
+  show("result", !!v.result); $("result").textContent = v.result || "";
+  $("prompt").textContent = v.prompt;
+  $("guideBtn").textContent = labels.guideButton; $("notebookBtn").textContent = labels.notebookButton;
+  $("submitBtn").textContent = labels.submitButton;
+  $("abandonBtn").textContent = labels.abandonButton;
+  show("submitBtn", v.status === "playing" && !v.submission);
+  show("abandonBtn", v.canAbandon);
+  if (!(v.status === "playing" && !v.submission)) show("submitPanel", false);
+  $("notebookList").innerHTML = v.notebook.map((t) => `<li>${esc(t)}</li>`).join("");
+  show("notebookEmpty", v.notebook.length === 0);
+  $("guideTitle").textContent = `${v.trackLabel} ${labels.guideButton.toLowerCase()}`;
+  $("notebookTitle").textContent = labels.notebookButton;
+  if (v.error) { $("error").textContent = v.error; show("error", true); } else show("error", false);
+}
+
+async function refresh() {
+  if (!creds) return showIntro();
+  let r = await api("/api/me");
+  if (r.status === 401 && creds.snap) r = await api("/api/restore", { snap: creds.snap });
+  if (r.status !== 200) { creds = null; try { localStorage.removeItem(KEY); } catch (_) {} return showIntro(); }
+  render(r.data);
+}
+
+async function showIntro() {
+  const r = await api("/api/intro");
+  $("opening").textContent = r.data.opening; $("colorCheck").textContent = r.data.colorCheck;
+  show("play", false); show("intro", true);
+}
+
+async function join(colorTrouble) {
+  $("colorYes").disabled = $("colorNo").disabled = true;
+  const r = await api("/api/join", { colorTrouble });
+  creds = { id: r.data.id, token: r.data.token, snap: r.data.snap }; save();
+  render(r.data);
+  if (pendingScan) { const code = pendingScan; pendingScan = null; scan(code); }
+}
+
+async function scan(code) {
+  const r = await api("/api/scan", { code });
+  if (r.status === 200) render(r.data); else refresh();
+  show("guidePanel", false); show("notebookPanel", false);
+  window.scrollTo(0, 0);
+}
+
+function toggle(panel) {
+  for (const p of ["guidePanel", "notebookPanel", "submitPanel"]) if (p !== panel) show(p, false);
+  show(panel, $(panel).classList.contains("hidden"));
+}
+
+async function loadGuide() {
+  if (guideLoaded) return;
+  const r = await api("/api/guide");
+  if (r.status !== 200) return;
+  guideLoaded = true;
+  $("guideList").innerHTML = r.data.entries.map((e) => `<div class="entry" data-t="${esc(e.term.toLowerCase())}"><dt><b>${esc(e.term)}</b></dt><dd>${esc(e.note)}</dd></div>`).join("");
+  if (r.data.mixing) { $("mixingList").innerHTML = r.data.mixing.map((t) => `<li>${esc(t)}</li>`).join(""); show("mixing", true); }
+}
+
+$("colorYes").onclick = () => join(true);
+$("colorNo").onclick = () => join(false);
+$("guideBtn").onclick = async () => { await loadGuide(); toggle("guidePanel"); };
+$("notebookBtn").onclick = () => toggle("notebookPanel");
+$("guideSearch").oninput = () => {
+  const q = $("guideSearch").value.trim().toLowerCase();
+  for (const el of document.querySelectorAll("#guideList .entry")) el.classList.toggle("hidden", !!q && !el.dataset.t.includes(q));
+};
+$("submitBtn").onclick = () => {
+  confirming = false; show("submitConfirm", false); $("submitGo").textContent = "Submit";
+  $("submitEntry").textContent = labels.submitEntry; toggle("submitPanel"); $("answer").focus();
+};
+$("submitCancel").onclick = () => { confirming = false; show("submitPanel", false); };
+$("submitGo").onclick = async () => {
+  const answer = $("answer").value.trim();
+  if (!answer) return;
+  if (!confirming) {
+    confirming = true;
+    $("submitConfirm").textContent = labels.submitConfirm.replace("{answer}", answer);
+    show("submitConfirm", true); $("submitGo").textContent = "Yes, submit";
+    return;
+  }
+  const r = await api("/api/submit", { answer });
+  confirming = false; show("submitPanel", false);
+  if (r.status === 200) render(r.data); else refresh();
+};
+$("abandonBtn").onclick = async () => { const r = await api("/api/abandon", {}); if (r.status === 200) render(r.data); };
+
+// Keep the screen current (run starts, reveals) without interrupting typing.
+setInterval(() => {
+  if (document.hidden || !creds) return;
+  if (document.activeElement && ["answer", "guideSearch"].includes(document.activeElement.id)) return;
+  refresh();
+}, 4000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden && creds) refresh(); });
+
+(async () => {
+  labels = (await api("/api/labels")).data;
+  if (creds) { await refresh(); if (pendingScan && creds) { const c = pendingScan; pendingScan = null; scan(c); } }
+  else showIntro();
+})();
+</script>
+</body>
+</html>

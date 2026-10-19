@@ -1,0 +1,20 @@
+/* Deliberately plain. Restyle freely. */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 18px; line-height: 1.45; color: #111; background: #fff; }
+main { max-width: 640px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 1.5em; margin: 0.3em 0 0.6em; }
+h2 { font-size: 1.15em; margin: 1.2em 0 0.5em; }
+button { font: inherit; padding: 12px 16px; border: 1px solid #333; background: #f2f2f2; border-radius: 6px; cursor: pointer; }
+button.primary { background: #111; color: #fff; }
+button:disabled { opacity: 0.4; cursor: default; }
+input[type=text], input[type=password], input[type=search], input[type=number] { font: inherit; padding: 10px; border: 1px solid #333; border-radius: 6px; width: 100%; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+.row > button { flex: 1 1 auto; }
+.muted { color: #555; font-size: 0.9em; }
+.box { border: 1px solid #ccc; border-radius: 6px; padding: 12px; margin: 12px 0; }
+.result { background: #f6f6f6; }
+.prompt { font-size: 1.35em; font-weight: 600; margin: 16px 0; }
+.error { color: #a00; }
+.hidden { display: none !important; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #ddd; vertical-align: top; }
