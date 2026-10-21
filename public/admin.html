@@ -27,7 +27,7 @@
       <p id="trackLine" class="muted"></p>
       <div class="row">
         <button id="startBtn" class="primary">Start run</button>
-        <button id="revealBtn">Reveal scores now</button>
+        <button id="revealBtn">Reveal scores</button>
         <button id="nextBtn" class="primary">Start next run</button>
       </div>
       <p class="muted">Join link: <span id="joinUrl"></span> · <a href="/projector" target="_blank">Open projector view</a></p>
@@ -37,7 +37,7 @@
     <table><tbody id="stats"></tbody></table>
 
     <h2>Submitted answers</h2>
-    <p class="muted">Answers the app couldn't score are marked. Type points (0–100) and press Enter. Scores reveal automatically once everyone has submitted and every answer has points.</p>
+    <p class="muted">Answers the app couldn't score are marked. Type points (0–100) and press Enter. Scores appear on phones and the projector only when you press <b>Reveal scores</b>.</p>
     <table>
       <thead><tr><th>Player</th><th>Track</th><th>Answer</th><th>Points</th><th>Scored as</th></tr></thead>
       <tbody id="subs"></tbody>
@@ -63,7 +63,7 @@ const LS = { key: "witb-admin", game: "witb-admin-game", log: "witb-admin-log" }
 const get = (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (_) { return d; } };
 const put = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} };
 let key = null; try { key = localStorage.getItem(LS.key); } catch (_) {}
-let editing = false;
+let editing = false, lastState = null;
 
 async function api(path, body) {
   const res = await fetch(path, { method: body === undefined ? "GET" : "POST",
@@ -88,6 +88,7 @@ async function tick() {
   const r = await api("/api/admin/state");
   if (r.status === 401) { show("panel", false); show("login", true); return; }
   const v = r.data;
+  lastState = v;
   show("login", false); show("panel", true);
 
   // After a server restart, the server may have lost the run number and status. Put them back.
@@ -139,7 +140,13 @@ $("go").onclick = async () => {
   const r = await api("/api/admin/state"); show("err", r.status === 401); if (r.status !== 401) tick();
 };
 $("startBtn").onclick = async () => { await api("/api/admin/start", {}); tick(); };
-$("revealBtn").onclick = async () => { if (confirm("Reveal scores now, before everyone has submitted?")) { await api("/api/admin/reveal", {}); tick(); } };
+$("revealBtn").onclick = async () => {
+  const v = lastState || {};
+  const missing = (v.players || 0) - (v.submitted || 0);
+  const warn = [missing > 0 ? `${missing} player(s) haven't submitted` : "", v.unscored ? `${v.unscored} answer(s) still need your score` : ""].filter(Boolean);
+  if (warn.length && !confirm(`${warn.join(" and ")}. Reveal scores anyway?`)) return;
+  await api("/api/admin/reveal", {}); tick();
+};
 $("nextBtn").onclick = async () => { await api("/api/admin/next-run", {}); tick(); };
 $("newRolesBtn").onclick = async () => {
   if (!confirm("Start a new game with the same players and new roles? Notebooks, paths and answers are cleared.")) return;

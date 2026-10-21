@@ -49,7 +49,7 @@ app.get("/", page("player.html"));
 app.get("/s/:code", page("player.html"));
 app.get("/projector", page("projector.html"));
 app.get("/admin", page("admin.html"));
-app.use("/static", express.static(pub, { maxAge: "5m" }));
+app.use("/static", express.static(pub, { maxAge: 0 })); // browsers re-check after every deploy
 app.get("/vendor/jsQR.js", (req, res) => res.sendFile(require.resolve("jsqr/dist/jsQR.js")));
 app.get("/healthz", (req, res) => res.json({ ok: true }));
 

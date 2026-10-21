@@ -23,7 +23,7 @@ button.big { width: 100%; font-size: 1.3em; padding: 16px; }
 ol.path { padding-left: 1.6em; margin: 0; }
 ol.path li { margin: 0 0 8px; }
 h3 { font-size: 1em; margin: 1em 0 0.4em; }
-.scanner { position: fixed; inset: 0; z-index: 10; background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; text-align: center; }
+.scanner { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 10; background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; text-align: center; }
 .scanner video { width: 100%; max-width: 480px; max-height: 65vh; object-fit: cover; border-radius: 8px; background: #222; }
 .scanner .error { color: #f99; }
 .scanner button { min-width: 50%; }
@@ -32,7 +32,7 @@ h3 { font-size: 1em; margin: 1em 0 0.4em; }
 .hint { background: #fff8e1; border-color: #e6c200; }
 .tag { display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 4px; background: #111; color: #fff; font-size: 0.7em; font-weight: 600; vertical-align: middle; }
 #notebookBtn.has-new { border-width: 2px; font-weight: 700; background: #fff8e1; }
-.card { position: fixed; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, 0.6); }
+.card { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 20; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, 0.6); }
 .card-inner { width: 100%; max-width: 520px; padding: 28px 22px 20px; border-radius: 14px; background: #fff; font-size: 1.2em; line-height: 1.5; white-space: pre-line; text-align: center; animation: card-pop 0.25s ease-out; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35); }
 .card-inner .lead-bold > strong:first-child { display: block; margin-bottom: 8px; font-size: 1.5em; }
 .card-inner button { margin-top: 18px; white-space: normal; }
