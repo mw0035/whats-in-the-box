@@ -83,7 +83,7 @@ app.get("/api/intro", (req, res) => {
 });
 
 app.post("/api/join", (req, res) => {
-  const p = game.join(!!(req.body && req.body.colorTrouble));
+  const p = game.join(!!(req.body && req.body.colorTrouble), req.body && req.body.name);
   playerReply(res, p, { id: p.id, token: p.token });
 });
 
@@ -111,6 +111,12 @@ app.post("/api/scan", (req, res) => {
   playerReply(res, p);
 });
 
+app.post("/api/hint", (req, res) => {
+  const p = player(req, res); if (!p) return;
+  game.useHint(p);
+  playerReply(res, p);
+});
+
 app.post("/api/abandon", (req, res) => {
   const p = player(req, res); if (!p) return;
   game.abandon(p);
@@ -126,7 +132,8 @@ app.post("/api/submit", (req, res) => {
 app.get("/api/labels", (req, res) => {
   const m = content.messages;
   const keys = ["guideButton", "notebookButton", "submitButton", "submitEntry", "submitConfirm", "abandonButton",
-    "notebookEmpty", "scanButton", "scanHelp", "scanCancel", "scanNoCamera", "finalHeading", "finalHint", "pathButton", "pathEmpty", "pathRun", "pathAsked"];
+    "notebookEmpty", "notebookNew", "namePrompt", "nameContinue", "puzzleLabel", "hintButton", "hintConfirm", "hintYes", "hintNo",
+    "hintLabel", "hintCrossTrack", "hintNone", "cardButton", "scanButton", "scanHelp", "scanCancel", "scanNoCamera", "finalHeading", "finalHint", "pathButton", "pathEmpty", "pathRun", "pathAsked"];
   res.json(Object.fromEntries(keys.map((k) => [k, m[k]])));
 });
 
@@ -157,7 +164,7 @@ app.get("/api/admin/log", admin, (req, res) => {
 app.get("/api/admin/export", admin, (req, res) => {
   res.setHeader("Content-Disposition", `attachment; filename="whats-in-the-box-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-")}.json"`);
   res.json({ exportedAt: new Date().toISOString(), bootId: game.bootId, run: game.run, status: game.status,
-    players: [...game.players.values()].map((p) => ({ num: p.num, track: p.track, colorTrouble: p.colorTrouble, notebook: p.notebook, submission: p.submission })),
+    players: [...game.players.values()].map((p) => ({ num: p.num, name: p.name, track: p.track, hintsLeft: p.hintsLeft, colorTrouble: p.colorTrouble, notebook: p.notebook, submission: p.submission })),
     events: game.log, sheets: content.sheets.map(({ id, animal, color, frame }) => ({ id, animal, color, frame })) });
 });
 app.get("/api/admin/join-qr.svg", admin, async (req, res) => {

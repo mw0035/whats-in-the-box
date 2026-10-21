@@ -11,10 +11,17 @@
   <!-- Joining -->
   <section id="intro" class="hidden">
     <h1 id="opening">What's in the box?</h1>
-    <p id="colorCheck"></p>
-    <div class="row">
-      <button id="colorYes">Yes</button>
-      <button id="colorNo">No</button>
+    <div id="nameStep">
+      <p id="namePrompt"></p>
+      <input id="nameInput" type="text" maxlength="30" autocomplete="nickname">
+      <p><button id="nameGo" class="primary" style="width:100%"></button></p>
+    </div>
+    <div id="colorStep" class="hidden">
+      <p id="colorCheck"></p>
+      <div class="row">
+        <button id="colorYes">Yes</button>
+        <button id="colorNo">No</button>
+      </div>
     </div>
   </section>
 
@@ -22,8 +29,18 @@
   <section id="play" class="hidden">
     <p class="muted" id="who"></p>
     <div id="result" class="box result hidden"></div>
+    <p id="puzzleLabel" class="puzzle-label hidden"></p>
     <p id="prompt" class="prompt"></p>
+    <div id="hintBox" class="box hint hidden"></div>
     <p><button id="scanBtn" class="primary big hidden"></button></p>
+    <p><button id="hintBtn" class="hidden" style="width:100%"></button></p>
+    <div id="hintPanel" class="box hidden">
+      <p id="hintQuestion"></p>
+      <div class="row">
+        <button id="hintYes" class="primary"></button>
+        <button id="hintNo"></button>
+      </div>
+    </div>
     <div class="row">
       <button id="guideBtn"></button>
       <button id="notebookBtn"></button>
@@ -67,6 +84,14 @@
   </section>
 </main>
 
+<!-- Full-screen card for a new clue or for finding the answer -->
+<div id="card" class="card hidden" role="dialog" aria-modal="true">
+  <div class="card-inner">
+    <div id="cardText"></div>
+    <button id="cardBtn" class="primary big"></button>
+  </div>
+</div>
+
 <!-- In-page QR scanner -->
 <div id="scanner" class="scanner hidden">
   <video id="video" playsinline muted></video>
@@ -99,16 +124,47 @@ async function api(path, body) {
 
 function show(id, on) { $(id).classList.toggle("hidden", !on); }
 function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
-// Game text may mark *italics*.
-function fmt(s) { return esc(s || "").replace(/\*([^*\n]+)\*/g, "<em>$1</em>"); }
+// Game text may mark ***bold italics***, **bold** and *italics*.
+function fmt(s) {
+  return esc(s || "").replace(/\*\*\*([^*\n]+)\*\*\*/g, "<strong><em>$1</em></strong>")
+    .replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>").replace(/\*([^*\n]+)\*/g, "<em>$1</em>");
+}
+
+// Per-player memory on this phone: which card was last shown, how many clues were looked at.
+const seenKey = (k) => `witb-${k}-${creds && creds.id}`;
+const getSeen = (k) => { try { return Number(localStorage.getItem(seenKey(k))) || 0; } catch (_) { return 0; } };
+const setSeen = (k, n) => { try { localStorage.setItem(seenKey(k), String(n)); } catch (_) {} };
+
+function showCard(card) {
+  $("cardText").innerHTML = fmt(card.text);
+  $("cardText").classList.toggle("lead-bold", /^\*\*[^*]/.test(card.text || "")); // a bold opening line becomes the heading
+  $("cardBtn").textContent = labels.cardButton;
+  show("card", true);
+  if (navigator.vibrate) navigator.vibrate([150, 80, 250]);
+}
+
+function renderNotebook(v) {
+  const seen = Math.min(getSeen("notes"), v.notebook.length);
+  const fresh = v.notebook.length - seen;
+  $("notebookBtn").textContent = labels.notebookButton + (v.notebook.length ? ` (${v.notebook.length})` : "");
+  $("notebookBtn").classList.toggle("has-new", fresh > 0);
+  $("notebookList").innerHTML = v.notebook.map((t, i) =>
+    `<li>${esc(t)}${i >= seen ? ` <span class="tag">${esc(labels.notebookNew)}</span>` : ""}</li>`).join("");
+  $("notebookEmpty").textContent = labels.notebookEmpty; show("notebookEmpty", v.notebook.length === 0);
+}
 
 function render(v) {
   view = v;
   if (v.snap) { creds.snap = v.snap; save(); }
   show("intro", false); show("play", true);
-  $("who").textContent = `Player ${v.num} · ${v.trackLabel} · Run ${v.run}`;
+  $("who").textContent = `${v.name} · ${v.trackLabel} · Run ${v.run}`;
   show("result", !!v.result); $("result").innerHTML = fmt(v.result);
+  show("puzzleLabel", !!v.puzzleNum); $("puzzleLabel").textContent = v.puzzleNum ? labels.puzzleLabel.replace("{n}", v.puzzleNum) : "";
   $("prompt").innerHTML = fmt(v.prompt);
+  show("hintBox", !!v.hint); $("hintBox").innerHTML = v.hint ? `<strong>${esc(labels.hintLabel)}</strong> ${fmt(v.hint)}` : "";
+  $("hintBtn").textContent = labels.hintButton; show("hintBtn", ["available", "none", "cross"].includes(v.hintState));
+  if (!["available", "none", "cross"].includes(v.hintState)) show("hintPanel", false);
+  if (v.card && v.card.n > getSeen("card")) { setSeen("card", v.card.n); showCard(v.card); }
   $("guideBtn").textContent = labels.guideButton; $("notebookBtn").textContent = labels.notebookButton;
   $("pathBtn").textContent = labels.pathButton; $("pathTitle").textContent = labels.pathButton;
   $("scanBtn").textContent = labels.scanButton; show("scanBtn", v.canScan);
@@ -119,8 +175,7 @@ function render(v) {
   show("abandonBtn", v.canAbandon);
   if (!(v.status === "playing" && !v.submission)) show("submitPanel", false);
   renderPath(v.path || []);
-  $("notebookList").innerHTML = v.notebook.map((t) => `<li>${esc(t)}</li>`).join("");
-  $("notebookEmpty").textContent = labels.notebookEmpty; show("notebookEmpty", v.notebook.length === 0);
+  renderNotebook(v);
   $("guideTitle").textContent = `${v.trackLabel} ${labels.guideButton.toLowerCase()}`;
   $("notebookTitle").textContent = labels.notebookButton;
   if (v.error) { $("error").textContent = v.error; show("error", true); } else show("error", false);
@@ -137,12 +192,15 @@ async function refresh() {
 async function showIntro() {
   const r = await api("/api/intro");
   $("opening").textContent = r.data.opening; $("colorCheck").textContent = r.data.colorCheck;
+  $("namePrompt").textContent = labels.namePrompt; $("nameGo").textContent = labels.nameContinue;
+  $("colorYes").disabled = $("colorNo").disabled = false;
+  show("nameStep", true); show("colorStep", false); show("card", false);
   show("play", false); show("intro", true);
 }
 
 async function join(colorTrouble) {
   $("colorYes").disabled = $("colorNo").disabled = true;
-  const r = await api("/api/join", { colorTrouble });
+  const r = await api("/api/join", { colorTrouble, name: $("nameInput").value.trim() });
   creds = { id: r.data.id, token: r.data.token, snap: r.data.snap }; save();
   render(r.data);
   if (pendingScan) { const code = pendingScan; pendingScan = null; scan(code); }
@@ -151,7 +209,7 @@ async function join(colorTrouble) {
 async function scan(code) {
   const r = await api("/api/scan", { code });
   if (r.status === 200) render(r.data); else refresh();
-  show("guidePanel", false); show("notebookPanel", false); show("pathPanel", false);
+  show("guidePanel", false); show("notebookPanel", false); show("pathPanel", false); show("hintPanel", false);
   window.scrollTo(0, 0);
 }
 
@@ -163,7 +221,7 @@ function renderPath(path) {
     const items = path.filter((x) => x.run === r).map((x, k) => {
       const showAsked = x.asked && !["start", "stillCold", "resume"].includes(x.o);
       return `<li value="${k + 1}"><b>${esc(x.place)}</b>${x.place ? " · " : ""}${esc(x.what)}` +
-        (showAsked ? `<br><span class="muted">${esc(labels.pathAsked.replace("{asked}", x.asked))}</span>` : "") + "</li>";
+        (showAsked ? `<br><span class="muted">${fmt(labels.pathAsked.replace("{asked}", x.asked))}</span>` : "") + "</li>";
     }).reverse().join("");
     return (runs.length > 1 ? `<h3>${esc(labels.pathRun.replace("{r}", r))}</h3>` : "") + `<ol reversed class="path">${items}</ol>`;
   }).join("");
@@ -233,13 +291,44 @@ async function loadGuide() {
   const r = await api("/api/guide");
   if (r.status !== 200) return;
   guideLoaded = true;
-  $("guideList").innerHTML = r.data.entries.map((e) => `<div class="entry" data-t="${esc(e.term.toLowerCase())}"><dt><b>${esc(e.term)}</b></dt><dd>${esc(e.note)}</dd></div>`).join("");
+  $("guideList").innerHTML = r.data.entries.map((e) => `<div class="entry" data-t="${esc(e.term.toLowerCase())}"><dt><b>${esc(e.term)}</b></dt><dd>${fmt(e.note)}</dd></div>`).join("");
 }
 
+$("nameGo").onclick = () => { show("nameStep", false); show("colorStep", true); };
+$("nameInput").onkeydown = (e) => { if (e.key === "Enter") $("nameGo").click(); };
 $("colorYes").onclick = () => join(true);
 $("colorNo").onclick = () => join(false);
+$("cardBtn").onclick = () => show("card", false);
 $("guideBtn").onclick = async () => { await loadGuide(); toggle("guidePanel"); };
-$("notebookBtn").onclick = () => toggle("notebookPanel");
+$("notebookBtn").onclick = () => {
+  toggle("notebookPanel");
+  if (view && !$("notebookPanel").classList.contains("hidden")) setTimeout(() => { setSeen("notes", view.notebook.length); renderNotebookBadge(); }, 0);
+};
+// Opening the notebook clears the highlight on the button; the New tags stay until the next screen update.
+function renderNotebookBadge() { $("notebookBtn").classList.remove("has-new"); }
+
+// Hints: confirm before spending one; cross-track puzzles and "none left" just explain.
+let hintAction = null;
+$("hintBtn").onclick = () => {
+  if (!view) return;
+  const st = view.hintState;
+  if (st === "available") {
+    $("hintQuestion").textContent = labels.hintConfirm.replace("{left}", view.hintsLeft).replace("{total}", view.hintsTotal);
+    $("hintYes").textContent = labels.hintYes; $("hintNo").textContent = labels.hintNo;
+    show("hintYes", true); hintAction = "use";
+  } else {
+    $("hintQuestion").textContent = st === "cross" ? labels.hintCrossTrack : labels.hintNone;
+    $("hintNo").textContent = labels.cardButton; show("hintYes", false); hintAction = null;
+  }
+  show("hintPanel", true);
+};
+$("hintNo").onclick = () => show("hintPanel", false);
+$("hintYes").onclick = async () => {
+  show("hintPanel", false);
+  if (hintAction !== "use") return;
+  const r = await api("/api/hint", {});
+  if (r.status === 200) render(r.data);
+};
 $("pathBtn").onclick = () => toggle("pathPanel");
 $("scanBtn").onclick = openScanner;
 $("scanCancel").onclick = closeScanner;

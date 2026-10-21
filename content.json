@@ -2,7 +2,8 @@
   "title": "What's in the box?",
   "answer": "chocolate coin",
   "settings": {
-    "retryLostRoutes": true
+    "retryLostRoutes": true,
+    "hintsPerGame": 2
   },
   "tracks": {
     "animal": {
@@ -299,12 +300,18 @@
       ],
       "steps": [
         {
-          "question": "I might hold a bell, wear a clock, or keep watch over a castle. What am I?",
-          "answer": "giraffe"
+          "question": "I might hold a bell, wear a clock, or keep watch over a castle. What am I?\n\n*Field guide required*.",
+          "answer": "giraffe",
+          "hint": "Think of a tall building that might hold a bell or a clock. Find that word in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "Darkness settles over town.\nA hush falls on the crowd.\nZipping sparks race skyward,\nZigzagging through a cloud.\nLight spills across the heavens;\nEyes widen at the show.",
-          "answer": "zebra"
+          "question": "Darkness settles over town.\nA hush falls on the crowd.\nZipping sparks race skyward,\nZigzagging through a cloud.\nLight spills across the heavens;\nEyes widen at the show.\n\n*Field guide required*.",
+          "answer": "zebra",
+          "hint": "Read the first letter of each line. Find that word in your field guide.",
+          "type": "Wordplay: acrostic",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -321,12 +328,18 @@
       ],
       "steps": [
         {
-          "question": "Curious explorers tread eastward.",
-          "answer": "badger"
+          "question": "Curious explorers tread eastward.\n\n*Field guide required*.",
+          "answer": "badger",
+          "hint": "Read the first letter of each word. Find that word in your field guide.",
+          "type": "Wordplay: acrostic",
+          "fieldGuide": true
         },
         {
-          "question": "A crowd with a temper.",
-          "answer": "kangaroo"
+          "question": "A crowd with a temper.\n\n*Field guide required*.",
+          "answer": "kangaroo",
+          "hint": "What's another word for an angry crowd? Find it in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -343,12 +356,18 @@
       ],
       "steps": [
         {
-          "question": "Style with the volume turned all the way up.",
-          "answer": "flamingo"
+          "question": "Style with the volume turned all the way up.\n\n*Field guide required*.",
+          "answer": "flamingo",
+          "hint": "What's a word for loud, over-the-top style? Find it in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "Hug the shadows, dodge the light;\nCreep through the corners, out of sight.",
-          "answer": "fox"
+          "question": "Hug the shadows, dodge the light;\nCreep through the corners, out of sight.\n\n*Field guide required*.",
+          "answer": "fox",
+          "hint": "What's a word for creeping around out of sight? Find it in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -365,12 +384,18 @@
       ],
       "steps": [
         {
-          "question": "The members of this house love to argue.",
-          "answer": "owl"
+          "question": "The members of this house love to argue.\n\n*Field guide required*.",
+          "answer": "owl",
+          "hint": "Which British lawmaking body is famous for its arguments? Find it in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "I hum when content, though I never sing. What am I?",
-          "answer": "cat"
+          "question": "I hum when content, though you might not like my singing. Now take your curiosity elsewhere.\n\n*Field guide NOT required*.",
+          "answer": "cat",
+          "hint": "Which animal purrs and is famously killed by curiosity? Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
         }
       ],
       "outcome": {
@@ -387,12 +412,18 @@
       ],
       "steps": [
         {
-          "question": "You reach for a rose and suddenly change your mind. What am I?",
-          "answer": "porcupine"
+          "question": "You reach for a rose and suddenly change your mind. What am I?\n\n*Field guide required*.",
+          "answer": "porcupine",
+          "hint": "What does a rose's stem do to your hand? Find that word in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "Two friends sit in silence after a quarrel.\nNeither is hungry, yet something must be swallowed\nBefore either can say, “I’m sorry.”",
-          "answer": "lion"
+          "question": "Two friends sit in silence after a quarrel.\nNeither is hungry, yet something must be swallowed\nBefore either can say, “I’m sorry.”\n\n*Field guide required*.",
+          "answer": "lion",
+          "hint": "Another word for ego. Find it in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -409,12 +440,18 @@
       ],
       "steps": [
         {
-          "question": "My crown grows around my face.\nMy throne is a patch of sun. What am I?",
-          "answer": "lion"
+          "question": "My crown grows around my face.\nMy throne is a patch of sun. What am I?\n\n*Field guide NOT required*.",
+          "answer": "lion",
+          "hint": "Which big cat wears a mane like a crown? Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
         },
         {
-          "question": "I wear a piano’s colors,\nBut I’ve never played a tune.\nListen as I cross the grass...\nMy music is the beat of hooves.\nWhat am I?",
-          "answer": "zebra"
+          "question": "I wear a piano’s colors,\nBut I’ve never played a tune.\nListen as I cross the grass...\nMy music is the beat of hooves.\n\nWhat am I?\n\n*Field guide NOT required*.",
+          "answer": "zebra",
+          "hint": "Which animal is striped black and white, like piano keys? Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
         }
       ],
       "outcome": {
@@ -430,12 +467,18 @@
       ],
       "steps": [
         {
-          "question": "What angry stuff is made of.",
-          "answer": "red"
+          "question": "What angry stuff is made of.\n\n*Field guide required*.",
+          "answer": "red",
+          "hint": "Find madder in your field guide.",
+          "type": "Wordplay: sounds like",
+          "fieldGuide": true
         },
         {
-          "question": "Semper fi and beyond.",
-          "answer": "blue"
+          "question": "Semper fi and *beyond*.\n\n*Field guide required*.",
+          "answer": "blue",
+          "hint": "The Marines' motto is Semper fi, and ultra means beyond. Find ultra + marine in your field guide.",
+          "type": "Wordplay: word-building",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -451,12 +494,18 @@
       ],
       "steps": [
         {
-          "question": "To attain this royal color, you’ll have to crush a few snails.",
-          "answer": "purple"
+          "question": "To attain this royal color, you'll have to crush a few snails.\n\n*Field guide required*.",
+          "answer": "purple",
+          "hint": "Find the field guide entry about sea snails.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "I can give a brand-new photograph a past it never had.",
-          "answer": "brown"
+          "question": "I can give a brand-new photograph a past it never had.\n\n*Field guide required*.",
+          "answer": "brown",
+          "hint": "Find sepia in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -472,12 +521,18 @@
       ],
       "steps": [
         {
-          "question": "If you want this color, pack some mangoes on your way to the barn.",
-          "answer": "yellow"
+          "question": "If you want this color, pack some mangoes on your way to the barn.\n\n*Field guide required*.",
+          "answer": "yellow",
+          "hint": "Find the field guide entry about cows and mango leaves.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "There is no one to paint the copper door, yet every year its new coat spreads a little farther.",
-          "answer": "green"
+          "question": "There is no one to paint the copper door, yet every year its new coat spreads a little farther.\n\n*Field guide required*.",
+          "answer": "green",
+          "hint": "Find the field guide entry about the crust that grows on old copper.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -493,12 +548,18 @@
       ],
       "steps": [
         {
-          "question": "Whose clues?",
-          "answer": "blue"
+          "question": "*Whose* clues?\n\n*Field guide NOT required*.",
+          "answer": "blue",
+          "hint": "This puzzle references a famous children's TV show called Blue's Clues.",
+          "type": "Wordplay: rhyme",
+          "fieldGuide": false
         },
         {
-          "question": "Vain investors rarely imagine disasters in advance. Naturally.",
-          "answer": "green"
+          "question": "Vain investors rarely imagine disasters in advance. Naturally.\n\n*Field guide required*.",
+          "answer": "green",
+          "hint": "Read the first letter of each word. Find that word in your field guide.",
+          "type": "Wordplay: acrostic",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -514,12 +575,18 @@
       ],
       "steps": [
         {
-          "question": "Copper runs in my family.",
-          "answer": "green"
+          "question": "Copper runs in my family.\n\n*Field guide required*.",
+          "answer": "green",
+          "hint": "Find the copper mineral in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "My creation was a mistake.",
-          "answer": "purple"
+          "question": "My creation was a mistake.\n\n*Field guide required*.",
+          "answer": "purple",
+          "hint": "Find the field guide entry about a dye made by accident.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -535,12 +602,18 @@
       ],
       "steps": [
         {
-          "question": "As the leaders say: “Old ruins conceal history in layers.”",
-          "answer": "purple"
+          "question": "As the *leaders* say: \"Old ruins conceal history in layers.\"\n\n*Field guide required*.",
+          "answer": "purple",
+          "hint": "Read the first letter of each word in the quote. Find that word in your field guide.",
+          "type": "Wordplay: acrostic",
+          "fieldGuide": true
         },
         {
-          "question": "I spent centuries waiting for my afterlife. I didn’t expect to spend it on canvas.",
-          "answer": "brown"
+          "question": "I spent centuries waiting for my afterlife. I didn't expect to spend it on canvas.\n\n*Field guide required*.",
+          "answer": "brown",
+          "hint": "Find the field guide entry about mummies.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -556,12 +629,18 @@
       ],
       "steps": [
         {
-          "question": "Lanterns flicker on the pier.\nUnder the stars, the tide rolls in.\nNight birds call across the water.\nEverything waits for morning.",
-          "answer": "crescent"
+          "question": "Lanterns flicker on the pier.\nUnder the stars, the tide rolls in.\nNight birds call across the water.\nEverything waits for morning.\n\n*Field guide required*.",
+          "answer": "crescent",
+          "hint": "Read the first letter of each line. Find that word in your field guide.",
+          "type": "Wordplay: acrostic",
+          "fieldGuide": true
         },
         {
-          "question": "Dell toyed with the idea of going to the gym all day but forgot in the end.",
-          "answer": "diamond"
+          "question": "Dell toyed with the idea of going to the gym all day but forgot in the end.\n\n*Field guide required*.",
+          "answer": "diamond",
+          "hint": "Say \"Dell toyed\" out loud, quickly. Find the word it sounds like in your field guide.",
+          "type": "Wordplay: sounds like",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -577,12 +656,18 @@
       ],
       "steps": [
         {
-          "question": "My first half cancels a contract. My second half includes you and me.",
-          "answer": "ring"
+          "question": "My first half cancels a contract. My second half includes you and me.\n\n*Field guide required*.",
+          "answer": "ring",
+          "hint": "To cancel a contract is to *annul* it, and you and me is *us*. Find annul + us in your field guide.",
+          "type": "Wordplay: word-building",
+          "fieldGuide": true
         },
         {
-          "question": "Everyone on the bus! That means you too, Rhom...",
-          "answer": "diamond"
+          "question": "Everyone on the bus! That means you too, *Rhom*...\n\n*Field guide required*.",
+          "answer": "diamond",
+          "hint": "Rhom + bus. Find it in your field guide.",
+          "type": "Wordplay: finish the word",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -598,12 +683,18 @@
       ],
       "steps": [
         {
-          "question": "It might surprise vous, but I cut a pretty clean square.",
-          "answer": "curved triangle"
+          "question": "It might surprise *vous*, but I cut a pretty clean square.\n\n*Field guide required*.",
+          "answer": "curved triangle",
+          "hint": "Find the field guide entry with a French-looking name and a drill that cuts square holes.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "Boxers fight inside me, even though I'm square. What am I?",
-          "answer": "ring"
+          "question": "Boxers fight inside me, even though I'm square. What am I?\n\n*Field guide NOT required*.",
+          "answer": "ring",
+          "hint": "Boxers fight in a ring.",
+          "type": "General knowledge",
+          "fieldGuide": false
         }
       ],
       "outcome": {
@@ -619,12 +710,18 @@
       ],
       "steps": [
         {
-          "question": "An astronomer went for a manicure and found something familiar without looking up.",
-          "answer": "crescent"
+          "question": "An astronomer went for a manicure and found something familiar without looking up.\n\n*Field guide required*.",
+          "answer": "crescent",
+          "hint": "Look at the base of your fingernail. Find that half-moon in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "Seems fishy to me.",
-          "answer": "almond"
+          "question": "Seems fishy to me.\n\n*Field guide required*.",
+          "answer": "almond",
+          "hint": "Find the field guide entry whose name means fish bladder.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -640,12 +737,18 @@
       ],
       "steps": [
         {
-          "question": "An oval put on a cape and learned to fly.",
-          "answer": "squircle"
+          "question": "An oval put on a cape and learned to fly.\n\n*Field guide required*.",
+          "answer": "squircle",
+          "hint": "Superheroes wear capes, and an oval is an ellipse. Find super + ellipse in your field guide.",
+          "type": "Wordplay: word-building",
+          "fieldGuide": true
         },
         {
-          "question": "Ben Franklin flew me into a thunderstorm to catch lightning. What am I?",
-          "answer": "diamond"
+          "question": "Ben Franklin flew me into a thunderstorm to catch lightning. What am I?\n\n*Field guide required*.",
+          "answer": "diamond",
+          "hint": "Ben Franklin flew a kite. Find kite in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -661,12 +764,18 @@
       ],
       "steps": [
         {
-          "question": "The medieval painter heard \"halo\" and apparently thought, \"Why stop at the head?\"",
-          "answer": "almond"
+          "question": "The medieval painter heard \"halo\" and apparently thought, \"Why stop at the head?\"\n\n*Field guide required*.",
+          "answer": "almond",
+          "hint": "Find the field guide entry about a halo around a whole holy figure.",
+          "type": "Meaning",
+          "fieldGuide": true
         },
         {
-          "question": "They don't let me drive as much these days...",
-          "answer": "curved triangle"
+          "question": "They don't let me drive as much these days...\n\n*Field guide required*.",
+          "answer": "curved triangle",
+          "hint": "Find the field guide entry about a car engine part.",
+          "type": "Meaning",
+          "fieldGuide": true
         }
       ],
       "outcome": {
@@ -878,14 +987,415 @@
         "note": "a group of porcupines"
       },
       {
-        "term": "crash",
-        "value": null,
-        "note": "a group of rhinoceroses"
-      },
-      {
         "term": "murder",
         "value": null,
         "note": "a group of crows"
+      },
+      {
+        "term": "parade",
+        "value": null,
+        "note": "a group of elephants"
+      }
+    ],
+    "color": [
+      {
+        "term": "madder",
+        "value": "red",
+        "note": "red dye from the roots of the madder plant; it colored the British army's red coats"
+      },
+      {
+        "term": "gamboge",
+        "value": "yellow",
+        "note": "golden-yellow gum resin from Southeast Asian Garcinia trees"
+      },
+      {
+        "term": "Indian yellow",
+        "value": "yellow",
+        "note": "warm yellow, reportedly made from the urine of cows fed on mango leaves"
+      },
+      {
+        "term": "viridian",
+        "value": "green",
+        "note": "cool **green** with a bluish tint, made from chromium"
+      },
+      {
+        "term": "verdigris",
+        "value": "green",
+        "note": "green pigment made by exposing copper to vinegar; the name is also used loosely for the green crust that forms on old copper"
+      },
+      {
+        "term": "malachite",
+        "value": "green",
+        "note": "banded green copper mineral"
+      },
+      {
+        "term": "smalt",
+        "value": "blue",
+        "note": "ground glass colored blue with cobalt"
+      },
+      {
+        "term": "ultramarine",
+        "value": "blue",
+        "note": "blue extracted from lapis lazuli; the finest grades at times cost more than gold. The name means \"beyond the sea\""
+      },
+      {
+        "term": "Tyrian purple",
+        "value": "purple",
+        "note": "dye from sea snails, worn by emperors"
+      },
+      {
+        "term": "orchil",
+        "value": "purple",
+        "note": "purple dye made from lichens"
+      },
+      {
+        "term": "mauveine",
+        "value": "purple",
+        "note": "a purple dye, the first commercially successful synthetic organic one (1856), made by accident by an 18-year-old chemist"
+      },
+      {
+        "term": "sepia",
+        "value": "brown",
+        "note": "brown ink from cuttlefish"
+      },
+      {
+        "term": "bistre",
+        "value": "brown",
+        "note": "brown made from wood soot"
+      },
+      {
+        "term": "caput mortuum",
+        "value": "brown",
+        "note": "dark brown iron oxide; the name means 'dead head'"
+      },
+      {
+        "term": "mummy brown",
+        "value": "brown",
+        "note": "brown once made from ground-up mummies"
+      },
+      {
+        "term": "lamp black",
+        "value": null,
+        "note": "black made from the soot of oil lamps"
+      },
+      {
+        "term": "zinc white",
+        "value": null,
+        "note": "brilliant white made from zinc oxide"
+      }
+    ],
+    "frame": [
+      {
+        "term": "deltoid",
+        "value": "diamond",
+        "note": "a four-sided shape with two pairs of equal neighboring sides, as in a kite or a diamond. Named for the Greek letter delta (Δ), like the deltoid muscle of the shoulder"
+      },
+      {
+        "term": "rhombus",
+        "value": "diamond",
+        "note": "a four-sided shape with all four sides equal: a diamond. Every square is one"
+      },
+      {
+        "term": "kite",
+        "value": "diamond",
+        "note": "the flying toy, and the four-sided shape named after it. The classic one is a diamond"
+      },
+      {
+        "term": "lune",
+        "value": "crescent",
+        "note": "a crescent cut between two circular arcs. From luna, Latin for moon"
+      },
+      {
+        "term": "lunule",
+        "value": "crescent",
+        "note": "a small crescent, like the pale half-moon at the base of a fingernail"
+      },
+      {
+        "term": "annulus",
+        "value": "ring",
+        "note": "a ring: the band between two circles with the same center, like a life ring, a planet's ring or a band of an archery target"
+      },
+      {
+        "term": "vesica",
+        "value": "almond",
+        "note": "the almond shape where two equal circles overlap, each passing through the other's center. In full, vesica piscis: \"fish bladder.\""
+      },
+      {
+        "term": "mandorla",
+        "value": "almond",
+        "note": "Italian for \"almond\": the almond-shaped halo around a holy figure in medieval art"
+      },
+      {
+        "term": "Reuleaux triangle",
+        "value": "curved triangle",
+        "note": "a curved triangle as wide in every direction as a circle, so it keeps the same height as it rolls. Found in some guitar picks and in drills that cut nearly square holes"
+      },
+      {
+        "term": "Wankel rotor",
+        "value": "curved triangle",
+        "note": "the roughly triangular rotor with curved sides that spins inside a Wankel rotary engine, now rarely used in cars"
+      },
+      {
+        "term": "superellipse",
+        "value": "squircle",
+        "note": "a family of curves between the ellipse and the rectangle; the best known is the rounded square, halfway between a square and a circle. Piet Hein used one to design Stockholm's Sergels Torg"
+      },
+      {
+        "term": "lemniscate",
+        "value": null,
+        "note": "a figure-eight curve, like the infinity sign"
+      },
+      {
+        "term": "pentagram",
+        "value": null,
+        "note": "a five-pointed star"
+      }
+    ]
+  },
+  "scoring": [
+    {
+      "points": 100,
+      "label": "Chocolate coin",
+      "when": [
+        {
+          "any": [
+            "gelt"
+          ]
+        },
+        {
+          "any": [
+            "chocolate",
+            "choc"
+          ],
+          "andAny": [
+            "coin",
+            "coins",
+            "money",
+            "gelt",
+            "penny",
+            "pennies",
+            "gold",
+            "dollar",
+            "dollars",
+            "cash",
+            "doubloon",
+            "doubloons",
+            "bill",
+            "bills",
+            "currency"
+          ]
+        }
+      ]
+    },
+    {
+      "points": 70,
+      "label": "Penny (decoy)",
+      "when": [
+        {
+          "any": [
+            "penny",
+            "pennies"
+          ]
+        }
+      ]
+    },
+    {
+      "points": 90,
+      "label": "Coin",
+      "when": [
+        {
+          "any": [
+            "coin",
+            "coins",
+            "doubloon",
+            "doubloons",
+            "token",
+            "tokens",
+            "quarter",
+            "dime",
+            "nickel"
+          ]
+        }
+      ]
+    },
+    {
+      "points": 70,
+      "label": "Gold, dollar or money (decoys)",
+      "when": [
+        {
+          "any": [
+            "gold",
+            "dollar",
+            "dollars",
+            "bill",
+            "bills",
+            "money",
+            "cash",
+            "currency"
+          ]
+        }
+      ]
+    },
+    {
+      "points": 50,
+      "label": "Chocolate or candy, no money word",
+      "when": [
+        {
+          "any": [
+            "chocolate",
+            "choc",
+            "candy",
+            "candies",
+            "sweet",
+            "sweets"
+          ]
+        }
+      ]
+    }
+  ],
+  "messages": {
+    "opening": "You are all trying to solve the same question: What's in the box?",
+    "colorCheck": "This game can be played without the need to discriminate between colors. Would you like to opt out of the color discrimination tasks?",
+    "track_animal": "You have been assigned the role of ***Zoologist***. Your field guide will help you decode some of the puzzles into animals.",
+    "track_color": "You have been assigned the role of ***Color Scientist***. Your field guide will help you decode some of the puzzles into colors.",
+    "track_frame": "You have been assigned the role of ***Geometer***. Your field guide will help you decode some of the puzzles into shapes.",
+    "firstPrompt_animal": "Begin by scanning your favorite of the animals in the room.",
+    "firstPrompt_color": "Begin by scanning your favorite of the colors in the room.",
+    "firstPrompt_frame": "Begin by scanning your favorite of the shapes in the room.",
+    "correct": "Yes, that seems right.",
+    "wrongInTrack": "Your trail goes cold. Go back to the {place} and scan it to try again or start a new trail.",
+    "localOptimum": "**You found a clue!** It's saved in your notebook for future reference.\n\n\"{clue}\"\n\nStart a new trail to learn more clues or submit your final answer if you think you know what's inside the box.",
+    "hop": "**{term}**",
+    "wrongHop": "The trail goes cold. You'll need to start a new one.",
+    "found": "You found the solution! It's a **chocolate coin**.",
+    "submitButton": "Submit final answer.",
+    "submitEntry": "What's in the box? You get one answer.",
+    "submitConfirm": "Submit \"{answer}\"? Submitting ends your search: you won't be able to scan any more. You can still talk with anyone and use your field guide to help them.",
+    "afterSubmit": "Your answer is locked in. You can't scan any more, but you can still help: talk to anyone, and your field guide and notebook stay open.",
+    "projectorCount": "Run {r}: {k} of {n} have submitted.",
+    "revealProjector": "Run {r} scores",
+    "revealPhone": "You answered \"{answer}\": {score} points.",
+    "newRun": "Run {r} is starting. You're still a{an} {track}, and your notebook still has the clues you found.",
+    "guideButton": "Field Guide",
+    "notebookButton": "Notebook",
+    "notStarted": "The game is about to begin. Please wait.",
+    "runOver": "This run is over. Wait for the next one to start.",
+    "alreadyFound": "You've found what's in the box. Submit your answer whenever you're ready.",
+    "afterSubmitScan": "Your answer is locked in for this run, so scanning is off. You can still help others.",
+    "coldRepeat": "Your trail is still cold.",
+    "newTrail": "To begin working on a new trail, scan any animal, color, or shape.",
+    "abandonButton": "Start a new trail.",
+    "abandoned": "You left that trail. Scan another code to start a new one.",
+    "noSubmission": "You didn't submit an answer this run.",
+    "notScored": "You answered \"{answer}\". The administrator will score it.",
+    "submitClosed": "Answers can only be submitted while a run is in progress.",
+    "localOptimumRepeat": "Your trail ends here, at a clue you already have: \"{clue}\"",
+    "projectorWaiting": "Scan to join. The game will start soon.",
+    "scanButton": "Scan",
+    "scanHelp": "Point your camera at a QR code.",
+    "scanCancel": "Cancel",
+    "scanNoCamera": "Your camera isn't available here. You can also scan with your phone's camera app.",
+    "scanUnknown": "That code isn't part of this game.",
+    "place": "{color} {animal} in the {frame}",
+    "finalHeading": "What's in the box?",
+    "finalHint": "When you think you know what's in the box, submit your final answer. After that, you can't scan any more.",
+    "pathButton": "My path",
+    "pathEmpty": "You haven't scanned anything yet.",
+    "pathRun": "Run {r}",
+    "pathAsked": "Puzzle: {asked}",
+    "pathStart": "Started a trail",
+    "pathFits": "That fits",
+    "pathCold": "Trail went cold",
+    "pathStillCold": "Still cold",
+    "pathResume": "Back on the trail",
+    "pathClue": "Found a clue!",
+    "pathFound": "Found what's in the box!",
+    "pathAbandon": "Left the trail",
+    "notebookEmpty": "No clues to show yet.",
+    "newGame": "A new game is starting. {intro}",
+    "namePrompt": "What name would you like to play under?",
+    "nameContinue": "Continue",
+    "puzzleLabel": "Puzzle {n}",
+    "hintButton": "Hint?",
+    "hintConfirm": "You have {left} out of {total} hints left. Are you sure you want a hint for this puzzle?",
+    "hintYes": "Yes, show me",
+    "hintNo": "Cancel",
+    "hintLabel": "Hint:",
+    "hintCrossTrack": "Hmm... this puzzle seems strange. Try asking other players about this one.",
+    "hintNone": "You have no hints left for this game.",
+    "cardButton": "Got it",
+    "notebookNew": "New",
+    "pathHint": "Used a hint"
+  },
+  "messageLabels": {
+    "opening": "Opening question (projector)",
+    "colorCheck": "Color-vision check",
+    "track_animal": "Track: Animal",
+    "track_color": "Track: Color",
+    "track_frame": "Track: Frame",
+    "firstPrompt_animal": "First prompt: Animal",
+    "firstPrompt_color": "First prompt: Color",
+    "firstPrompt_frame": "First prompt: Frame",
+    "correct": "Correct answer",
+    "wrongInTrack": "Wrong answer (in-track)",
+    "localOptimum": "Local optimum",
+    "hop": "Cross-track hop",
+    "wrongHop": "Wrong answer (cross-track)",
+    "found": "Global optimum",
+    "submitButton": "Submit button (always visible)",
+    "submitEntry": "Submit: entry",
+    "submitConfirm": "Submit: confirm",
+    "afterSubmit": "After submitting",
+    "projectorCount": "Projector: running count",
+    "revealProjector": "Reveal (projector)",
+    "revealPhone": "Reveal (phone)",
+    "newRun": "New run (phone)",
+    "instructorScreen": "Instructor screen",
+    "guideButton": "Field guide button",
+    "notebookButton": "Notebook button",
+    "scanButton": "Scan button",
+    "scanHelp": "Scanner: instructions",
+    "scanCancel": "Scanner: cancel button",
+    "scanNoCamera": "Scanner: no camera",
+    "scanUnknown": "Scanner: unknown code",
+    "place": "How a scanned spot is described",
+    "finalHeading": "Final answer: heading",
+    "finalHint": "Final answer: explanation",
+    "pathButton": "Path button",
+    "pathEmpty": "Path: empty",
+    "pathRun": "Path: run heading",
+    "pathAsked": "Path: what the player was looking for",
+    "pathStart": "Path: trail started",
+    "pathFits": "Path: correct",
+    "pathCold": "Path: wrong",
+    "pathStillCold": "Path: wrong while cold",
+    "pathResume": "Path: back on the trail",
+    "pathClue": "Path: clue",
+    "pathFound": "Path: global optimum",
+    "pathAbandon": "Path: left a trail",
+    "notebookEmpty": "Notebook: empty",
+    "newGame": "New game with the same players (phone)",
+    "namePrompt": "Name question",
+    "nameContinue": "Name: continue button",
+    "puzzleLabel": "Label above each puzzle",
+    "hintButton": "Hint button",
+    "hintConfirm": "Hint: confirmation",
+    "hintYes": "Hint: yes button",
+    "hintNo": "Hint: no button",
+    "hintLabel": "Hint: label",
+    "hintCrossTrack": "Hint on a cross-track puzzle",
+    "hintNone": "Hint: none left",
+    "cardButton": "Clue card: close button",
+    "notebookNew": "Notebook: new clue tag",
+    "pathHint": "Path: hint used"
+  },
+  "guidesArchive": {
+    "note": "Entries cut from the field guides on 2026-10-21. Move one back into guides to restore it.",
+    "animal": [
+      {
+        "term": "crash",
+        "value": null,
+        "note": "a group of rhinoceroses"
       },
       {
         "term": "smack",
@@ -1008,11 +1518,6 @@
         "note": "a group of ravens"
       },
       {
-        "term": "parade",
-        "value": null,
-        "note": "a group of elephants"
-      },
-      {
         "term": "shiver",
         "value": null,
         "note": "a group of sharks"
@@ -1035,44 +1540,14 @@
         "note": "crimson made from cochineal insects, which live on cactus"
       },
       {
-        "term": "madder",
-        "value": "red",
-        "note": "red dye from the roots of the madder plant; it colored the British army's red coats"
-      },
-      {
-        "term": "gamboge",
-        "value": "yellow",
-        "note": "golden-yellow gum resin from Southeast Asian Garcinia trees"
-      },
-      {
         "term": "orpiment",
         "value": "yellow",
         "note": "golden-yellow arsenic mineral"
       },
       {
-        "term": "Indian yellow",
-        "value": "yellow",
-        "note": "warm yellow, reportedly made from the urine of cows fed on mango leaves"
-      },
-      {
         "term": "Naples yellow",
         "value": "yellow",
         "note": "lead-based yellow, from pale to deep"
-      },
-      {
-        "term": "viridian",
-        "value": "green",
-        "note": "cool blue-green chromium pigment"
-      },
-      {
-        "term": "verdigris",
-        "value": "green",
-        "note": "green pigment made by exposing copper to vinegar; the name is also used loosely for the green crust that forms on old copper"
-      },
-      {
-        "term": "malachite",
-        "value": "green",
-        "note": "banded green copper mineral"
       },
       {
         "term": "terre verte",
@@ -1085,16 +1560,6 @@
         "note": "arsenic green, blamed for poisonous wallpaper"
       },
       {
-        "term": "smalt",
-        "value": "blue",
-        "note": "ground glass colored blue with cobalt"
-      },
-      {
-        "term": "ultramarine",
-        "value": "blue",
-        "note": "blue extracted from lapis lazuli; the finest grades at times cost more than gold. The name means \"beyond the sea\""
-      },
-      {
         "term": "Prussian blue",
         "value": "blue",
         "note": "deep blue synthetic pigment, first made in Berlin around 1704"
@@ -1103,21 +1568,6 @@
         "term": "Egyptian blue",
         "value": "blue",
         "note": "ancient synthetic blue, made in Egypt by firing minerals in kilns"
-      },
-      {
-        "term": "Tyrian purple",
-        "value": "purple",
-        "note": "dye from sea snails, worn by emperors"
-      },
-      {
-        "term": "orchil",
-        "value": "purple",
-        "note": "purple dye made from lichens"
-      },
-      {
-        "term": "mauveine",
-        "value": "purple",
-        "note": "the first commercially successful synthetic organic dye (1856), made by accident by an 18-year-old chemist"
       },
       {
         "term": "cobalt violet",
@@ -1135,44 +1585,14 @@
         "note": "yellowish-brown earth named for Siena, Italy; reddish-brown when burnt"
       },
       {
-        "term": "sepia",
-        "value": "brown",
-        "note": "brown ink from cuttlefish"
-      },
-      {
-        "term": "bistre",
-        "value": "brown",
-        "note": "brown made from wood soot"
-      },
-      {
-        "term": "caput mortuum",
-        "value": "brown",
-        "note": "dark brown iron oxide with a purplish tinge; the name means 'dead head'"
-      },
-      {
-        "term": "mummy brown",
-        "value": "brown",
-        "note": "brown once made from ground-up mummies"
-      },
-      {
         "term": "cadmium orange",
         "value": null,
         "note": "bright orange pigment made from cadmium"
       },
       {
-        "term": "zinc white",
-        "value": null,
-        "note": "brilliant white made from zinc oxide"
-      },
-      {
         "term": "rose madder",
         "value": null,
         "note": "soft pink made from madder root"
-      },
-      {
-        "term": "lamp black",
-        "value": null,
-        "note": "black made from the soot of oil lamps"
       },
       {
         "term": "lead white",
@@ -1187,39 +1607,9 @@
     ],
     "frame": [
       {
-        "term": "deltoid",
-        "value": "diamond",
-        "note": "a four-sided shape with two pairs of equal neighboring sides, as in a kite or a diamond. Named for the Greek letter delta (Δ), like the deltoid muscle of the shoulder"
-      },
-      {
-        "term": "rhombus",
-        "value": "diamond",
-        "note": "a four-sided shape with all four sides equal: a diamond. Every square is one"
-      },
-      {
-        "term": "kite",
-        "value": "diamond",
-        "note": "the flying toy, and the four-sided shape named after it. The classic one is a diamond"
-      },
-      {
-        "term": "lune",
-        "value": "crescent",
-        "note": "a crescent cut between two circular arcs. From luna, Latin for moon"
-      },
-      {
-        "term": "lunule",
-        "value": "crescent",
-        "note": "a small crescent, like the pale half-moon at the base of a fingernail"
-      },
-      {
         "term": "meniscus",
         "value": "crescent",
         "note": "a crescent shape, like the cross-section of a lens curved outward on one side and inward on the other; also the curved surface of water in a narrow tube"
-      },
-      {
-        "term": "annulus",
-        "value": "ring",
-        "note": "a ring: the band between two circles with the same center, like a life ring, a planet's ring or a band of an archery target"
       },
       {
         "term": "annulet",
@@ -1232,39 +1622,14 @@
         "note": "a three-dimensional ring, like an inner tube; seen from above, it looks like a flat ring"
       },
       {
-        "term": "vesica",
-        "value": "almond",
-        "note": "the almond shape where two equal circles overlap, each passing through the other's center. In full, vesica piscis: \"fish bladder.\""
-      },
-      {
-        "term": "mandorla",
-        "value": "almond",
-        "note": "Italian for \"almond\": the almond-shaped halo around a holy figure in medieval art"
-      },
-      {
         "term": "navette",
         "value": "almond",
         "note": "French for \"little boat\": a gem cut pointed at both ends"
       },
       {
-        "term": "Reuleaux triangle",
-        "value": "curved triangle",
-        "note": "a curved triangle as wide in every direction as a circle, so it keeps the same height as it rolls. Found in some guitar picks and in drills that cut nearly square holes"
-      },
-      {
         "term": "orbiform",
         "value": "curved triangle",
         "note": "any curve of constant width; apart from the circle, the curved triangle is the most famous"
-      },
-      {
-        "term": "Wankel rotor",
-        "value": "curved triangle",
-        "note": "the roughly triangular rotor with curved sides that spins inside a Wankel rotary engine, now rarely used in cars"
-      },
-      {
-        "term": "superellipse",
-        "value": "squircle",
-        "note": "a family of curves between the ellipse and the rectangle; the best known is the rounded square, halfway between a square and a circle. Piet Hein used one to design Stockholm's Sergels Torg"
       },
       {
         "term": "Lamé curve",
@@ -1285,11 +1650,6 @@
         "term": "hexagram",
         "value": null,
         "note": "a six-pointed star of two overlapping triangles"
-      },
-      {
-        "term": "lemniscate",
-        "value": null,
-        "note": "a figure-eight curve, like the infinity sign"
       },
       {
         "term": "astroid",
@@ -1342,11 +1702,6 @@
         "note": "in British usage, a four-sided shape with one pair of parallel sides; in American usage, one with no parallel sides"
       },
       {
-        "term": "pentagram",
-        "value": null,
-        "note": "a five-pointed star"
-      },
-      {
         "term": "octagram",
         "value": null,
         "note": "an eight-pointed star"
@@ -1357,216 +1712,5 @@
         "note": "a pie slice of a circle"
       }
     ]
-  },
-  "scoring": [
-    {
-      "points": 100,
-      "label": "Chocolate coin",
-      "when": [
-        {
-          "any": [
-            "gelt"
-          ]
-        },
-        {
-          "any": [
-            "chocolate",
-            "choc"
-          ],
-          "andAny": [
-            "coin",
-            "coins",
-            "money",
-            "gelt",
-            "penny",
-            "pennies",
-            "gold",
-            "dollar",
-            "dollars",
-            "cash",
-            "doubloon",
-            "doubloons",
-            "bill",
-            "bills",
-            "currency"
-          ]
-        }
-      ]
-    },
-    {
-      "points": 70,
-      "label": "Penny (decoy)",
-      "when": [
-        {
-          "any": [
-            "penny",
-            "pennies"
-          ]
-        }
-      ]
-    },
-    {
-      "points": 90,
-      "label": "Coin",
-      "when": [
-        {
-          "any": [
-            "coin",
-            "coins",
-            "doubloon",
-            "doubloons",
-            "token",
-            "tokens",
-            "quarter",
-            "dime",
-            "nickel"
-          ]
-        }
-      ]
-    },
-    {
-      "points": 70,
-      "label": "Gold, dollar or money (decoys)",
-      "when": [
-        {
-          "any": [
-            "gold",
-            "dollar",
-            "dollars",
-            "bill",
-            "bills",
-            "money",
-            "cash",
-            "currency"
-          ]
-        }
-      ]
-    },
-    {
-      "points": 50,
-      "label": "Chocolate or candy, no money word",
-      "when": [
-        {
-          "any": [
-            "chocolate",
-            "choc",
-            "candy",
-            "candies",
-            "sweet",
-            "sweets"
-          ]
-        }
-      ]
-    }
-  ],
-  "messages": {
-    "opening": "You are all trying to solve the same question: What's in the box?",
-    "colorCheck": "This game can be played without the need to discriminate between colors. Would you like to opt out of the color discrimination tasks?",
-    "track_animal": "You have been assigned the role of *Zoologist*. Your field guide will help you decode clues into animals.",
-    "track_color": "You have been assigned the role of *Color Scientist*. Your field guide will help you decode clues into colors.",
-    "track_frame": "You have been assigned the role of *Geometer*. Your field guide will help you decode clues into shapes.",
-    "firstPrompt_animal": "Begin by scanning your favorite of the animals in the room.",
-    "firstPrompt_color": "Begin by scanning your favorite of the colors in the room.",
-    "firstPrompt_frame": "Begin by scanning your favorite of the shapes in the room.",
-    "correct": "Yes, that seems right.",
-    "wrongInTrack": "Your trail goes cold. Go back to the {place} and scan it to try again.",
-    "localOptimum": "Your trail ends here. You found a clue: \"{clue}\" It's saved in your notebook.",
-    "hop": "Next: {term}",
-    "wrongHop": "Your trail goes cold.",
-    "found": "You found the solution! It's a chocolate coin.",
-    "submitButton": "Submit final answer.",
-    "submitEntry": "What's in the box? You get one answer.",
-    "submitConfirm": "Submit \"{answer}\"? Submitting ends your search: you won't be able to scan any more. You can still talk with anyone and use your field guide to help them.",
-    "afterSubmit": "Your answer is locked in. You can't scan any more, but you can still help: talk to anyone, and your field guide and notebook stay open.",
-    "projectorCount": "Run {r}: {k} of {n} have submitted.",
-    "revealProjector": "Run {r} scores",
-    "revealPhone": "You answered \"{answer}\": {score} points.",
-    "newRun": "Run {r} is starting. You're still a{an} {track}, and your notebook still has the clues you found.",
-    "guideButton": "Field Guide",
-    "notebookButton": "Notebook",
-    "notStarted": "The game is about to begin. Please wait.",
-    "runOver": "This run is over. Wait for the next one to start.",
-    "alreadyFound": "You've found what's in the box. Submit your answer whenever you're ready.",
-    "afterSubmitScan": "Your answer is locked in for this run, so scanning is off. You can still help others.",
-    "coldRepeat": "Your trail is still cold.",
-    "newTrail": "To begin working on a new clue, scan any animal, color, or shape.",
-    "abandonButton": "Start a new trail.",
-    "abandoned": "You left that trail. Scan another code to start a new one.",
-    "noSubmission": "You didn't submit an answer this run.",
-    "notScored": "You answered \"{answer}\". The administrator will score it.",
-    "submitClosed": "Answers can only be submitted while a run is in progress.",
-    "localOptimumRepeat": "Your trail ends here, at a clue you already have: \"{clue}\"",
-    "projectorWaiting": "Scan to join. The game will start soon.",
-    "scanButton": "Scan",
-    "scanHelp": "Point your camera at a QR code.",
-    "scanCancel": "Cancel",
-    "scanNoCamera": "Your camera isn't available here. You can also scan with your phone's camera app.",
-    "scanUnknown": "That code isn't part of this game.",
-    "place": "{color} {animal} in the {frame}",
-    "finalHeading": "What's in the box?",
-    "finalHint": "When you think you know what's in the box, submit your final answer. After that, you can't scan any more.",
-    "pathButton": "My path",
-    "pathEmpty": "You haven't scanned anything yet.",
-    "pathRun": "Run {r}",
-    "pathAsked": "Looking for: {asked}",
-    "pathStart": "Started a trail",
-    "pathFits": "That fits",
-    "pathCold": "Trail went cold",
-    "pathStillCold": "Still cold",
-    "pathResume": "Back on the trail",
-    "pathClue": "Found a clue",
-    "pathFound": "Found what's in the box",
-    "pathAbandon": "Left the trail",
-    "notebookEmpty": "No clues to show yet.",
-    "newGame": "A new game is starting. {intro}"
-  },
-  "messageLabels": {
-    "opening": "Opening question (projector)",
-    "colorCheck": "Color-vision check",
-    "track_animal": "Track: Animal",
-    "track_color": "Track: Color",
-    "track_frame": "Track: Frame",
-    "firstPrompt_animal": "First prompt: Animal",
-    "firstPrompt_color": "First prompt: Color",
-    "firstPrompt_frame": "First prompt: Frame",
-    "correct": "Correct answer",
-    "wrongInTrack": "Wrong answer (in-track)",
-    "localOptimum": "Local optimum",
-    "hop": "Cross-track hop",
-    "wrongHop": "Wrong answer (cross-track)",
-    "found": "Global optimum",
-    "submitButton": "Submit button (always visible)",
-    "submitEntry": "Submit: entry",
-    "submitConfirm": "Submit: confirm",
-    "afterSubmit": "After submitting",
-    "projectorCount": "Projector: running count",
-    "revealProjector": "Reveal (projector)",
-    "revealPhone": "Reveal (phone)",
-    "newRun": "New run (phone)",
-    "instructorScreen": "Instructor screen",
-    "guideButton": "Field guide button",
-    "notebookButton": "Notebook button",
-    "scanButton": "Scan button",
-    "scanHelp": "Scanner: instructions",
-    "scanCancel": "Scanner: cancel button",
-    "scanNoCamera": "Scanner: no camera",
-    "scanUnknown": "Scanner: unknown code",
-    "place": "How a scanned spot is described",
-    "finalHeading": "Final answer: heading",
-    "finalHint": "Final answer: explanation",
-    "pathButton": "Path button",
-    "pathEmpty": "Path: empty",
-    "pathRun": "Path: run heading",
-    "pathAsked": "Path: what the player was looking for",
-    "pathStart": "Path: trail started",
-    "pathFits": "Path: correct",
-    "pathCold": "Path: wrong",
-    "pathStillCold": "Path: wrong while cold",
-    "pathResume": "Path: back on the trail",
-    "pathClue": "Path: clue",
-    "pathFound": "Path: global optimum",
-    "pathAbandon": "Path: left a trail",
-    "notebookEmpty": "Notebook: empty",
-    "newGame": "New game with the same players (phone)"
   }
 }
