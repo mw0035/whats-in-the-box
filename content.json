@@ -1326,7 +1326,8 @@
     "hintNone": "You have no hints left for this game.",
     "cardButton": "Got it",
     "notebookNew": "New",
-    "pathHint": "Used a hint"
+    "pathHint": "Used a hint",
+    "foundRecord": "**Found it!** It's a **chocolate coin**."
   },
   "messageLabels": {
     "opening": "Opening question (projector)",
@@ -1388,7 +1389,8 @@
     "hintNone": "Hint: none left",
     "cardButton": "Clue card: close button",
     "notebookNew": "Notebook: new clue tag",
-    "pathHint": "Path: hint used"
+    "pathHint": "Path: hint used",
+    "foundRecord": "Record of the answer (notebook and path)"
   },
   "guidesArchive": {
     "note": "Entries cut from the field guides on 2026-10-21. Move one back into guides to restore it.",

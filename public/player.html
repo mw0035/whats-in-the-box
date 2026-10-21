@@ -148,9 +148,9 @@ function renderNotebook(v) {
   const fresh = v.notebook.length - seen;
   $("notebookBtn").textContent = labels.notebookButton + (v.notebook.length ? ` (${v.notebook.length})` : "");
   $("notebookBtn").classList.toggle("has-new", fresh > 0);
-  $("notebookList").innerHTML = v.notebook.map((t, i) =>
+  $("notebookList").innerHTML = (v.foundNote ? `<li class="found-note">${fmt(v.foundNote)}</li>` : "") + v.notebook.map((t, i) =>
     `<li>${esc(t)}${i >= seen ? ` <span class="tag">${esc(labels.notebookNew)}</span>` : ""}</li>`).join("");
-  $("notebookEmpty").textContent = labels.notebookEmpty; show("notebookEmpty", v.notebook.length === 0);
+  $("notebookEmpty").textContent = labels.notebookEmpty; show("notebookEmpty", v.notebook.length === 0 && !v.foundNote);
 }
 
 function render(v) {
@@ -220,7 +220,7 @@ function renderPath(path) {
   $("pathList").innerHTML = runs.map((r) => {
     const items = path.filter((x) => x.run === r).map((x, k) => {
       const showAsked = x.asked && !["start", "stillCold", "resume"].includes(x.o);
-      return `<li value="${k + 1}"><b>${esc(x.place)}</b>${x.place ? " · " : ""}${esc(x.what)}` +
+      return `<li value="${k + 1}"><b>${esc(x.place)}</b>${x.place ? " · " : ""}${fmt(x.what)}` +
         (showAsked ? `<br><span class="muted">${fmt(labels.pathAsked.replace("{asked}", x.asked))}</span>` : "") + "</li>";
     }).reverse().join("");
     return (runs.length > 1 ? `<h3>${esc(labels.pathRun.replace("{r}", r))}</h3>` : "") + `<ol reversed class="path">${items}</ol>`;

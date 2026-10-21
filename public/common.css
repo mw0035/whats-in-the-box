@@ -37,3 +37,4 @@ h3 { font-size: 1em; margin: 1em 0 0.4em; }
 .card-inner .lead-bold > strong:first-child { display: block; margin-bottom: 8px; font-size: 1.5em; }
 .card-inner button { margin-top: 18px; white-space: normal; }
 @keyframes card-pop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.found-note { list-style: none; margin: 0 0 10px -1.2em; padding: 8px 10px; border-radius: 6px; background: #e5f4e4; }
