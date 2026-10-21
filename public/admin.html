@@ -47,8 +47,11 @@
     <p><button id="downloadBtn">Download debrief data</button> <span id="logInfo" class="muted"></span></p>
     <p class="muted">Every scan, answer and clue is logged. This page also keeps its own copy, so the download includes everything even if the server restarted.</p>
 
-    <h2>New class</h2>
-    <p><button id="resetBtn">Reset the whole game</button> <span class="muted">Removes every player and score. Download the debrief data first.</span></p>
+    <h2>Between games</h2>
+    <p class="muted">Each option clears every notebook, path and answer and starts again at run 1, waiting for you to press Start run. The debrief data keeps everything until you reset everything.</p>
+    <p><button id="newRolesBtn">New game, new roles</button> <span class="muted">Same players. Everyone gets a new role where possible; anyone who opted out of color tasks still gets no Color role.</span></p>
+    <p><button id="sameRolesBtn">New game, same roles</button> <span class="muted">Same players, same roles.</span></p>
+    <p><button id="resetBtn">Reset everything</button> <span class="muted">For a new class. Every phone goes back to the join screen and the color question. Download the debrief data first.</span></p>
   </section>
 </main>
 <script>
@@ -90,20 +93,22 @@ async function tick() {
   // After a server restart, the server may have lost the run number and status. Put them back.
   const last = get(LS.game, null);
   const recent = last && Date.now() - (last.at || 0) < 3 * 3600 * 1000;
-  if (recent && last.bootId !== v.bootId && (v.run < last.run || (v.run === last.run && v.status !== last.status && v.status === "waiting"))) {
-    await api("/api/admin/restore", { run: last.run, status: last.status });
+  const behind = (last && ((last.epoch || 0) > v.epoch || ((last.epoch || 0) === v.epoch && (last.game || 1) > v.game))) ||
+    (last && v.run < last.run) || (last && v.run === last.run && v.status !== last.status && v.status === "waiting");
+  if (recent && last.bootId !== v.bootId && behind) {
+    await api("/api/admin/restore", { run: last.run, status: last.status, epoch: last.epoch, game: last.game });
     $("restored").textContent = `The server restarted. Restored run ${last.run} (${last.status}). Players' phones restore themselves when they next check in.`;
     show("restored", true);
     return tick();
   }
-  put(LS.game, { bootId: v.bootId, run: v.run, status: v.status, at: Date.now() });
+  put(LS.game, { bootId: v.bootId, epoch: v.epoch, game: v.game, run: v.run, status: v.status, at: Date.now() });
 
   show("contentErrors", v.contentErrors.length > 0);
   $("errList").innerHTML = v.contentErrors.map((e) => `<li>${esc(e)}</li>`).join("");
   const words = { waiting: "Waiting to start", playing: "In progress", revealed: "Scores revealed" };
-  $("statusLine").textContent = `Run ${v.run}: ${words[v.status]}`;
+  $("statusLine").textContent = `Game ${v.game} · Run ${v.run}: ${words[v.status]}`;
   $("countLine").textContent = `${v.submitted} of ${v.players} have submitted` + (v.unscored ? ` · ${v.unscored} answer(s) need your score` : "");
-  $("trackLine").textContent = `Animal ${v.byTrack.animal} · Color ${v.byTrack.color} · Frame ${v.byTrack.frame}`;
+  $("trackLine").textContent = `Zoologists ${v.byTrack.animal} · Color Scientists ${v.byTrack.color} · Geometers ${v.byTrack.frame}`;
   show("startBtn", v.status === "waiting"); show("revealBtn", v.status === "playing"); show("nextBtn", v.status === "revealed");
   $("nextBtn").textContent = `Start run ${v.run + 1}`;
   $("joinUrl").textContent = v.joinUrl;
@@ -136,8 +141,16 @@ $("go").onclick = async () => {
 $("startBtn").onclick = async () => { await api("/api/admin/start", {}); tick(); };
 $("revealBtn").onclick = async () => { if (confirm("Reveal scores now, before everyone has submitted?")) { await api("/api/admin/reveal", {}); tick(); } };
 $("nextBtn").onclick = async () => { await api("/api/admin/next-run", {}); tick(); };
+$("newRolesBtn").onclick = async () => {
+  if (!confirm("Start a new game with the same players and new roles? Notebooks, paths and answers are cleared.")) return;
+  await api("/api/admin/new-game", { newRoles: true }); tick();
+};
+$("sameRolesBtn").onclick = async () => {
+  if (!confirm("Start a new game with the same players and the same roles? Notebooks, paths and answers are cleared.")) return;
+  await api("/api/admin/new-game", { newRoles: false }); tick();
+};
 $("resetBtn").onclick = async () => {
-  if (prompt('This removes every player and score. Type RESET to confirm.') !== "RESET") return;
+  if (prompt('This removes every player and score, and every phone goes back to the join screen. Type RESET to confirm.') !== "RESET") return;
   await api("/api/admin/reset", { confirm: "RESET" }); put(LS.game, null); put(LS.log, { boots: {} }); tick();
 };
 $("downloadBtn").onclick = async () => {

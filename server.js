@@ -143,7 +143,9 @@ app.post("/api/admin/start", admin, (req, res) => res.json({ ok: game.startRun()
 app.post("/api/admin/reveal", admin, (req, res) => { game.reveal("instructor"); res.json({ ok: true }); });
 app.post("/api/admin/next-run", admin, (req, res) => res.json({ ok: game.nextRun() }));
 app.post("/api/admin/score", admin, (req, res) => res.json({ ok: game.setScore(Number(req.body.num), req.body.points) }));
-app.post("/api/admin/restore", admin, (req, res) => res.json({ ok: game.restoreGame(Number(req.body.run), req.body.status) }));
+app.post("/api/admin/restore", admin, (req, res) => res.json({ ok: game.restoreGame(Number(req.body.run), req.body.status,
+  req.body.epoch == null ? undefined : Number(req.body.epoch), req.body.game == null ? undefined : Number(req.body.game)) }));
+app.post("/api/admin/new-game", admin, (req, res) => res.json({ ok: game.newGame(!!(req.body && req.body.newRoles)) }));
 app.post("/api/admin/reset", admin, (req, res) => {
   if (!req.body || req.body.confirm !== "RESET") return res.status(400).json({ error: "confirmation missing" });
   game.reset(); game.event(null, "reset"); res.json({ ok: true });

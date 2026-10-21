@@ -1517,7 +1517,8 @@
     "pathClue": "Found a clue",
     "pathFound": "Found what's in the box",
     "pathAbandon": "Left the trail",
-    "notebookEmpty": "No clues to show yet."
+    "notebookEmpty": "No clues to show yet.",
+    "newGame": "A new game is starting. {intro}"
   },
   "messageLabels": {
     "opening": "Opening question (projector)",
@@ -1565,6 +1566,7 @@
     "pathClue": "Path: clue",
     "pathFound": "Path: global optimum",
     "pathAbandon": "Path: left a trail",
-    "notebookEmpty": "Notebook: empty"
+    "notebookEmpty": "Notebook: empty",
+    "newGame": "New game with the same players (phone)"
   }
 }
