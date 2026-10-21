@@ -54,7 +54,7 @@ lines = [
     ("", None),
     ("Cross-track routes (the only way to the answer)", "h"),
     ("Each route has two hops, each using a term from a different other track's field guide. Routes are designed so that complementary expertise makes success much more likely; a player can still finish one alone by knowing the term, looking it up elsewhere, or guessing.", None),
-    ("One shot per hop: a wrong scan loses the route. The player is sent back to the last good sheet, and rescanning it gives an ordinary in-track fallback question that leads to a local optimum.", None),
+    ("One shot per hop: a wrong scan loses the route and ends the trail ('Your trail goes cold.'). The player starts a new trail from any sheet.", None),
     ("A player can retry a lost route only by starting the whole trail over from its first scan. (Setting in content.json: retryLostRoutes. Set it to false and a lost route stays lost for the rest of the run.)", None),
     ("No timer on hop prompts: the cost falls on guessing, not on taking time to find help.", None),
     ("The final hop reveals: 'You found it. It's a chocolate coin.' Scanning that sheet in any other situation shows ordinary content.", None),
@@ -118,14 +118,11 @@ rows, tints = [], []
 for r in ROUTES:
     for k, h in enumerate(r["hops"], 1):
         cat, val = h["accept"]
-        fq, fa, fc = h["fallback"]
         rows.append([r["id"], TRACK_LABEL[r["receiver"]], r["family"], k, f"Next: {h['term']}", TRACK_LABEL[h["owner"]],
-                     f"{val}  ({sheets_with(cat, val)})", fq, f"{fa}  ({sheets_with(r['receiver'], fa)})",
-                     f"{CLUES[fc]['text']}  [{fc}]", ANSWER if k == 2 else "Next hop"])
+                     f"{val}  ({sheets_with(cat, val)})", ANSWER if k == 2 else "Next hop"])
         tints.append(r["receiver"])
-table(ws, ["Route", "Player's track", "From trail", "Hop", "Shown on phone", "Decoded with", "Correct scan (sheets)",
-           "If wrong: fallback question", "Fallback answer (sheets)", "Fallback clue", "If right"],
-      rows, [7, 10, 8, 5, 16, 11, 24, 34, 22, 30, 22], tints)
+table(ws, ["Route", "Player's track", "From trail", "Hop", "Shown on phone", "Decoded with", "Correct scan (sheets)", "If right"],
+      rows, [7, 10, 8, 5, 16, 11, 24, 22], tints)
 
 # ---------------- Clues
 ws = wb.create_sheet("Clues")

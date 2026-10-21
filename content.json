@@ -6,13 +6,13 @@
   },
   "tracks": {
     "animal": {
-      "label": "Animal"
+      "label": "Zoologist"
     },
     "color": {
-      "label": "Color"
+      "label": "Color Scientist"
     },
     "frame": {
-      "label": "Frame"
+      "label": "Geometer"
     }
   },
   "colors": [
@@ -24,7 +24,7 @@
     "brown"
   ],
   "frames": [
-    "kite",
+    "diamond",
     "crescent",
     "ring",
     "almond",
@@ -51,7 +51,7 @@
       "code": "0lpqdna",
       "animal": "owl",
       "color": "red",
-      "frame": "kite"
+      "frame": "diamond"
     },
     {
       "id": 2,
@@ -114,7 +114,7 @@
       "code": "pn8yk1g",
       "animal": "cat",
       "color": "blue",
-      "frame": "kite"
+      "frame": "diamond"
     },
     {
       "id": 11,
@@ -146,12 +146,12 @@
   "clues": {
     "A-money": {
       "track": "animal",
-      "text": "It's connected to money.",
+      "text": "It flips.",
       "suggests": "money in general",
       "fits": {
         "penny": 1,
-        "gold": 1,
-        "dollar bill": 1,
+        "gold": 0,
+        "dollar bill": 0,
         "coin": 1,
         "chocolate coin": 1
       }
@@ -170,7 +170,7 @@
     },
     "A-cheap": {
       "track": "animal",
-      "text": "It's worth very little.",
+      "text": "It's not worth very much.",
       "suggests": "a penny",
       "fits": {
         "penny": 1,
@@ -182,7 +182,7 @@
     },
     "A-face": {
       "track": "animal",
-      "text": "It has a face stamped on it.",
+      "text": "It has a face on it.",
       "suggests": "a coin or penny",
       "fits": {
         "penny": 1,
@@ -194,10 +194,10 @@
     },
     "C-gold": {
       "track": "color",
-      "text": "It's gold-colored.",
+      "text": "It's metallic.",
       "suggests": "gold",
       "fits": {
-        "penny": 0,
+        "penny": 1,
         "gold": 1,
         "dollar bill": 0,
         "coin": 1,
@@ -278,13 +278,13 @@
     },
     "F-card": {
       "track": "frame",
-      "text": "It's often tucked inside a birthday card.",
+      "text": "You might give it as a gift.",
       "suggests": "a dollar bill",
       "fits": {
-        "penny": 1,
-        "gold": 0,
+        "penny": 0,
+        "gold": 1,
         "dollar bill": 1,
-        "coin": 1,
+        "coin": 0,
         "chocolate coin": 1
       }
     }
@@ -299,11 +299,11 @@
       ],
       "steps": [
         {
-          "question": "Find what a tower is made of.",
+          "question": "I might hold a bell, wear a clock, or keep watch over a castle. What am I?",
           "answer": "giraffe"
         },
         {
-          "question": "Find what a dazzle is made of. No two have the same stripes.",
+          "question": "Darkness settles over town.\nA hush falls on the crowd.\nZipping sparks race skyward,\nZigzagging through a cloud.\nLight spills across the heavens;\nEyes widen at the show.",
           "answer": "zebra"
         }
       ],
@@ -321,11 +321,11 @@
       ],
       "steps": [
         {
-          "question": "Find what lives in a cete and sleeps in a sett.",
+          "question": "Curious explorers tread eastward.",
           "answer": "badger"
         },
         {
-          "question": "Find what a mob is made of. It can box.",
+          "question": "A crowd with a temper.",
           "answer": "kangaroo"
         }
       ],
@@ -343,11 +343,11 @@
       ],
       "steps": [
         {
-          "question": "Find what a flamboyance is made of. They rest on one leg.",
+          "question": "Style with the volume turned all the way up.",
           "answer": "flamingo"
         },
         {
-          "question": "Find what a skulk is made of.",
+          "question": "Hug the shadows, dodge the light;\nCreep through the corners, out of sight.",
           "answer": "fox"
         }
       ],
@@ -365,11 +365,11 @@
       ],
       "steps": [
         {
-          "question": "Find what a parliament is made of.",
+          "question": "The members of this house love to argue.",
           "answer": "owl"
         },
         {
-          "question": "Find what a clowder is made of.",
+          "question": "I hum when content, though I never sing. What am I?",
           "answer": "cat"
         }
       ],
@@ -387,11 +387,11 @@
       ],
       "steps": [
         {
-          "question": "Find what a prickle is made of. Don't hug it.",
+          "question": "You reach for a rose and suddenly change your mind. What am I?",
           "answer": "porcupine"
         },
         {
-          "question": "Find what a pride is made of.",
+          "question": "Two friends sit in silence after a quarrel.\nNeither is hungry, yet something must be swallowed\nBefore either can say, “I’m sorry.”",
           "answer": "lion"
         }
       ],
@@ -409,11 +409,11 @@
       ],
       "steps": [
         {
-          "question": "Find the only big cat that lives in groups.",
+          "question": "My crown grows around my face.\nMy throne is a patch of sun. What am I?",
           "answer": "lion"
         },
         {
-          "question": "Find the animal whose stripes are as unique as fingerprints.",
+          "question": "I wear a piano’s colors,\nBut I’ve never played a tune.\nListen as I cross the grass...\nMy music is the beat of hooves.\nWhat am I?",
           "answer": "zebra"
         }
       ],
@@ -430,12 +430,12 @@
       ],
       "steps": [
         {
-          "question": "Find cinnabar.",
+          "question": "What angry stuff is made of.",
           "answer": "red"
         },
         {
-          "question": "Go back to the color you started on.",
-          "answer": "START"
+          "question": "Semper fi and beyond.",
+          "answer": "blue"
         }
       ],
       "outcome": {
@@ -451,11 +451,11 @@
       ],
       "steps": [
         {
-          "question": "Find what ultramarine and vermilion make when mixed.",
+          "question": "To attain this royal color, you’ll have to crush a few snails.",
           "answer": "purple"
         },
         {
-          "question": "Find umber.",
+          "question": "I can give a brand-new photograph a past it never had.",
           "answer": "brown"
         }
       ],
@@ -472,11 +472,11 @@
       ],
       "steps": [
         {
-          "question": "Find orpiment.",
+          "question": "If you want this color, pack some mangoes on your way to the barn.",
           "answer": "yellow"
         },
         {
-          "question": "Find what orpiment and ultramarine make when mixed.",
+          "question": "There is no one to paint the copper door, yet every year its new coat spreads a little farther.",
           "answer": "green"
         }
       ],
@@ -493,11 +493,11 @@
       ],
       "steps": [
         {
-          "question": "Find Prussian blue.",
+          "question": "Whose clues?",
           "answer": "blue"
         },
         {
-          "question": "Find what Prussian blue and Naples yellow make when mixed.",
+          "question": "Vain investors rarely imagine disasters in advance. Naturally.",
           "answer": "green"
         }
       ],
@@ -514,12 +514,12 @@
       ],
       "steps": [
         {
-          "question": "Find viridian.",
+          "question": "Copper runs in my family.",
           "answer": "green"
         },
         {
-          "question": "Go back to the color you started on.",
-          "answer": "START"
+          "question": "My creation was a mistake.",
+          "answer": "purple"
         }
       ],
       "outcome": {
@@ -535,11 +535,11 @@
       ],
       "steps": [
         {
-          "question": "Find Tyrian purple.",
+          "question": "As the leaders say: “Old ruins conceal history in layers.”",
           "answer": "purple"
         },
         {
-          "question": "Mix viridian with carmine. Find the mud you get.",
+          "question": "I spent centuries waiting for my afterlife. I didn’t expect to spend it on canvas.",
           "answer": "brown"
         }
       ],
@@ -556,12 +556,12 @@
       ],
       "steps": [
         {
-          "question": "Find the lune.",
+          "question": "Lanterns flicker on the pier.\nUnder the stars, the tide rolls in.\nNight birds call across the water.\nEverything waits for morning.",
           "answer": "crescent"
         },
         {
-          "question": "Find the deltoid.",
-          "answer": "kite"
+          "question": "Dell toyed with the idea of going to the gym all day but forgot in the end.",
+          "answer": "diamond"
         }
       ],
       "outcome": {
@@ -573,16 +573,16 @@
       "id": "F2",
       "track": "frame",
       "starts": [
-        "kite"
+        "diamond"
       ],
       "steps": [
         {
-          "question": "Find the annulus.",
+          "question": "My first half cancels a contract. My second half includes you and me.",
           "answer": "ring"
         },
         {
-          "question": "Go back to the shape you started on.",
-          "answer": "START"
+          "question": "Everyone on the bus! That means you too, Rhom...",
+          "answer": "diamond"
         }
       ],
       "outcome": {
@@ -598,11 +598,11 @@
       ],
       "steps": [
         {
-          "question": "Find the triangle that is as wide in every direction as a circle.",
+          "question": "It might surprise vous, but I cut a pretty clean square.",
           "answer": "curved triangle"
         },
         {
-          "question": "Find the annulus.",
+          "question": "Boxers fight inside me, even though I'm square. What am I?",
           "answer": "ring"
         }
       ],
@@ -619,11 +619,11 @@
       ],
       "steps": [
         {
-          "question": "Find the lune.",
+          "question": "An astronomer went for a manicure and found something familiar without looking up.",
           "answer": "crescent"
         },
         {
-          "question": "Find the vesica.",
+          "question": "Seems fishy to me.",
           "answer": "almond"
         }
       ],
@@ -640,12 +640,12 @@
       ],
       "steps": [
         {
-          "question": "Find the superellipse.",
+          "question": "An oval put on a cape and learned to fly.",
           "answer": "squircle"
         },
         {
-          "question": "Find the deltoid.",
-          "answer": "kite"
+          "question": "Ben Franklin flew me into a thunderstorm to catch lightning. What am I?",
+          "answer": "diamond"
         }
       ],
       "outcome": {
@@ -661,12 +661,12 @@
       ],
       "steps": [
         {
-          "question": "Find the vesica.",
+          "question": "The medieval painter heard \"halo\" and apparently thought, \"Why stop at the head?\"",
           "answer": "almond"
         },
         {
-          "question": "Go back to the shape you started on.",
-          "answer": "START"
+          "question": "They don't let me drive as much these days...",
+          "answer": "curved triangle"
         }
       ],
       "outcome": {
@@ -687,11 +687,6 @@
           "accept": {
             "category": "color",
             "value": "blue"
-          },
-          "fallback": {
-            "question": "Find what a mob is made of.",
-            "answer": "kangaroo",
-            "clue": "A-money"
           }
         },
         {
@@ -700,11 +695,6 @@
           "accept": {
             "category": "frame",
             "value": "ring"
-          },
-          "fallback": {
-            "question": "Find what a tower is made of.",
-            "answer": "giraffe",
-            "clue": "A-face"
           }
         }
       ]
@@ -720,11 +710,6 @@
           "accept": {
             "category": "frame",
             "value": "curved triangle"
-          },
-          "fallback": {
-            "question": "Find what a parliament is made of.",
-            "answer": "owl",
-            "clue": "A-round"
           }
         },
         {
@@ -733,11 +718,6 @@
           "accept": {
             "category": "color",
             "value": "brown"
-          },
-          "fallback": {
-            "question": "Find what a skulk is made of.",
-            "answer": "fox",
-            "clue": "A-cheap"
           }
         }
       ]
@@ -753,11 +733,6 @@
           "accept": {
             "category": "animal",
             "value": "badger"
-          },
-          "fallback": {
-            "question": "Find madder.",
-            "answer": "red",
-            "clue": "C-shine"
           }
         },
         {
@@ -766,11 +741,6 @@
           "accept": {
             "category": "frame",
             "value": "almond"
-          },
-          "fallback": {
-            "question": "Find what gamboge and ultramarine make when mixed.",
-            "answer": "green",
-            "clue": "C-gold"
           }
         }
       ]
@@ -786,11 +756,6 @@
           "accept": {
             "category": "animal",
             "value": "hippo"
-          },
-          "fallback": {
-            "question": "Find carmine.",
-            "answer": "red",
-            "clue": "C-hoard"
           }
         },
         {
@@ -798,12 +763,7 @@
           "owner": "frame",
           "accept": {
             "category": "frame",
-            "value": "kite"
-          },
-          "fallback": {
-            "question": "Find Tyrian purple.",
-            "answer": "purple",
-            "clue": "C-first"
+            "value": "diamond"
           }
         }
       ]
@@ -819,11 +779,6 @@
           "accept": {
             "category": "animal",
             "value": "ferret"
-          },
-          "fallback": {
-            "question": "Find the annulus.",
-            "answer": "ring",
-            "clue": "F-flat"
           }
         },
         {
@@ -832,11 +787,6 @@
           "accept": {
             "category": "color",
             "value": "brown"
-          },
-          "fallback": {
-            "question": "Find the lune.",
-            "answer": "crescent",
-            "clue": "F-card"
           }
         }
       ]
@@ -852,11 +802,6 @@
           "accept": {
             "category": "animal",
             "value": "cat"
-          },
-          "fallback": {
-            "question": "Find the superellipse.",
-            "answer": "squircle",
-            "clue": "F-wallet"
           }
         },
         {
@@ -865,11 +810,6 @@
           "accept": {
             "category": "color",
             "value": "yellow"
-          },
-          "fallback": {
-            "question": "Find the lune.",
-            "answer": "crescent",
-            "clue": "F-thin"
           }
         }
       ]
@@ -960,7 +900,7 @@
       {
         "term": "romp",
         "value": null,
-        "note": "a group of otters on land"
+        "note": "a group of otters"
       },
       {
         "term": "knot",
@@ -980,7 +920,7 @@
       {
         "term": "cauldron",
         "value": null,
-        "note": "a group of bats in flight"
+        "note": "a group of bats"
       },
       {
         "term": "ostentation",
@@ -1082,7 +1022,7 @@
       {
         "term": "vermilion",
         "value": "red",
-        "note": "bright red pigment made from cinnabar"
+        "note": "bright red mercury pigment, ground from cinnabar or made synthetically"
       },
       {
         "term": "cinnabar",
@@ -1092,17 +1032,17 @@
       {
         "term": "carmine",
         "value": "red",
-        "note": "crimson made from cochineal insects"
+        "note": "crimson made from cochineal insects, which live on cactus"
       },
       {
         "term": "madder",
         "value": "red",
-        "note": "red dye from the roots of the madder plant"
+        "note": "red dye from the roots of the madder plant; it colored the British army's red coats"
       },
       {
         "term": "gamboge",
         "value": "yellow",
-        "note": "deep yellow from the resin of Southeast Asian trees"
+        "note": "golden-yellow gum resin from Southeast Asian Garcinia trees"
       },
       {
         "term": "orpiment",
@@ -1112,12 +1052,12 @@
       {
         "term": "Indian yellow",
         "value": "yellow",
-        "note": "warm yellow, once said to be made from the urine of mango-fed cows"
+        "note": "warm yellow, reportedly made from the urine of cows fed on mango leaves"
       },
       {
         "term": "Naples yellow",
         "value": "yellow",
-        "note": "pale lead-based yellow"
+        "note": "lead-based yellow, from pale to deep"
       },
       {
         "term": "viridian",
@@ -1127,7 +1067,7 @@
       {
         "term": "verdigris",
         "value": "green",
-        "note": "green crust that forms on copper"
+        "note": "green pigment made by exposing copper to vinegar; the name is also used loosely for the green crust that forms on old copper"
       },
       {
         "term": "malachite",
@@ -1152,22 +1092,17 @@
       {
         "term": "ultramarine",
         "value": "blue",
-        "note": "blue from crushed lapis lazuli"
-      },
-      {
-        "term": "azurite",
-        "value": "blue",
-        "note": "blue copper mineral"
+        "note": "blue extracted from lapis lazuli; the finest grades at times cost more than gold. The name means \"beyond the sea\""
       },
       {
         "term": "Prussian blue",
         "value": "blue",
-        "note": "one of the first synthetic pigments (1700s)"
+        "note": "deep blue synthetic pigment, first made in Berlin around 1704"
       },
       {
         "term": "Egyptian blue",
         "value": "blue",
-        "note": "ancient synthetic blue"
+        "note": "ancient synthetic blue, made in Egypt by firing minerals in kilns"
       },
       {
         "term": "Tyrian purple",
@@ -1182,12 +1117,12 @@
       {
         "term": "mauveine",
         "value": "purple",
-        "note": "the first synthetic dye (1856)"
+        "note": "the first commercially successful synthetic organic dye (1856), made by accident by an 18-year-old chemist"
       },
       {
         "term": "cobalt violet",
         "value": "purple",
-        "note": "cool purple made from cobalt"
+        "note": "purples made from cobalt compounds, from pinkish to bluish"
       },
       {
         "term": "umber",
@@ -1197,7 +1132,7 @@
       {
         "term": "sienna",
         "value": "brown",
-        "note": "brown earth from near Siena; redder when burnt"
+        "note": "yellowish-brown earth named for Siena, Italy; reddish-brown when burnt"
       },
       {
         "term": "sepia",
@@ -1212,7 +1147,7 @@
       {
         "term": "caput mortuum",
         "value": "brown",
-        "note": "purple-brown iron oxide; the name means 'dead head'"
+        "note": "dark brown iron oxide with a purplish tinge; the name means 'dead head'"
       },
       {
         "term": "mummy brown",
@@ -1220,14 +1155,14 @@
         "note": "brown once made from ground-up mummies"
       },
       {
-        "term": "realgar",
+        "term": "cadmium orange",
         "value": null,
-        "note": "orange-red arsenic mineral; poisonous"
+        "note": "bright orange pigment made from cadmium"
       },
       {
-        "term": "minium",
+        "term": "zinc white",
         "value": null,
-        "note": "'red lead', a bright orange pigment"
+        "note": "brilliant white made from zinc oxide"
       },
       {
         "term": "rose madder",
@@ -1235,9 +1170,9 @@
         "note": "soft pink made from madder root"
       },
       {
-        "term": "carthamin",
+        "term": "lamp black",
         "value": null,
-        "note": "pink-red from safflower petals"
+        "note": "black made from the soot of oil lamps"
       },
       {
         "term": "lead white",
@@ -1253,38 +1188,98 @@
     "frame": [
       {
         "term": "deltoid",
-        "value": "kite",
-        "note": "a kite or diamond shape: four sides, two pairs of equal neighbors"
+        "value": "diamond",
+        "note": "a four-sided shape with two pairs of equal neighboring sides, as in a kite or a diamond. Named for the Greek letter delta (Δ), like the deltoid muscle of the shoulder"
+      },
+      {
+        "term": "rhombus",
+        "value": "diamond",
+        "note": "a four-sided shape with all four sides equal: a diamond. Every square is one"
+      },
+      {
+        "term": "kite",
+        "value": "diamond",
+        "note": "the flying toy, and the four-sided shape named after it. The classic one is a diamond"
       },
       {
         "term": "lune",
         "value": "crescent",
-        "note": "a crescent cut between two circular arcs"
+        "note": "a crescent cut between two circular arcs. From luna, Latin for moon"
+      },
+      {
+        "term": "lunule",
+        "value": "crescent",
+        "note": "a small crescent, like the pale half-moon at the base of a fingernail"
+      },
+      {
+        "term": "meniscus",
+        "value": "crescent",
+        "note": "a crescent shape, like the cross-section of a lens curved outward on one side and inward on the other; also the curved surface of water in a narrow tube"
       },
       {
         "term": "annulus",
         "value": "ring",
-        "note": "a ring: the band between two circles with the same center"
+        "note": "a ring: the band between two circles with the same center, like a life ring, a planet's ring or a band of an archery target"
+      },
+      {
+        "term": "annulet",
+        "value": "ring",
+        "note": "in heraldry, a plain ring"
+      },
+      {
+        "term": "torus",
+        "value": "ring",
+        "note": "a three-dimensional ring, like an inner tube; seen from above, it looks like a flat ring"
       },
       {
         "term": "vesica",
         "value": "almond",
-        "note": "the almond shape where two equal circles overlap"
+        "note": "the almond shape where two equal circles overlap, each passing through the other's center. In full, vesica piscis: \"fish bladder.\""
+      },
+      {
+        "term": "mandorla",
+        "value": "almond",
+        "note": "Italian for \"almond\": the almond-shaped halo around a holy figure in medieval art"
+      },
+      {
+        "term": "navette",
+        "value": "almond",
+        "note": "French for \"little boat\": a gem cut pointed at both ends"
       },
       {
         "term": "Reuleaux triangle",
         "value": "curved triangle",
-        "note": "a curved triangle as wide in every direction as a circle"
+        "note": "a curved triangle as wide in every direction as a circle, so it keeps the same height as it rolls. Found in some guitar picks and in drills that cut nearly square holes"
+      },
+      {
+        "term": "orbiform",
+        "value": "curved triangle",
+        "note": "any curve of constant width; apart from the circle, the curved triangle is the most famous"
+      },
+      {
+        "term": "Wankel rotor",
+        "value": "curved triangle",
+        "note": "the roughly triangular rotor with curved sides that spins inside a Wankel rotary engine, now rarely used in cars"
       },
       {
         "term": "superellipse",
         "value": "squircle",
-        "note": "a rounded square, between a square and a circle"
+        "note": "a family of curves between the ellipse and the rectangle; the best known is the rounded square, halfway between a square and a circle. Piet Hein used one to design Stockholm's Sergels Torg"
+      },
+      {
+        "term": "Lamé curve",
+        "value": "squircle",
+        "note": "another name for the superellipse, after the French mathematician Gabriel Lamé"
+      },
+      {
+        "term": "hyperellipse",
+        "value": "squircle",
+        "note": "a superellipse that bulges out toward the corners of a square or rectangle"
       },
       {
         "term": "cardioid",
         "value": null,
-        "note": "a heart-shaped curve traced by a rolling circle"
+        "note": "a heart-shaped curve traced by a point on a circle rolling around another circle of the same size"
       },
       {
         "term": "hexagram",
@@ -1309,7 +1304,7 @@
       {
         "term": "arbelos",
         "value": null,
-        "note": "'shoemaker's knife': the region between three semicircles"
+        "note": "'shoemaker's knife': the region inside one semicircle and outside two smaller ones along its diameter"
       },
       {
         "term": "salinon",
@@ -1344,7 +1339,7 @@
       {
         "term": "trapezium",
         "value": null,
-        "note": "a four-sided shape with one pair of parallel sides"
+        "note": "in British usage, a four-sided shape with one pair of parallel sides; in American usage, one with no parallel sides"
       },
       {
         "term": "pentagram",
@@ -1363,12 +1358,6 @@
       }
     ]
   },
-  "colorMixing": [
-    "red + yellow = orange",
-    "yellow + blue = green",
-    "blue + red = purple",
-    "opposites (red + green, blue + orange, yellow + purple) = brown mud"
-  ],
   "scoring": [
     {
       "points": 100,
@@ -1471,43 +1460,64 @@
     }
   ],
   "messages": {
-    "opening": "What's in the box?",
-    "colorCheck": "Before we start: do you have trouble telling some colors apart?",
-    "track_animal": "You are an Animal inquirer. Your field guide helps you investigate animals.",
-    "track_color": "You are a Color inquirer. Your field guide helps you investigate colors.",
-    "track_frame": "You are a Frame inquirer. Your field guide helps you investigate the shapes of frames.",
-    "firstPrompt_animal": "Scan your favorite animal.",
-    "firstPrompt_color": "Scan your favorite color.",
-    "firstPrompt_frame": "Scan your favorite shape.",
-    "correct": "That fits.",
-    "wrongInTrack": "Your trail goes cold. Return to sheet #{n} and scan it to try again.",
+    "opening": "You are all trying to solve the same question: What's in the box?",
+    "colorCheck": "This game can be played without the need to discriminate between colors. Would you like to opt out of the color discrimination tasks?",
+    "track_animal": "You have been assigned the role of *Zoologist*. Your field guide will help you decode clues into animals.",
+    "track_color": "You have been assigned the role of *Color Scientist*. Your field guide will help you decode clues into colors.",
+    "track_frame": "You have been assigned the role of *Geometer*. Your field guide will help you decode clues into shapes.",
+    "firstPrompt_animal": "Begin by scanning your favorite of the animals in the room.",
+    "firstPrompt_color": "Begin by scanning your favorite of the colors in the room.",
+    "firstPrompt_frame": "Begin by scanning your favorite of the shapes in the room.",
+    "correct": "Yes, that seems right.",
+    "wrongInTrack": "Your trail goes cold. Go back to the {place} and scan it to try again.",
     "localOptimum": "Your trail ends here. You found a clue: \"{clue}\" It's saved in your notebook.",
     "hop": "Next: {term}",
-    "wrongHop": "Your trail goes cold. Return to sheet #{n}.",
-    "found": "You found it. It's a chocolate coin.",
-    "submitButton": "Submit my answer",
+    "wrongHop": "Your trail goes cold.",
+    "found": "You found the solution! It's a chocolate coin.",
+    "submitButton": "Submit final answer.",
     "submitEntry": "What's in the box? You get one answer.",
     "submitConfirm": "Submit \"{answer}\"? Submitting ends your search: you won't be able to scan any more. You can still talk with anyone and use your field guide to help them.",
     "afterSubmit": "Your answer is locked in. You can't scan any more, but you can still help: talk to anyone, and your field guide and notebook stay open.",
     "projectorCount": "Run {r}: {k} of {n} have submitted.",
     "revealProjector": "Run {r} scores",
     "revealPhone": "You answered \"{answer}\": {score} points.",
-    "newRun": "Run {r} is starting. You're still a{an} {track} inquirer, and your notebook still has the clues you found.",
-    "guideButton": "Field guide",
+    "newRun": "Run {r} is starting. You're still a{an} {track}, and your notebook still has the clues you found.",
+    "guideButton": "Field Guide",
     "notebookButton": "Notebook",
-    "notStarted": "The game hasn't started yet. Hang on.",
+    "notStarted": "The game is about to begin. Please wait.",
     "runOver": "This run is over. Wait for the next one to start.",
     "alreadyFound": "You've found what's in the box. Submit your answer whenever you're ready.",
     "afterSubmitScan": "Your answer is locked in for this run, so scanning is off. You can still help others.",
     "coldRepeat": "Your trail is still cold.",
-    "newTrail": "Scan any sheet to begin a new trail.",
-    "abandonButton": "Start a new trail",
-    "abandoned": "You left that trail.",
+    "newTrail": "To begin working on a new clue, scan any animal, color, or shape.",
+    "abandonButton": "Start a new trail.",
+    "abandoned": "You left that trail. Scan another code to start a new one.",
     "noSubmission": "You didn't submit an answer this run.",
-    "notScored": "You answered \"{answer}\". Your instructor will score it.",
+    "notScored": "You answered \"{answer}\". The administrator will score it.",
     "submitClosed": "Answers can only be submitted while a run is in progress.",
     "localOptimumRepeat": "Your trail ends here, at a clue you already have: \"{clue}\"",
-    "projectorWaiting": "Scan to join. The game will start soon."
+    "projectorWaiting": "Scan to join. The game will start soon.",
+    "scanButton": "Scan",
+    "scanHelp": "Point your camera at a QR code.",
+    "scanCancel": "Cancel",
+    "scanNoCamera": "Your camera isn't available here. You can also scan with your phone's camera app.",
+    "scanUnknown": "That code isn't part of this game.",
+    "place": "{color} {animal} in the {frame}",
+    "finalHeading": "What's in the box?",
+    "finalHint": "When you think you know what's in the box, submit your final answer. After that, you can't scan any more.",
+    "pathButton": "My path",
+    "pathEmpty": "You haven't scanned anything yet.",
+    "pathRun": "Run {r}",
+    "pathAsked": "Looking for: {asked}",
+    "pathStart": "Started a trail",
+    "pathFits": "That fits",
+    "pathCold": "Trail went cold",
+    "pathStillCold": "Still cold",
+    "pathResume": "Back on the trail",
+    "pathClue": "Found a clue",
+    "pathFound": "Found what's in the box",
+    "pathAbandon": "Left the trail",
+    "notebookEmpty": "No clues to show yet."
   },
   "messageLabels": {
     "opening": "Opening question (projector)",
@@ -1534,6 +1544,27 @@
     "newRun": "New run (phone)",
     "instructorScreen": "Instructor screen",
     "guideButton": "Field guide button",
-    "notebookButton": "Notebook button"
+    "notebookButton": "Notebook button",
+    "scanButton": "Scan button",
+    "scanHelp": "Scanner: instructions",
+    "scanCancel": "Scanner: cancel button",
+    "scanNoCamera": "Scanner: no camera",
+    "scanUnknown": "Scanner: unknown code",
+    "place": "How a scanned spot is described",
+    "finalHeading": "Final answer: heading",
+    "finalHint": "Final answer: explanation",
+    "pathButton": "Path button",
+    "pathEmpty": "Path: empty",
+    "pathRun": "Path: run heading",
+    "pathAsked": "Path: what the player was looking for",
+    "pathStart": "Path: trail started",
+    "pathFits": "Path: correct",
+    "pathCold": "Path: wrong",
+    "pathStillCold": "Path: wrong while cold",
+    "pathResume": "Path: back on the trail",
+    "pathClue": "Path: clue",
+    "pathFound": "Path: global optimum",
+    "pathAbandon": "Path: left a trail",
+    "notebookEmpty": "Notebook: empty"
   }
 }

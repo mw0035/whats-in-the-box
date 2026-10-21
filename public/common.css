@@ -18,3 +18,13 @@ input[type=text], input[type=password], input[type=search], input[type=number] {
 .hidden { display: none !important; }
 table { border-collapse: collapse; width: 100%; }
 th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #ddd; vertical-align: top; }
+button.big { width: 100%; font-size: 1.3em; padding: 16px; }
+.final { margin-top: 40px; padding-top: 8px; border-top: 2px solid #ccc; }
+ol.path { padding-left: 1.6em; margin: 0; }
+ol.path li { margin: 0 0 8px; }
+h3 { font-size: 1em; margin: 1em 0 0.4em; }
+.scanner { position: fixed; inset: 0; z-index: 10; background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; text-align: center; }
+.scanner video { width: 100%; max-width: 480px; max-height: 65vh; object-fit: cover; border-radius: 8px; background: #222; }
+.scanner .error { color: #f99; }
+.scanner button { min-width: 50%; }
+.prompt, .result, ol.path .muted { white-space: pre-line; }

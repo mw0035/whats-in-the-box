@@ -45,7 +45,6 @@ function correctSheetFor(g, p) {
     const step = c.trailById.get(t.trail).steps[t.step];
     return anyOf(sheetsWith(p.track, step.answer === "START" ? t.start : step.answer));
   }
-  if (t.mode === "fb") return anyOf(sheetsWith(p.track, c.routeById.get(t.route).hops[t.hop].fallback.answer));
   if (t.mode === "hop") { const h = c.routeById.get(t.route).hops[t.hop]; return anyOf(sheetsWith(h.accept.category, h.accept.value)); }
   return null;
 }
@@ -69,9 +68,9 @@ function simulate(n, talking) {
         sheet = p.trailsStarted === 0
           ? pickWeighted(c.sheets, (s) => (FAVORITES[p.track][s[p.track]] || 1))
           : anyOf(c.sheets);
-      } else if (["qcold", "hopcold", "fbcold"].includes(t.mode)) {
+      } else if (t.mode === "qcold") {
         sheet = c.sheetById.get(t.lastSheet);
-      } else if (t.mode === "q" || t.mode === "fb") {
+      } else if (t.mode === "q") {
         sheet = rand() < A.knowsInTrack ? correctSheetFor(g, p) : anyOf(c.sheets);
       } else if (t.mode === "hop") {
         const owner = c.routeById.get(t.route).hops[t.hop].owner;

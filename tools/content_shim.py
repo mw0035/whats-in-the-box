@@ -14,12 +14,11 @@ FAMILIES = [{"id": t["id"], "track": t["track"], "starts": t["starts"],
              "outcome": ("clue", t["outcome"]["clue"]) if t["outcome"]["type"] == "clue" else ("route", t["outcome"]["route"])}
             for t in _c["trails"]]
 ROUTES = [{"id": r["id"], "family": r["trail"], "receiver": r["track"],
-           "hops": [{"term": h["term"], "owner": h["owner"], "accept": (h["accept"]["category"], h["accept"]["value"]),
-                     "fallback": (h["fallback"]["question"], h["fallback"]["answer"], h["fallback"]["clue"])} for h in r["hops"]]}
+           "hops": [{"term": h["term"], "owner": h["owner"], "accept": (h["accept"]["category"], h["accept"]["value"])} for h in r["hops"]]}
           for r in _c["routes"]]
 ANSWER = _c["messages"]["found"]
 GUIDES = {t: [(g["term"], g["value"], g["note"]) for g in _c["guides"][t]] for t in TRACKS}
-COLOR_MIXING = _c["colorMixing"]
+COLOR_MIXING = _c.get("colorMixing", [])
 MESSAGES = [(_c.get("messageLabels", {}).get(k, k), v) for k, v in _c["messages"].items()]
 def _rule(r):
     parts = []

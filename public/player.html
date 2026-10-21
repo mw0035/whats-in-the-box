@@ -23,17 +23,17 @@
     <p class="muted" id="who"></p>
     <div id="result" class="box result hidden"></div>
     <p id="prompt" class="prompt"></p>
+    <p><button id="scanBtn" class="primary big hidden"></button></p>
     <div class="row">
       <button id="guideBtn"></button>
       <button id="notebookBtn"></button>
+      <button id="pathBtn"></button>
     </div>
-    <p><button id="submitBtn" class="primary" style="width:100%"></button></p>
     <p><button id="abandonBtn" class="hidden" style="width:100%"></button></p>
 
     <div id="guidePanel" class="box hidden">
       <h2 id="guideTitle"></h2>
       <input id="guideSearch" type="search" placeholder="Search" autocomplete="off">
-      <div id="mixing" class="hidden"><h2>Mixing</h2><ul id="mixingList"></ul></div>
       <dl id="guideList"></dl>
     </div>
 
@@ -43,18 +43,37 @@
       <p id="notebookEmpty" class="muted">No clues yet.</p>
     </div>
 
-    <div id="submitPanel" class="box hidden">
-      <p id="submitEntry"></p>
-      <input id="answer" type="text" maxlength="120" autocomplete="off">
-      <p id="submitConfirm" class="hidden"></p>
-      <div class="row">
-        <button id="submitGo" class="primary">Submit</button>
-        <button id="submitCancel">Cancel</button>
+    <div id="pathPanel" class="box hidden">
+      <h2 id="pathTitle"></h2>
+      <div id="pathList"></div>
+    </div>
+
+    <p id="error" class="error hidden"></p>
+
+    <div id="final" class="final hidden">
+      <h2 id="finalHeading"></h2>
+      <p id="finalHint" class="muted"></p>
+      <button id="submitBtn" style="width:100%"></button>
+      <div id="submitPanel" class="box hidden">
+        <p id="submitEntry"></p>
+        <input id="answer" type="text" maxlength="120" autocomplete="off">
+        <p id="submitConfirm" class="hidden"></p>
+        <div class="row">
+          <button id="submitGo" class="primary">Submit</button>
+          <button id="submitCancel">Cancel</button>
+        </div>
       </div>
     </div>
-    <p id="error" class="error hidden"></p>
   </section>
 </main>
+
+<!-- In-page QR scanner -->
+<div id="scanner" class="scanner hidden">
+  <video id="video" playsinline muted></video>
+  <p id="scanHelp"></p>
+  <p id="scanMsg" class="error"></p>
+  <button id="scanCancel"></button>
+</div>
 
 <script>
 "use strict";
@@ -80,22 +99,28 @@ async function api(path, body) {
 
 function show(id, on) { $(id).classList.toggle("hidden", !on); }
 function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+// Game text may mark *italics*.
+function fmt(s) { return esc(s || "").replace(/\*([^*\n]+)\*/g, "<em>$1</em>"); }
 
 function render(v) {
   view = v;
   if (v.snap) { creds.snap = v.snap; save(); }
   show("intro", false); show("play", true);
-  $("who").textContent = `Player ${v.num} · ${v.trackLabel} inquirer · Run ${v.run}`;
-  show("result", !!v.result); $("result").textContent = v.result || "";
-  $("prompt").textContent = v.prompt;
+  $("who").textContent = `Player ${v.num} · ${v.trackLabel} · Run ${v.run}`;
+  show("result", !!v.result); $("result").innerHTML = fmt(v.result);
+  $("prompt").innerHTML = fmt(v.prompt);
   $("guideBtn").textContent = labels.guideButton; $("notebookBtn").textContent = labels.notebookButton;
+  $("pathBtn").textContent = labels.pathButton; $("pathTitle").textContent = labels.pathButton;
+  $("scanBtn").textContent = labels.scanButton; show("scanBtn", v.canScan);
+  $("finalHeading").textContent = labels.finalHeading; $("finalHint").textContent = labels.finalHint;
   $("submitBtn").textContent = labels.submitButton;
   $("abandonBtn").textContent = labels.abandonButton;
-  show("submitBtn", v.status === "playing" && !v.submission);
+  show("final", v.status === "playing" && !v.submission);
   show("abandonBtn", v.canAbandon);
   if (!(v.status === "playing" && !v.submission)) show("submitPanel", false);
+  renderPath(v.path || []);
   $("notebookList").innerHTML = v.notebook.map((t) => `<li>${esc(t)}</li>`).join("");
-  show("notebookEmpty", v.notebook.length === 0);
+  $("notebookEmpty").textContent = labels.notebookEmpty; show("notebookEmpty", v.notebook.length === 0);
   $("guideTitle").textContent = `${v.trackLabel} ${labels.guideButton.toLowerCase()}`;
   $("notebookTitle").textContent = labels.notebookButton;
   if (v.error) { $("error").textContent = v.error; show("error", true); } else show("error", false);
@@ -126,12 +151,80 @@ async function join(colorTrouble) {
 async function scan(code) {
   const r = await api("/api/scan", { code });
   if (r.status === 200) render(r.data); else refresh();
-  show("guidePanel", false); show("notebookPanel", false);
+  show("guidePanel", false); show("notebookPanel", false); show("pathPanel", false);
   window.scrollTo(0, 0);
 }
 
+// Newest first, grouped by run. Each step says where the player scanned and what happened.
+function renderPath(path) {
+  if (!path.length) { $("pathList").innerHTML = `<p class="muted">${esc(labels.pathEmpty)}</p>`; return; }
+  const runs = [...new Set(path.map((x) => x.run))].sort((a, b) => b - a);
+  $("pathList").innerHTML = runs.map((r) => {
+    const items = path.filter((x) => x.run === r).map((x, k) => {
+      const showAsked = x.asked && !["start", "stillCold", "resume"].includes(x.o);
+      return `<li value="${k + 1}"><b>${esc(x.place)}</b>${x.place ? " · " : ""}${esc(x.what)}` +
+        (showAsked ? `<br><span class="muted">${esc(labels.pathAsked.replace("{asked}", x.asked))}</span>` : "") + "</li>";
+    }).reverse().join("");
+    return (runs.length > 1 ? `<h3>${esc(labels.pathRun.replace("{r}", r))}</h3>` : "") + `<ol reversed class="path">${items}</ol>`;
+  }).join("");
+}
+
+// ---------------------------------------------------------------- in-page QR scanner
+let stream = null, scanTimer = null, jsQRLoading = null;
+const frame = document.createElement("canvas");
+const frameCtx = frame.getContext("2d", { willReadFrequently: true });
+
+function loadJsQR() {
+  if (window.jsQR) return Promise.resolve();
+  return jsQRLoading = jsQRLoading || new Promise((ok, fail) => {
+    const s = document.createElement("script"); s.src = "/vendor/jsQR.js"; s.onload = ok; s.onerror = fail;
+    document.head.appendChild(s);
+  });
+}
+
+// Sheet QR codes hold an address ending in /s/<code>.
+function codeFrom(text) {
+  try { const m = new URL(text, location.href).pathname.match(/^\/s\/([A-Za-z0-9]+)/); if (m) return m[1]; } catch (_) {}
+  return String(text).slice(0, 100);
+}
+
+async function openScanner() {
+  $("scanHelp").textContent = labels.scanHelp; $("scanCancel").textContent = labels.scanCancel;
+  $("scanMsg").textContent = "";
+  show("scanner", true);
+  try {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error("no camera");
+    await loadJsQR();
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+  } catch (_) { $("scanMsg").textContent = labels.scanNoCamera; return; }
+  if ($("scanner").classList.contains("hidden")) return closeScanner(); // cancelled while waiting for permission
+  const v = $("video"); v.srcObject = stream;
+  await v.play().catch(() => {});
+  scanTimer = setInterval(readFrame, 200);
+}
+
+function readFrame() {
+  const v = $("video");
+  if (v.readyState < 2 || !v.videoWidth) return;
+  const k = Math.min(1, 640 / v.videoWidth);
+  const w = frame.width = Math.round(v.videoWidth * k), h = frame.height = Math.round(v.videoHeight * k);
+  frameCtx.drawImage(v, 0, 0, w, h);
+  const hit = window.jsQR(frameCtx.getImageData(0, 0, w, h).data, w, h, { inversionAttempts: "dontInvert" });
+  if (!hit || !hit.data) return;
+  if (navigator.vibrate) navigator.vibrate(60);
+  closeScanner();
+  scan(codeFrom(hit.data));
+}
+
+function closeScanner() {
+  clearInterval(scanTimer); scanTimer = null;
+  if (stream) { for (const t of stream.getTracks()) t.stop(); stream = null; }
+  $("video").srcObject = null;
+  show("scanner", false);
+}
+
 function toggle(panel) {
-  for (const p of ["guidePanel", "notebookPanel", "submitPanel"]) if (p !== panel) show(p, false);
+  for (const p of ["guidePanel", "notebookPanel", "pathPanel", "submitPanel"]) if (p !== panel) show(p, false);
   show(panel, $(panel).classList.contains("hidden"));
 }
 
@@ -141,13 +234,15 @@ async function loadGuide() {
   if (r.status !== 200) return;
   guideLoaded = true;
   $("guideList").innerHTML = r.data.entries.map((e) => `<div class="entry" data-t="${esc(e.term.toLowerCase())}"><dt><b>${esc(e.term)}</b></dt><dd>${esc(e.note)}</dd></div>`).join("");
-  if (r.data.mixing) { $("mixingList").innerHTML = r.data.mixing.map((t) => `<li>${esc(t)}</li>`).join(""); show("mixing", true); }
 }
 
 $("colorYes").onclick = () => join(true);
 $("colorNo").onclick = () => join(false);
 $("guideBtn").onclick = async () => { await loadGuide(); toggle("guidePanel"); };
 $("notebookBtn").onclick = () => toggle("notebookPanel");
+$("pathBtn").onclick = () => toggle("pathPanel");
+$("scanBtn").onclick = openScanner;
+$("scanCancel").onclick = closeScanner;
 $("guideSearch").oninput = () => {
   const q = $("guideSearch").value.trim().toLowerCase();
   for (const el of document.querySelectorAll("#guideList .entry")) el.classList.toggle("hidden", !!q && !el.dataset.t.includes(q));
@@ -174,7 +269,7 @@ $("abandonBtn").onclick = async () => { const r = await api("/api/abandon", {});
 
 // Keep the screen current (run starts, reveals) without interrupting typing.
 setInterval(() => {
-  if (document.hidden || !creds) return;
+  if (document.hidden || !creds || stream) return;
   if (document.activeElement && ["answer", "guideSearch"].includes(document.activeElement.id)) return;
   refresh();
 }, 4000);

@@ -50,6 +50,7 @@ app.get("/s/:code", page("player.html"));
 app.get("/projector", page("projector.html"));
 app.get("/admin", page("admin.html"));
 app.use("/static", express.static(pub, { maxAge: "5m" }));
+app.get("/vendor/jsQR.js", (req, res) => res.sendFile(require.resolve("jsqr/dist/jsQR.js")));
 app.get("/healthz", (req, res) => res.json({ ok: true }));
 
 const baseUrl = (req) => BASE_URL || `${req.protocol}://${req.get("host")}`;
@@ -101,7 +102,6 @@ app.get("/api/guide", (req, res) => {
   const p = player(req, res); if (!p) return;
   res.json({
     entries: content.guides[p.track].map((g) => ({ term: g.term, note: g.note })).sort((a, b) => a.term.localeCompare(b.term)),
-    mixing: p.track === "color" ? content.colorMixing : null,
   });
 });
 
@@ -125,8 +125,9 @@ app.post("/api/submit", (req, res) => {
 
 app.get("/api/labels", (req, res) => {
   const m = content.messages;
-  res.json({ guideButton: m.guideButton, notebookButton: m.notebookButton, submitButton: m.submitButton,
-    submitEntry: m.submitEntry, submitConfirm: m.submitConfirm, abandonButton: m.abandonButton });
+  const keys = ["guideButton", "notebookButton", "submitButton", "submitEntry", "submitConfirm", "abandonButton",
+    "notebookEmpty", "scanButton", "scanHelp", "scanCancel", "scanNoCamera", "finalHeading", "finalHint", "pathButton", "pathEmpty", "pathRun", "pathAsked"];
+  res.json(Object.fromEntries(keys.map((k) => [k, m[k]])));
 });
 
 // ---------------------------------------------------------------- admin API (password in a header, or ?key= for images)
