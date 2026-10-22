@@ -1166,7 +1166,9 @@
         {
           "any": [
             "chocolate",
-            "choc"
+            "choc",
+            "cocoa",
+            "cacao"
           ],
           "andAny": [
             "coin",
@@ -1189,19 +1191,21 @@
       ]
     },
     {
-      "points": 70,
-      "label": "Penny (decoy)",
+      "points": 90,
+      "label": "Chocolate, no money word",
       "when": [
         {
           "any": [
-            "penny",
-            "pennies"
+            "chocolate",
+            "choc",
+            "cocoa",
+            "cacao"
           ]
         }
       ]
     },
     {
-      "points": 90,
+      "points": 80,
       "label": "Coin",
       "when": [
         {
@@ -1238,17 +1242,31 @@
       ]
     },
     {
-      "points": 50,
-      "label": "Chocolate or candy, no money word",
+      "points": 60,
+      "label": "Candy or sweets, no chocolate",
       "when": [
         {
           "any": [
-            "chocolate",
-            "choc",
             "candy",
             "candies",
             "sweet",
-            "sweets"
+            "sweets",
+            "treat",
+            "treats",
+            "confection",
+            "confectionery"
+          ]
+        }
+      ]
+    },
+    {
+      "points": 60,
+      "label": "Penny (decoy)",
+      "when": [
+        {
+          "any": [
+            "penny",
+            "pennies"
           ]
         }
       ]
@@ -1268,7 +1286,7 @@
     "localOptimum": "**You found a clue!** It's saved in your notebook for future reference.\n\n**Clue:** {clue}\n\nStart a new trail to learn more clues or submit your final answer if you think you know what's inside the box.",
     "hop": "**{term}**",
     "wrongHop": "The trail goes cold. You'll need to start a new one.",
-    "found": "You found the solution! It's a **chocolate coin**.",
+    "found": "**You found a rare clue!** Only a team effort could unlock this one. It's saved in your notebook.\n\n**Clue:** It's made of chocolate.\n\nStart a new trail to learn more clues or submit your final answer if you think you know what's inside the box.",
     "submitButton": "Submit final answer.",
     "submitEntry": "What's in the box? You get one answer.",
     "submitConfirm": "Submit \"{answer}\"? Submitting ends your search: you won't be able to scan any more. You can still talk with anyone and use your field guide to help them.",
@@ -1327,7 +1345,7 @@
     "cardButton": "Got it",
     "notebookNew": "New",
     "pathHint": "Used a hint",
-    "foundRecord": "**Found it!** It's a **chocolate coin**.",
+    "foundRecord": "**Rare clue:** It's made of chocolate.",
     "joinNeedCode": "Scan the QR code on the classroom screen to join the game.",
     "joinTypeCode": "Can't scan it? Type the 4-letter code shown under it:",
     "joinCodeButton": "Continue",
@@ -1348,7 +1366,7 @@
     "localOptimum": "Local optimum",
     "hop": "Cross-track hop",
     "wrongHop": "Wrong answer (cross-track)",
-    "found": "Global optimum",
+    "found": "Rare clue (after a cross-track route)",
     "submitButton": "Submit button (always visible)",
     "submitEntry": "Submit: entry",
     "submitConfirm": "Submit: confirm",
@@ -1395,7 +1413,7 @@
     "cardButton": "Clue card: close button",
     "notebookNew": "Notebook: new clue tag",
     "pathHint": "Path: hint used",
-    "foundRecord": "Record of the answer (notebook and path)",
+    "foundRecord": "Rare clue record (notebook and path)",
     "joinNeedCode": "Join: no code yet",
     "joinTypeCode": "Join: type the code",
     "joinCodeButton": "Join: code button",

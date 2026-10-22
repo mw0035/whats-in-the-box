@@ -115,7 +115,7 @@ async function tick() {
   $("joinUrl").textContent = v.joinUrl; $("classCode").textContent = v.classCode;
   const s = v.stats;
   $("stats").innerHTML = [["Scans", s.scans], ["Clues found", s.clues], ["Cross-track routes reached", s.routesReached],
-    ["Cross-track hops answered correctly", s.hopCorrect], ["Cross-track hops answered wrongly", s.hopWrong], ["Players who found the answer", s.found], ["Hints used", s.hints]]
+    ["Cross-track hops answered correctly", s.hopCorrect], ["Cross-track hops answered wrongly", s.hopWrong], ["Rare clues found (cross-track routes solved)", s.found], ["Hints used", s.hints]]
     .map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join("");
   if (!editing) {
     $("subs").innerHTML = v.submissions.map((x) => `<tr${x.points == null ? ' style="background:#fff3d6"' : ""}>
