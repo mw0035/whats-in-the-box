@@ -30,7 +30,7 @@
         <button id="revealBtn">Reveal scores</button>
         <button id="nextBtn" class="primary">Start next run</button>
       </div>
-      <p class="muted">Join link: <span id="joinUrl"></span> · <a href="/projector" target="_blank">Open projector view</a></p>
+      <p class="muted">Class code: <b id="classCode"></b> (changes when you reset everything) · Join link: <span id="joinUrl"></span> · <a href="/projector" target="_blank">Open projector view</a></p>
     </div>
 
     <h2>This run</h2>
@@ -112,7 +112,7 @@ async function tick() {
   $("trackLine").textContent = `Zoologists ${v.byTrack.animal} · Color Scientists ${v.byTrack.color} · Geometers ${v.byTrack.frame}`;
   show("startBtn", v.status === "waiting"); show("revealBtn", v.status === "playing"); show("nextBtn", v.status === "revealed");
   $("nextBtn").textContent = `Start run ${v.run + 1}`;
-  $("joinUrl").textContent = v.joinUrl;
+  $("joinUrl").textContent = v.joinUrl; $("classCode").textContent = v.classCode;
   const s = v.stats;
   $("stats").innerHTML = [["Scans", s.scans], ["Clues found", s.clues], ["Cross-track routes reached", s.routesReached],
     ["Cross-track hops answered correctly", s.hopCorrect], ["Cross-track hops answered wrongly", s.hopWrong], ["Players who found the answer", s.found], ["Hints used", s.hints]]

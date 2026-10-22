@@ -10,6 +10,8 @@
   #opening { font-size: 3.5em; margin-top: 0.4em; }
   #count { font-size: 2.2em; margin: 0.4em 0; }
   #qr img { width: min(46vh, 80vw); height: auto; }
+  #codeLine { font-size: 1.5em; margin: 0.2em 0 0; }
+  #codeLine b { letter-spacing: 0.12em; color: #111; }
   #waiting { font-size: 1.8em; }
   #dist { margin: 0 auto; max-width: 700px; font-size: 1.6em; }
   #dist td { padding: 8px 12px; }
@@ -26,7 +28,7 @@
 
   <section id="screen" class="hidden">
     <h1 id="opening"></h1>
-    <div id="qr"><img alt="QR code to join the game"></div>
+    <div id="qr"><img alt="QR code to join the game"><p id="codeLine" class="muted"></p></div>
     <p id="waiting" class="muted"></p>
     <p id="count"></p>
     <div id="reveal" class="hidden">
@@ -43,14 +45,31 @@ try { key = localStorage.getItem("witb-admin"); } catch (_) {}
 const show = (id, on) => $(id).classList.toggle("hidden", !on);
 const esc = (s) => { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; };
 
+// Shared with the admin page (same browser): where the game stood, so a restarted server can be put back
+// before anyone scans a stale code from this screen.
+const GAME_KEY = "witb-admin-game";
+const getLast = () => { try { return JSON.parse(localStorage.getItem(GAME_KEY)); } catch (_) { return null; } };
+
 async function tick() {
   const res = await fetch("/api/projector", { headers: { "x-admin-key": key || "" } });
   if (res.status === 401) { show("screen", false); show("login", true); return; }
   const v = await res.json();
+  const last = getLast();
+  const recent = last && Date.now() - (last.at || 0) < 3 * 3600 * 1000;
+  const behind = last && ((last.epoch || 0) > v.epoch || ((last.epoch || 0) === v.epoch && (last.game || 1) > v.game) ||
+    v.run < last.run || (v.run === last.run && v.status !== last.status && v.status === "waiting"));
+  if (recent && last.bootId !== v.bootId && behind) {
+    await fetch("/api/admin/restore", { method: "POST", headers: { "x-admin-key": key, "content-type": "application/json" },
+      body: JSON.stringify({ run: last.run, status: last.status, epoch: last.epoch, game: last.game }) });
+    return tick();
+  }
+  try { localStorage.setItem(GAME_KEY, JSON.stringify({ bootId: v.bootId, epoch: v.epoch, game: v.game, run: v.run, status: v.status, at: Date.now() })); } catch (_) {}
   show("login", false); show("screen", true);
   $("opening").textContent = v.opening;
   const img = document.querySelector("#qr img");
-  const src = "/api/admin/join-qr.svg?key=" + encodeURIComponent(key);
+  // The code in the address makes the browser fetch a new QR code whenever the class code changes.
+  const src = "/api/admin/join-qr.svg?key=" + encodeURIComponent(key) + "&c=" + encodeURIComponent(v.classCode);
+  $("codeLine").innerHTML = esc(v.codeText).replace("{site}", esc(v.site)).replace("{code}", `<b>${esc(v.classCode)}</b>`);
   if (img.getAttribute("src") !== src) img.setAttribute("src", src);
   show("qr", v.status !== "revealed");
   show("waiting", v.status === "waiting"); $("waiting").textContent = v.waitingText;

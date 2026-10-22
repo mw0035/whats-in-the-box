@@ -11,7 +11,14 @@
   <!-- Joining -->
   <section id="intro" class="hidden">
     <h1 id="opening">What's in the box?</h1>
-    <div id="nameStep">
+    <div id="codeStep" class="hidden">
+      <p id="codeError" class="error hidden"></p>
+      <p id="joinNeedCode" class="prompt"></p>
+      <p id="joinTypeCode" class="muted"></p>
+      <input id="codeInput" type="text" maxlength="8" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      <p><button id="codeGo" class="primary" style="width:100%"></button></p>
+    </div>
+    <div id="nameStep" class="hidden">
       <p id="namePrompt"></p>
       <input id="nameInput" type="text" maxlength="30" autocomplete="nickname">
       <p><button id="nameGo" class="primary" style="width:100%"></button></p>
@@ -112,6 +119,17 @@ let pendingScan = null;
 const m = location.pathname.match(/^\/s\/([A-Za-z0-9]+)/);
 if (m) { pendingScan = m[1]; history.replaceState(null, "", "/"); }
 
+// The projector's QR code opens /join/<class code>. Keep the code for this tab (it survives a refresh) and tidy the address.
+const JOIN_KEY = "witb-join-code";
+let joinCode = null;
+try { joinCode = sessionStorage.getItem(JOIN_KEY); } catch (_) {}
+const jm = location.pathname.match(/^\/join\/([A-Za-z0-9]+)/);
+if (jm) {
+  joinCode = jm[1].toUpperCase();
+  try { sessionStorage.setItem(JOIN_KEY, joinCode); } catch (_) {}
+  history.replaceState(null, "", "/");
+}
+
 function save() { try { localStorage.setItem(KEY, JSON.stringify(creds)); } catch (_) {} }
 
 async function api(path, body) {
@@ -189,18 +207,49 @@ async function refresh() {
   render(r.data);
 }
 
+// Joining needs the class code from the projector: carried in its QR code, or typed in by hand.
+const codeOk = async (code) => !!code && !!(await api("/api/check-code?code=" + encodeURIComponent(code))).data.ok;
+function forgetJoinCode() { joinCode = null; try { sessionStorage.removeItem(JOIN_KEY); } catch (_) {} }
+
+function showStep(step) {
+  for (const s of ["codeStep", "nameStep", "colorStep"]) show(s, s === step);
+}
+
+function askForCode(wrong) {
+  $("joinNeedCode").textContent = labels.joinNeedCode; $("joinTypeCode").textContent = labels.joinTypeCode;
+  $("codeGo").textContent = labels.joinCodeButton;
+  $("codeError").textContent = labels.joinBadCode; show("codeError", !!wrong);
+  $("codeGo").disabled = false;
+  showStep("codeStep");
+}
+
 async function showIntro() {
   const r = await api("/api/intro");
   $("opening").textContent = r.data.opening; $("colorCheck").textContent = r.data.colorCheck;
   $("namePrompt").textContent = labels.namePrompt; $("nameGo").textContent = labels.nameContinue;
   $("colorYes").disabled = $("colorNo").disabled = false;
-  show("nameStep", true); show("colorStep", false); show("card", false);
-  show("play", false); show("intro", true);
+  show("card", false); show("play", false); show("intro", true);
+  if (await codeOk(joinCode)) showStep("nameStep");
+  else { const hadCode = !!joinCode; forgetJoinCode(); askForCode(hadCode); }
+}
+
+async function submitCode() {
+  const code = $("codeInput").value.trim().toUpperCase();
+  if (!code) return;
+  $("codeGo").disabled = true;
+  if (await codeOk(code)) {
+    joinCode = code; try { sessionStorage.setItem(JOIN_KEY, code); } catch (_) {}
+    show("codeError", false); showStep("nameStep"); $("nameInput").focus();
+  } else askForCode(true);
 }
 
 async function join(colorTrouble) {
   $("colorYes").disabled = $("colorNo").disabled = true;
-  const r = await api("/api/join", { colorTrouble, name: $("nameInput").value.trim() });
+  const r = await api("/api/join", { colorTrouble, name: $("nameInput").value.trim(), code: joinCode });
+  if (r.status !== 200) { // the code stopped matching (for example, the instructor reset the game)
+    forgetJoinCode(); $("colorYes").disabled = $("colorNo").disabled = false; askForCode(true); return;
+  }
+  forgetJoinCode();
   creds = { id: r.data.id, token: r.data.token, snap: r.data.snap }; save();
   render(r.data);
   if (pendingScan) { const code = pendingScan; pendingScan = null; scan(code); }
@@ -294,7 +343,9 @@ async function loadGuide() {
   $("guideList").innerHTML = r.data.entries.map((e) => `<div class="entry" data-t="${esc(e.term.toLowerCase())}"><dt><b>${esc(e.term)}</b></dt><dd>${fmt(e.note)}</dd></div>`).join("");
 }
 
-$("nameGo").onclick = () => { show("nameStep", false); show("colorStep", true); };
+$("codeGo").onclick = submitCode;
+$("codeInput").onkeydown = (e) => { if (e.key === "Enter") submitCode(); };
+$("nameGo").onclick = () => showStep("colorStep");
 $("nameInput").onkeydown = (e) => { if (e.key === "Enter") $("nameGo").click(); };
 $("colorYes").onclick = () => join(true);
 $("colorNo").onclick = () => join(false);

@@ -47,6 +47,7 @@ const page = (f) => (req, res) => res.sendFile(path.join(pub, f));
 
 app.get("/", page("player.html"));
 app.get("/s/:code", page("player.html"));
+app.get("/join/:code", page("player.html"));
 app.get("/projector", page("projector.html"));
 app.get("/admin", page("admin.html"));
 app.use("/static", express.static(pub, { maxAge: 0 })); // browsers re-check after every deploy
@@ -63,6 +64,25 @@ function player(req, res) {
   return p;
 }
 const sign = (data) => crypto.createHmac("sha256", SNAP_SECRET).update(data).digest("hex");
+
+// ---------------------------------------------------------------- class join codes
+// Each "Reset everything" starts a new epoch, and each epoch has its own 4-character code, derived from the secret,
+// so it never needs storing: after a restart the same epoch gives the same code. The projector's QR code carries it.
+const CODE_LETTERS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no I, O, 0 or 1
+const classCode = (epoch) => {
+  const h = crypto.createHmac("sha256", SNAP_SECRET).update("class|" + epoch).digest();
+  return [0, 1, 2, 3].map((i) => CODE_LETTERS[h[i] % CODE_LETTERS.length]).join("");
+};
+const cleanCode = (c) => String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+// The epoch a code belongs to: the current one, or (only while the server has lost its place) a later one.
+function epochForCode(code) {
+  code = cleanCode(code);
+  if (code.length !== 4) return null;
+  if (code === classCode(game.epoch)) return game.epoch;
+  if (game.fresh) for (let e = game.epoch + 1; e <= game.epoch + 50; e++) if (code === classCode(e)) return e;
+  return null;
+}
+const joinUrl = (req) => baseUrl(req) + "/join/" + classCode(game.epoch);
 const sealSnap = (snap) => { const data = JSON.stringify(snap); return data + "." + sign(data); };
 function openSnap(sealed) {
   if (typeof sealed !== "string") return null;
@@ -82,7 +102,12 @@ app.get("/api/intro", (req, res) => {
   res.json({ opening: m.opening, colorCheck: m.colorCheck });
 });
 
+app.get("/api/check-code", (req, res) => res.json({ ok: epochForCode(req.query.code) !== null }));
+
 app.post("/api/join", (req, res) => {
+  const epoch = epochForCode(req.body && req.body.code);
+  if (epoch === null) return res.status(403).json({ error: "code" });
+  if (epoch > game.epoch) game.adoptEpoch(epoch);
   const p = game.join(!!(req.body && req.body.colorTrouble), req.body && req.body.name);
   playerReply(res, p, { id: p.id, token: p.token });
 });
@@ -132,7 +157,7 @@ app.post("/api/submit", (req, res) => {
 app.get("/api/labels", (req, res) => {
   const m = content.messages;
   const keys = ["guideButton", "notebookButton", "submitButton", "submitEntry", "submitConfirm", "abandonButton",
-    "notebookEmpty", "notebookNew", "namePrompt", "nameContinue", "puzzleLabel", "hintButton", "hintConfirm", "hintYes", "hintNo",
+    "notebookEmpty", "notebookNew", "joinNeedCode", "joinTypeCode", "joinCodeButton", "joinBadCode", "namePrompt", "nameContinue", "puzzleLabel", "hintButton", "hintConfirm", "hintYes", "hintNo",
     "hintLabel", "hintCrossTrack", "hintNone", "cardButton", "scanButton", "scanHelp", "scanCancel", "scanNoCamera", "finalHeading", "finalHint", "pathButton", "pathEmpty", "pathRun", "pathAsked"];
   res.json(Object.fromEntries(keys.map((k) => [k, m[k]])));
 });
@@ -144,8 +169,10 @@ function admin(req, res, next) {
   next();
 }
 
-app.get("/api/projector", admin, (req, res) => res.json(game.projectorView()));
-app.get("/api/admin/state", admin, (req, res) => res.json({ ...game.adminView(), contentErrors, joinUrl: baseUrl(req) + "/" }));
+app.get("/api/projector", admin, (req, res) => res.json({ ...game.projectorView(), classCode: classCode(game.epoch),
+  bootId: game.bootId, epoch: game.epoch, game: game.game,
+  site: baseUrl(req).replace(/^https?:\/\//, ""), codeText: content.messages.projectorCode }));
+app.get("/api/admin/state", admin, (req, res) => res.json({ ...game.adminView(), contentErrors, joinUrl: joinUrl(req), classCode: classCode(game.epoch) }));
 app.post("/api/admin/start", admin, (req, res) => res.json({ ok: game.startRun() }));
 app.post("/api/admin/reveal", admin, (req, res) => { game.reveal("instructor"); res.json({ ok: true }); });
 app.post("/api/admin/next-run", admin, (req, res) => res.json({ ok: game.nextRun() }));
@@ -168,7 +195,8 @@ app.get("/api/admin/export", admin, (req, res) => {
     events: game.log, sheets: content.sheets.map(({ id, animal, color, frame }) => ({ id, animal, color, frame })) });
 });
 app.get("/api/admin/join-qr.svg", admin, async (req, res) => {
-  res.type("image/svg+xml").send(await QRCode.toString(baseUrl(req) + "/", { type: "svg", margin: 1 }));
+  res.set("Cache-Control", "no-store");
+  res.type("image/svg+xml").send(await QRCode.toString(joinUrl(req), { type: "svg", margin: 1 }));
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

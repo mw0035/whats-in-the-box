@@ -232,7 +232,7 @@
     },
     "C-first": {
       "track": "color",
-      "text": "It's the color of first place.",
+      "text": "It's in the color of first place.",
       "suggests": "gold",
       "fits": {
         "penny": 0,
@@ -1017,7 +1017,7 @@
       {
         "term": "viridian",
         "value": "green",
-        "note": "cool **green** with a bluish tint, made from chromium"
+        "note": "a deep green pigment made from chromium"
       },
       {
         "term": "verdigris",
@@ -1037,7 +1037,7 @@
       {
         "term": "ultramarine",
         "value": "blue",
-        "note": "blue extracted from lapis lazuli; the finest grades at times cost more than gold. The name means \"beyond the sea\""
+        "note": "blue extracted from lapis lazuli. The name means \"beyond the sea\""
       },
       {
         "term": "Tyrian purple",
@@ -1057,7 +1057,7 @@
       {
         "term": "sepia",
         "value": "brown",
-        "note": "brown ink from cuttlefish"
+        "note": "brown ink from cuttlefish, also a modern photo filter used to make photos look antique"
       },
       {
         "term": "bistre",
@@ -1257,9 +1257,9 @@
   "messages": {
     "opening": "You are all trying to solve the same question: What's in the box?",
     "colorCheck": "This game can be played without the need to discriminate between colors. Would you like to opt out of the color discrimination tasks?",
-    "track_animal": "You have been assigned the role of ***Zoologist***. Your field guide will help you decode some of the puzzles into animals.",
-    "track_color": "You have been assigned the role of ***Color Scientist***. Your field guide will help you decode some of the puzzles into colors.",
-    "track_frame": "You have been assigned the role of ***Geometer***. Your field guide will help you decode some of the puzzles into shapes.",
+    "track_animal": "You have been assigned the role of ***Zoologist***.\n\nYour field guide will help you decode some of the puzzles into animals.",
+    "track_color": "You have been assigned the role of ***Color Scientist***.\n\nYour field guide will help you decode some of the puzzles into colors.",
+    "track_frame": "You have been assigned the role of ***Geometer***.\n\nYour field guide will help you decode some of the puzzles into shapes.",
     "firstPrompt_animal": "Begin by scanning your favorite of the animals in the room.",
     "firstPrompt_color": "Begin by scanning your favorite of the colors in the room.",
     "firstPrompt_frame": "Begin by scanning your favorite of the shapes in the room.",
@@ -1322,12 +1322,17 @@
     "hintYes": "Yes, show me",
     "hintNo": "Cancel",
     "hintLabel": "Hint:",
-    "hintCrossTrack": "Hmm... this puzzle seems strange. Try asking other players about this one.",
+    "hintCrossTrack": "Hmm... this puzzle seems strange. It doesn't seem like *your* field guide is much help here.",
     "hintNone": "You have no hints left for this game.",
     "cardButton": "Got it",
     "notebookNew": "New",
     "pathHint": "Used a hint",
-    "foundRecord": "**Found it!** It's a **chocolate coin**."
+    "foundRecord": "**Found it!** It's a **chocolate coin**.",
+    "joinNeedCode": "Scan the QR code on the classroom screen to join the game.",
+    "joinTypeCode": "Can't scan it? Type the 4-letter code shown under it:",
+    "joinCodeButton": "Continue",
+    "joinBadCode": "That code doesn't match the game on the classroom screen. Check it and try again.",
+    "projectorCode": "Can't scan? Go to {site} and enter code {code}"
   },
   "messageLabels": {
     "opening": "Opening question (projector)",
@@ -1390,7 +1395,12 @@
     "cardButton": "Clue card: close button",
     "notebookNew": "Notebook: new clue tag",
     "pathHint": "Path: hint used",
-    "foundRecord": "Record of the answer (notebook and path)"
+    "foundRecord": "Record of the answer (notebook and path)",
+    "joinNeedCode": "Join: no code yet",
+    "joinTypeCode": "Join: type the code",
+    "joinCodeButton": "Join: code button",
+    "joinBadCode": "Join: wrong code",
+    "projectorCode": "Projector: code under the QR code"
   },
   "guidesArchive": {
     "note": "Entries cut from the field guides on 2026-10-21. Move one back into guides to restore it.",
