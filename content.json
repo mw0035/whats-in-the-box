@@ -147,8 +147,9 @@
   },
   "clues": {
     "A-money": {
+      "tag": "Z1",
       "track": "animal",
-      "text": "It flips.",
+      "text": "You could flip it.",
       "suggests": "money in general",
       "fits": {
         "penny": 1,
@@ -159,8 +160,9 @@
       }
     },
     "A-round": {
+      "tag": "Z2",
       "track": "animal",
-      "text": "It's round.",
+      "text": "It's circular.",
       "suggests": "a coin",
       "fits": {
         "penny": 1,
@@ -171,6 +173,7 @@
       }
     },
     "A-cheap": {
+      "tag": "Z3",
       "track": "animal",
       "text": "It's not worth very much.",
       "suggests": "a penny",
@@ -183,6 +186,7 @@
       }
     },
     "A-face": {
+      "tag": "Z4",
       "track": "animal",
       "text": "It has a face on it.",
       "suggests": "a coin or penny",
@@ -195,6 +199,7 @@
       }
     },
     "C-gold": {
+      "tag": "C1",
       "track": "color",
       "text": "It's metallic.",
       "suggests": "gold",
@@ -207,6 +212,7 @@
       }
     },
     "C-shine": {
+      "tag": "C2",
       "track": "color",
       "text": "It shines.",
       "suggests": "gold",
@@ -219,6 +225,7 @@
       }
     },
     "C-hoard": {
+      "tag": "C3",
       "track": "color",
       "text": "It would look at home in a dragon's hoard.",
       "suggests": "gold",
@@ -231,6 +238,7 @@
       }
     },
     "C-first": {
+      "tag": "C4",
       "track": "color",
       "text": "It's in the color of first place.",
       "suggests": "gold",
@@ -243,6 +251,7 @@
       }
     },
     "F-flat": {
+      "tag": "G1",
       "track": "frame",
       "text": "It's flat.",
       "suggests": "a bill or coin",
@@ -255,6 +264,7 @@
       }
     },
     "F-thin": {
+      "tag": "G2",
       "track": "frame",
       "text": "It's thin enough to slip into an envelope.",
       "suggests": "a dollar bill",
@@ -267,6 +277,7 @@
       }
     },
     "F-wallet": {
+      "tag": "G3",
       "track": "frame",
       "text": "It fits in a wallet.",
       "suggests": "a dollar bill",
@@ -279,6 +290,7 @@
       }
     },
     "F-card": {
+      "tag": "G4",
       "track": "frame",
       "text": "You might give it as a gift.",
       "suggests": "a dollar bill",
@@ -289,15 +301,458 @@
         "coin": 0,
         "chocolate coin": 1
       }
+    },
+    "Z5": {
+      "tag": "Z5",
+      "track": "animal",
+      "text": "You could use it to decide a kickoff.",
+      "suggests": "a coin",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "Z6": {
+      "tag": "Z6",
+      "track": "animal",
+      "text": "You could use it to scratch a lottery ticket.",
+      "suggests": "a coin",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "Z7": {
+      "tag": "Z7",
+      "track": "animal",
+      "text": "You might find one between the couch cushions.",
+      "suggests": "money in general",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "Z8": {
+      "tag": "Z8",
+      "track": "animal",
+      "text": "There is a bird on the back.",
+      "suggests": "a coin or dollar bill",
+      "fits": {
+        "penny": 0,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "Z9": {
+      "tag": "Z9",
+      "track": "animal",
+      "text": "It tells you where it comes from.",
+      "suggests": "money in general",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C5": {
+      "tag": "C5",
+      "track": "color",
+      "text": "It's associated with wealth.",
+      "suggests": "gold",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C6": {
+      "tag": "C6",
+      "track": "color",
+      "text": "I've been searching for a heart of ____.",
+      "suggests": "gold",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 0,
+        "chocolate coin": 1
+      }
+    },
+    "C7": {
+      "tag": "C7",
+      "track": "color",
+      "text": "It can be melted.",
+      "suggests": "gold",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C8": {
+      "tag": "C8",
+      "track": "color",
+      "text": "It's yellowish in color.",
+      "suggests": "gold",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C9": {
+      "tag": "C9",
+      "track": "color",
+      "text": "You might find it in a treasure chest.",
+      "suggests": "gold",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "G5": {
+      "tag": "G5",
+      "track": "frame",
+      "text": "You could keep several in a stack.",
+      "suggests": "money in general",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "G6": {
+      "tag": "G6",
+      "track": "frame",
+      "text": "You might receive it as a prize or reward.",
+      "suggests": "a dollar bill",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 0,
+        "chocolate coin": 1
+      }
+    },
+    "G7": {
+      "tag": "G7",
+      "track": "frame",
+      "text": "It has writing on both sides.",
+      "suggests": "a bill or coin",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "G8": {
+      "tag": "G8",
+      "track": "frame",
+      "text": "It tells you how much it is worth.",
+      "suggests": "a bill or coin",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "G9": {
+      "tag": "G9",
+      "track": "frame",
+      "text": "It would not make for a great tip.",
+      "suggests": "a penny",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "X1": {
+      "tag": "X1",
+      "track": "cross",
+      "text": "It's sweet.",
+      "suggests": "chocolate",
+      "fits": {
+        "penny": 0,
+        "gold": 0,
+        "dollar bill": 0,
+        "coin": 0,
+        "chocolate coin": 1
+      }
+    },
+    "X2": {
+      "tag": "X2",
+      "track": "cross",
+      "text": "It looks like something made of metal.",
+      "suggests": "chocolate",
+      "fits": {
+        "penny": 0,
+        "gold": 0,
+        "dollar bill": 0,
+        "coin": 0,
+        "chocolate coin": 1
+      }
+    },
+    "X3": {
+      "tag": "X3",
+      "track": "cross",
+      "text": "If you were expecting to be paid, you would be disappointed to receive this.",
+      "suggests": "a penny or coin",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "Z10": {
+      "tag": "Z10",
+      "track": "animal",
+      "negative": "lower",
+      "text": "It's not a quarter.",
+      "suggests": "(negative clue)",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "Z11": {
+      "tag": "Z11",
+      "track": "animal",
+      "negative": "lower",
+      "text": "It's not circulated.",
+      "suggests": "(negative clue)",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "Z12": {
+      "tag": "Z12",
+      "track": "animal",
+      "negative": "lower",
+      "text": "It's not a nickel.",
+      "suggests": "(negative clue)",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "Z13": {
+      "tag": "Z13",
+      "track": "animal",
+      "negative": "upper",
+      "text": "It's not a penny.",
+      "suggests": "(negative, upper)",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "Z14": {
+      "tag": "Z14",
+      "track": "animal",
+      "negative": "upper",
+      "text": "It's not US currency.",
+      "suggests": "(negative, upper)",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C10": {
+      "tag": "C10",
+      "track": "color",
+      "negative": "lower",
+      "text": "It's not a ring.",
+      "suggests": "(negative clue)",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C11": {
+      "tag": "C11",
+      "track": "color",
+      "negative": "lower",
+      "text": "It's not a piece of jewelry.",
+      "suggests": "(negative clue)",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C12": {
+      "tag": "C12",
+      "track": "color",
+      "negative": "lower",
+      "text": "It's not a crown.",
+      "suggests": "(negative clue)",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C13": {
+      "tag": "C13",
+      "track": "color",
+      "negative": "upper",
+      "text": "It's not actually valuable.",
+      "suggests": "(negative, upper)",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "C14": {
+      "tag": "C14",
+      "track": "color",
+      "negative": "upper",
+      "text": "It's not real gold.",
+      "suggests": "(negative, upper)",
+      "fits": {
+        "penny": 1,
+        "gold": 0,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "G10": {
+      "tag": "G10",
+      "track": "frame",
+      "negative": "lower",
+      "text": "It's not a dollar bill.",
+      "suggests": "(negative clue)",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "G11": {
+      "tag": "G11",
+      "track": "frame",
+      "negative": "lower",
+      "text": "It's not a letter.",
+      "suggests": "(negative clue)",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "G12": {
+      "tag": "G12",
+      "track": "frame",
+      "negative": "lower",
+      "text": "It's not a check.",
+      "suggests": "(negative clue)",
+      "fits": {
+        "penny": 1,
+        "gold": 1,
+        "dollar bill": 1,
+        "coin": 1,
+        "chocolate coin": 1
+      }
+    },
+    "G13": {
+      "tag": "G13",
+      "track": "frame",
+      "negative": "upper",
+      "text": "You couldn't spend this.",
+      "suggests": "(negative, upper)",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 0,
+        "chocolate coin": 1
+      }
+    },
+    "G14": {
+      "tag": "G14",
+      "track": "frame",
+      "negative": "upper",
+      "text": "It's not real money.",
+      "suggests": "(negative, upper)",
+      "fits": {
+        "penny": 0,
+        "gold": 1,
+        "dollar bill": 0,
+        "coin": 0,
+        "chocolate coin": 1
+      }
     }
   },
   "trails": [
     {
-      "id": "A1",
+      "id": "zoologist-1",
       "track": "animal",
-      "starts": [
-        "owl",
-        "cat"
+      "sheets": [
+        1
       ],
       "steps": [
         {
@@ -321,39 +776,37 @@
       }
     },
     {
-      "id": "A2",
+      "id": "zoologist-2",
       "track": "animal",
-      "starts": [
-        "lion",
-        "fox"
+      "sheets": [
+        2
       ],
       "steps": [
         {
-          "question": "Curious explorers tread eastward.\n\n*Field guide required*.",
-          "answer": "badger",
-          "hint": "Read the first letter of each word. Find that word in your field guide.",
-          "type": "Wordplay: acrostic",
-          "fieldGuide": true
+          "question": "My crown grows around my face.\nMy throne is a patch of sun. What am I?",
+          "answer": "lion",
+          "hint": "Which big cat wears a mane like a crown? Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
         },
         {
-          "question": "A crowd with a temper.\n\n*Field guide required*.",
-          "answer": "kangaroo",
-          "hint": "What's another word for an angry crowd? Find it in your field guide.",
-          "type": "Meaning",
-          "fieldGuide": true
+          "question": "I wear a piano’s colors,\nBut I’ve never played a tune.\nListen as I cross the grass...\nMy music is the beat of hooves.\n\nWhat am I?",
+          "answer": "zebra",
+          "hint": "Which animal is striped black and white, like piano keys? Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
         }
       ],
       "outcome": {
-        "type": "clue",
-        "clue": "A-round"
+        "type": "route",
+        "route": "R2"
       }
     },
     {
-      "id": "A3",
+      "id": "zoologist-3",
       "track": "animal",
-      "starts": [
-        "zebra",
-        "giraffe"
+      "sheets": [
+        3
       ],
       "steps": [
         {
@@ -377,11 +830,37 @@
       }
     },
     {
-      "id": "A4",
+      "id": "zoologist-4",
       "track": "animal",
-      "starts": [
-        "flamingo",
-        "porcupine"
+      "sheets": [
+        4
+      ],
+      "steps": [
+        {
+          "question": "We’re famous for wisdom, yet when discussion is due,\nEveryone asks the same question: “Who?”",
+          "answer": "owl",
+          "hint": "Which animal is famous for making a sound like the word \"who\"?",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "You can run me while sitting still,\nBuild me without laying a brick,\nAnd mean me without saying a word. What am I?\n\n*Field guide required.*",
+          "answer": "ferret",
+          "hint": "It's none of your *business*.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "Z6"
+      }
+    },
+    {
+      "id": "zoologist-5",
+      "track": "animal",
+      "sheets": [
+        5
       ],
       "steps": [
         {
@@ -392,9 +871,9 @@
           "fieldGuide": true
         },
         {
-          "question": "I hum when content, though you might not like my singing. Now take your curiosity elsewhere.\n\n*Field guide NOT required*.",
+          "question": "I hum when content, though you might not like my singing.",
           "answer": "cat",
-          "hint": "Which animal purrs and is famously killed by curiosity? Scan it.",
+          "hint": "Which animal purrs? Scan it.",
           "type": "General knowledge",
           "fieldGuide": false
         }
@@ -405,11 +884,145 @@
       }
     },
     {
-      "id": "A5",
+      "id": "zoologist-6",
       "track": "animal",
-      "starts": [
-        "kangaroo",
-        "badger"
+      "sheets": [
+        6
+      ],
+      "steps": [
+        {
+          "question": "Curiosity may be my undoing.\nA secret may slip out of the bag when I do.\nTongues fall silent, and I get the blame.",
+          "answer": "cat",
+          "hint": "Try reading the first letter of every line.",
+          "type": "Wordplay: acrostic",
+          "fieldGuide": false
+        },
+        {
+          "question": "Gazing over my neighbors comes naturally.\nI wear a patchwork no tailor stitched.\nReaching dinner is easier than reaching a drink.\nA browser by nature, I prefer leaves to pages.\nFour feet keep me grounded,\nFar below the head they carry.\nEven a lion must look up to me.",
+          "answer": "giraffe",
+          "hint": "Try reading the first letter of every line.",
+          "type": "Wordplay: acrostic",
+          "fieldGuide": false
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "Z8"
+      }
+    },
+    {
+      "id": "zoologist-7",
+      "track": "animal",
+      "sheets": [
+        7
+      ],
+      "steps": [
+        {
+          "question": "Curious explorers tread eastward.\n\n*Field guide required*.",
+          "answer": "badger",
+          "hint": "Read the first letter of each word. Find that word in your field guide.",
+          "type": "Wordplay: acrostic",
+          "fieldGuide": true
+        },
+        {
+          "question": "A crowd with a temper.\n\n*Field guide required*.",
+          "answer": "kangaroo",
+          "hint": "What's another word for an angry crowd? Find it in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "A-round"
+      }
+    },
+    {
+      "id": "zoologist-8",
+      "track": "animal",
+      "sheets": [
+        8
+      ],
+      "steps": [
+        {
+          "question": "I can leave you puzzled without asking a question.\nWhat I cannot reach, I may dismiss as sour.\nAnd if you trust me to guard the hens, you may have been outwitted.\n\nWhat am I?",
+          "answer": "fox",
+          "hint": "Some consider George Clooney to be a silver ___?",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "My name can wear your patience thin.\nI build my rooms without a single brick,\nAnd keep them hidden beneath your feet.\n\nWhat am I?",
+          "answer": "badger",
+          "hint": "This animal lives in burrows it digs with its large claws.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "Z9"
+      }
+    },
+    {
+      "id": "zoologist-9",
+      "track": "animal",
+      "sheets": [
+        9
+      ],
+      "steps": [
+        {
+          "question": "I carry a passenger but sell no tickets.\nI move ahead by leaving the ground.\nMy name gives a court a doubtful reputation,\nThough I’ve never judged a case.\n\nWhat am I?",
+          "answer": "kangaroo",
+          "hint": "This animal comes from down under.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "I can make you feel full without feeding you.\nI can make a speech longer without saying more.\nI can make software bigger without making it better.\nWhat am I?\n\n*Field guide required.*",
+          "answer": "hippo",
+          "hint": "Think Boat with an L.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "Z7"
+      }
+    },
+    {
+      "id": "zoologist-10",
+      "track": "animal",
+      "sheets": [
+        10
+      ],
+      "steps": [
+        {
+          "question": "My sitting room is a river; my dining room is a meadow.\nI can keep watch while most of me stays hidden.\nMy ears are small, but my yawn is enormous.\n\nWhat am I?",
+          "answer": "hippo",
+          "hint": "These animals are featured in a popular game where they're said to be very *hungry*.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "I make my point without a word.\nYou may admire the coat I wear,\nBut think twice before an embrace.\n\nWhat am I?",
+          "answer": "porcupine",
+          "hint": "This animal starts with pork.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "Z5"
+      }
+    },
+    {
+      "id": "zoologist-11",
+      "track": "animal",
+      "sheets": [
+        11
       ],
       "steps": [
         {
@@ -433,65 +1046,37 @@
       }
     },
     {
-      "id": "A6",
+      "id": "zoologist-12",
       "track": "animal",
-      "starts": [
-        "hippo",
-        "ferret"
+      "sheets": [
+        12
       ],
       "steps": [
         {
-          "question": "My crown grows around my face.\nMy throne is a patch of sun. What am I?\n\n*Field guide NOT required*.",
-          "answer": "lion",
-          "hint": "Which big cat wears a mane like a crown? Scan it.",
-          "type": "General knowledge",
+          "question": "Few gaps are too narrow to tempt me.\nEvery loose sock is a potential prize.\nRolled into a coil, I sleep.\nRooms become playgrounds when I wake.\nEven my name suggests a search.\nThe things you’ve lost may be in my keeping.\n\nWhat am I?",
+          "answer": "ferret",
+          "hint": "Try reading the first letter of every line.",
+          "type": "Wordplay: acrostic",
           "fieldGuide": false
         },
         {
-          "question": "I wear a piano’s colors,\nBut I’ve never played a tune.\nListen as I cross the grass...\nMy music is the beat of hooves.\n\nWhat am I?\n\n*Field guide NOT required*.",
-          "answer": "zebra",
-          "hint": "Which animal is striped black and white, like piano keys? Scan it.",
+          "question": "My meals help choose my wardrobe.\nI often rest on a single leg.\nMy double may stand on your lawn,\nBut it will never fly away.\n\nWhat am I?",
+          "answer": "flamingo",
+          "hint": "These animals are notoriously pink, though this color largely comes from their diet.",
           "type": "General knowledge",
           "fieldGuide": false
         }
       ],
       "outcome": {
         "type": "route",
-        "route": "R2"
+        "route": "R7"
       }
     },
     {
-      "id": "C1",
+      "id": "color-1",
       "track": "color",
-      "starts": [
-        "blue"
-      ],
-      "steps": [
-        {
-          "question": "What angry stuff is made of.\n\n*Field guide required*.",
-          "answer": "red",
-          "hint": "Find madder in your field guide.",
-          "type": "Wordplay: sounds like",
-          "fieldGuide": true
-        },
-        {
-          "question": "Semper fi and *beyond*.\n\n*Field guide required*.",
-          "answer": "blue",
-          "hint": "The Marines' motto is Semper fi, and ultra means beyond. Find ultra + marine in your field guide.",
-          "type": "Wordplay: word-building",
-          "fieldGuide": true
-        }
-      ],
-      "outcome": {
-        "type": "clue",
-        "clue": "C-gold"
-      }
-    },
-    {
-      "id": "C2",
-      "track": "color",
-      "starts": [
-        "red"
+      "sheets": [
+        1
       ],
       "steps": [
         {
@@ -515,10 +1100,37 @@
       }
     },
     {
-      "id": "C3",
+      "id": "color-2",
       "track": "color",
-      "starts": [
-        "green"
+      "sheets": [
+        2
+      ],
+      "steps": [
+        {
+          "question": "*Whose* clues?",
+          "answer": "blue",
+          "hint": "This puzzle references a famous children's TV show called Blue's Clues.",
+          "type": "Wordplay: rhyme",
+          "fieldGuide": false
+        },
+        {
+          "question": "Vain investors rarely imagine disasters in advance. Naturally.\n\n*Field guide required*.",
+          "answer": "green",
+          "hint": "Read the first letter of each word. Find that word in your field guide.",
+          "type": "Wordplay: acrostic",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "C-first"
+      }
+    },
+    {
+      "id": "color-3",
+      "track": "color",
+      "sheets": [
+        3
       ],
       "steps": [
         {
@@ -542,37 +1154,37 @@
       }
     },
     {
-      "id": "C4",
+      "id": "color-4",
       "track": "color",
-      "starts": [
-        "yellow"
+      "sheets": [
+        4
       ],
       "steps": [
         {
-          "question": "*Whose* clues?\n\n*Field guide NOT required*.",
-          "answer": "blue",
-          "hint": "This puzzle references a famous children's TV show called Blue's Clues.",
-          "type": "Wordplay: rhyme",
-          "fieldGuide": false
+          "question": "What angry stuff is made of.\n\n*Field guide required*.",
+          "answer": "red",
+          "hint": "Find madder in your field guide.",
+          "type": "Wordplay: sounds like",
+          "fieldGuide": true
         },
         {
-          "question": "Vain investors rarely imagine disasters in advance. Naturally.\n\n*Field guide required*.",
-          "answer": "green",
-          "hint": "Read the first letter of each word. Find that word in your field guide.",
-          "type": "Wordplay: acrostic",
+          "question": "Semper fi and *beyond*.\n\n*Field guide required*.",
+          "answer": "blue",
+          "hint": "The Marines' motto is Semper fi, and ultra means beyond. Find ultra + marine in your field guide.",
+          "type": "Wordplay: word-building",
           "fieldGuide": true
         }
       ],
       "outcome": {
         "type": "clue",
-        "clue": "C-first"
+        "clue": "C-gold"
       }
     },
     {
-      "id": "C5",
+      "id": "color-5",
       "track": "color",
-      "starts": [
-        "purple"
+      "sheets": [
+        5
       ],
       "steps": [
         {
@@ -596,10 +1208,10 @@
       }
     },
     {
-      "id": "C6",
+      "id": "color-6",
       "track": "color",
-      "starts": [
-        "brown"
+      "sheets": [
+        6
       ],
       "steps": [
         {
@@ -623,37 +1235,172 @@
       }
     },
     {
-      "id": "F1",
-      "track": "frame",
-      "starts": [
-        "ring"
+      "id": "color-7",
+      "track": "color",
+      "sheets": [
+        7
       ],
       "steps": [
         {
-          "question": "Lanterns flicker on the pier.\nUnder the stars, the tide rolls in.\nNight birds call across the water.\nEverything waits for morning.\n\n*Field guide required*.",
-          "answer": "crescent",
-          "hint": "Read the first letter of each line. Find that word in your field guide.",
-          "type": "Wordplay: acrostic",
+          "question": "I can betray your lack of experience.\nI can reveal your envy of another.\nYet when you’re waiting to move forward,\nI’m exactly what you hope to see.\n\nWhat am I?",
+          "answer": "green",
+          "hint": "Red light, yellow light, ___ light.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "You could make my shade with gum, but you'd have to look for it in the forest, not the checkout aisle.\n\n*Field guide required.*",
+          "answer": "yellow",
+          "hint": "Find a field guide entry about a golden shade made with gum.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "route",
+        "route": "R8"
+      }
+    },
+    {
+      "id": "color-8",
+      "track": "color",
+      "sheets": [
+        8
+      ],
+      "steps": [
+        {
+          "question": "You could make me by mixing the color of a stop sign with the color of a clear sky.",
+          "answer": "purple",
+          "hint": "When you mix red with blue you get purple.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "You might turn me when embarrassed, see me when angry, and stop when I appear.",
+          "answer": "red",
+          "hint": "Think about the color of a stop sign.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "C7"
+      }
+    },
+    {
+      "id": "color-9",
+      "track": "color",
+      "sheets": [
+        9
+      ],
+      "steps": [
+        {
+          "question": "An old thermometer hints at the metal inside me. Grind me up, and I become something a painter could use.\n\n*Field guide required.*",
+          "answer": "red",
+          "hint": "Find a field guide entry that talks about mercury.",
+          "type": "Meaning",
           "fieldGuide": true
         },
         {
-          "question": "Dell toyed with the idea of going to the gym all day but forgot in the end.\n\n*Field guide required*.",
-          "answer": "diamond",
-          "hint": "Say \"Dell toyed\" out loud, quickly. Find the word it sounds like in your field guide.",
-          "type": "Wordplay: sounds like",
+          "question": "You could make me from something you'd normally look through, colored with cobalt, then ground up.\n\n*Field guide required.*",
+          "answer": "blue",
+          "hint": "Find a field guide entry that talks about glass.",
+          "type": "Meaning",
           "fieldGuide": true
         }
       ],
       "outcome": {
         "type": "clue",
-        "clue": "F-flat"
+        "clue": "C6"
       }
     },
     {
-      "id": "F2",
+      "id": "color-10",
+      "track": "color",
+      "sheets": [
+        10
+      ],
+      "steps": [
+        {
+          "question": "My appearance suggests treasure, but I contain an element better known for its role in murder mysteries.\n\n*Field guide required.*",
+          "answer": "yellow",
+          "hint": "Find a field guide entry that talks about arsenic.",
+          "type": "Meaning",
+          "fieldGuide": true
+        },
+        {
+          "question": "You’d welcome me on your toast, but worry if I spread across your lawn.",
+          "answer": "brown",
+          "hint": "Another word for adding color to something when cooking.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "C5"
+      }
+    },
+    {
+      "id": "color-11",
+      "track": "color",
+      "sheets": [
+        11
+      ],
+      "steps": [
+        {
+          "question": "I was first made in a city that would later be divided by a famous wall.\n\n*Field guide required.*",
+          "answer": "blue",
+          "hint": "Find a field guide entry that references Berlin.",
+          "type": "Meaning",
+          "fieldGuide": true
+        },
+        {
+          "question": "My main ingredient starts as firewood and ends as a chimney sweep’s problem\n\n*Field guide required.*",
+          "answer": "brown",
+          "hint": "Find a field guide entry that talks about wood soot.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "C8"
+      }
+    },
+    {
+      "id": "color-12",
+      "track": "color",
+      "sheets": [
+        12
+      ],
+      "steps": [
+        {
+          "question": "On the road, I urge caution. In an old-fashioned insult, I question your courage.",
+          "answer": "yellow",
+          "hint": "The color of lemonade.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "You could make me from six-legged residents of a plant you wouldn't want to hug.\n\n*Field guide required.*",
+          "answer": "red",
+          "hint": "Find a field guide entry about a color made by crushing bugs.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "C9"
+      }
+    },
+    {
+      "id": "geometer-1",
       "track": "frame",
-      "starts": [
-        "diamond"
+      "sheets": [
+        1
       ],
       "steps": [
         {
@@ -677,10 +1424,10 @@
       }
     },
     {
-      "id": "F3",
+      "id": "geometer-2",
       "track": "frame",
-      "starts": [
-        "crescent"
+      "sheets": [
+        2
       ],
       "steps": [
         {
@@ -691,7 +1438,7 @@
           "fieldGuide": true
         },
         {
-          "question": "Boxers fight inside me, even though I'm square. What am I?\n\n*Field guide NOT required*.",
+          "question": "Boxers fight inside me, even though I'm square. What am I?",
           "answer": "ring",
           "hint": "Boxers fight in a ring.",
           "type": "General knowledge",
@@ -704,37 +1451,37 @@
       }
     },
     {
-      "id": "F4",
+      "id": "geometer-3",
       "track": "frame",
-      "starts": [
-        "squircle"
+      "sheets": [
+        3
       ],
       "steps": [
         {
-          "question": "An astronomer went for a manicure and found something familiar without looking up.\n\n*Field guide required*.",
+          "question": "Lanterns flicker on the pier.\nUnder the stars, the tide rolls in.\nNight birds call across the water.\nEverything waits for morning.\n\n*Field guide required*.",
           "answer": "crescent",
-          "hint": "Look at the base of your fingernail. Find that half-moon in your field guide.",
-          "type": "Meaning",
+          "hint": "Read the first letter of each line. Find that word in your field guide.",
+          "type": "Wordplay: acrostic",
           "fieldGuide": true
         },
         {
-          "question": "Seems fishy to me.\n\n*Field guide required*.",
-          "answer": "almond",
-          "hint": "Find the field guide entry whose name means fish bladder.",
-          "type": "Meaning",
+          "question": "Dell toyed with the idea of going to the gym all day but forgot in the end.\n\n*Field guide required*.",
+          "answer": "diamond",
+          "hint": "Say \"Dell toyed\" out loud, quickly. Find the word it sounds like in your field guide.",
+          "type": "Wordplay: sounds like",
           "fieldGuide": true
         }
       ],
       "outcome": {
         "type": "clue",
-        "clue": "F-card"
+        "clue": "F-flat"
       }
     },
     {
-      "id": "F5",
+      "id": "geometer-4",
       "track": "frame",
-      "starts": [
-        "almond"
+      "sheets": [
+        4
       ],
       "steps": [
         {
@@ -758,10 +1505,10 @@
       }
     },
     {
-      "id": "F6",
+      "id": "geometer-5",
       "track": "frame",
-      "starts": [
-        "curved triangle"
+      "sheets": [
+        5
       ],
       "steps": [
         {
@@ -783,12 +1530,201 @@
         "type": "route",
         "route": "R6"
       }
+    },
+    {
+      "id": "geometer-6",
+      "track": "frame",
+      "sheets": [
+        6
+      ],
+      "steps": [
+        {
+          "question": "An astronomer went for a manicure and found something familiar without looking up.\n\n*Field guide required*.",
+          "answer": "crescent",
+          "hint": "Look at the base of your fingernail. Find that half-moon in your field guide.",
+          "type": "Meaning",
+          "fieldGuide": true
+        },
+        {
+          "question": "Seems fishy to me.\n\n*Field guide required*.",
+          "answer": "almond",
+          "hint": "Find the field guide entry whose name means fish bladder.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "F-card"
+      }
+    },
+    {
+      "id": "geometer-7",
+      "track": "frame",
+      "sheets": [
+        7
+      ],
+      "steps": [
+        {
+          "question": "Take the path a planet follows, drop its last letter, and add the word for something you fill out.\n\n*Field guide required.*",
+          "answer": "curved triangle",
+          "hint": "A planet follows an orbit, and you fill out a form. Find orbi + form in your field guide.",
+          "type": "Wordplay: word-building",
+          "fieldGuide": true
+        },
+        {
+          "question": "A knight’s shield could carry this simple emblem.\n\n*Field guide required.*",
+          "answer": "ring",
+          "hint": "Find the field guide entry that references heraldry.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "G8"
+      }
+    },
+    {
+      "id": "geometer-8",
+      "track": "frame",
+      "sheets": [
+        8
+      ],
+      "steps": [
+        {
+          "question": "Many app icons wear my outline: as wide as they are tall, with no sharp corners.",
+          "answer": "squircle",
+          "hint": "Picture an app icon on a phone: a square with rounded corners. Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "In a narrow glass tube, look for the place where water refuses to lie flat.\n\n*Field guide required.*",
+          "answer": "crescent",
+          "hint": "Find the field guide entry about the curved surface of water in a narrow tube.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "G9"
+      }
+    },
+    {
+      "id": "geometer-9",
+      "track": "frame",
+      "sheets": [
+        9
+      ],
+      "steps": [
+        {
+          "question": "I keep three corners, but take a bending path between each pair.",
+          "answer": "curved triangle",
+          "hint": "Picture a triangle whose sides bulge outward. Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "A batter hopes to make a complete trip around me.",
+          "answer": "diamond",
+          "hint": "What shape is a baseball infield? Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        }
+      ],
+      "outcome": {
+        "type": "route",
+        "route": "R9"
+      }
+    },
+    {
+      "id": "geometer-10",
+      "track": "frame",
+      "sheets": [
+        10
+      ],
+      "steps": [
+        {
+          "question": "I’m fullest through the middle, with bowed sides that taper toward the ends.",
+          "answer": "almond",
+          "hint": "Picture the outline of the nut that shares this shape's name. Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        },
+        {
+          "question": "I’m the moon’s thin smile before its face grows full.",
+          "answer": "crescent",
+          "hint": "What shape is the moon when only a sliver shows? Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "G6"
+      }
+    },
+    {
+      "id": "geometer-11",
+      "track": "frame",
+      "sheets": [
+        11
+      ],
+      "steps": [
+        {
+          "question": "Viewed from above, its third dimension is easy to overlook.\n\n*Field guide required.*",
+          "answer": "ring",
+          "hint": "Find the field guide entry that references a three-dimensional object.",
+          "type": "Meaning",
+          "fieldGuide": true
+        },
+        {
+          "question": "Start with four equal sides and four right angles, then soften every corner.",
+          "answer": "squircle",
+          "hint": "Picture a shape halfway between a square and a circle. Scan it.",
+          "type": "General knowledge",
+          "fieldGuide": false
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "G7"
+      }
+    },
+    {
+      "id": "geometer-12",
+      "track": "frame",
+      "sheets": [
+        12
+      ],
+      "steps": [
+        {
+          "question": "My namesake was a Frenchman whose first name is shared with an archangel.\n\n*Field guide required.*",
+          "answer": "squircle",
+          "hint": "Find the field guide entry named after a French mathematician called Gabriel.",
+          "type": "Meaning",
+          "fieldGuide": true
+        },
+        {
+          "question": "My name suggests a tiny vessel in France, but you’re more likely to find me at a jeweler’s.\n\n*Field guide required.*",
+          "answer": "almond",
+          "hint": "Find the field guide entry about a gem cut whose name means \"little boat\" in French.",
+          "type": "Meaning",
+          "fieldGuide": true
+        }
+      ],
+      "outcome": {
+        "type": "clue",
+        "clue": "G5"
+      }
     }
   ],
   "routes": [
     {
       "id": "R1",
-      "trail": "A5",
+      "trail": "zoologist-11",
       "track": "animal",
       "hops": [
         {
@@ -807,11 +1743,12 @@
             "value": "ring"
           }
         }
-      ]
+      ],
+      "clue": "X1"
     },
     {
       "id": "R2",
-      "trail": "A6",
+      "trail": "zoologist-2",
       "track": "animal",
       "hops": [
         {
@@ -830,11 +1767,12 @@
             "value": "brown"
           }
         }
-      ]
+      ],
+      "clue": "X2"
     },
     {
       "id": "R3",
-      "trail": "C5",
+      "trail": "color-5",
       "track": "color",
       "hops": [
         {
@@ -853,11 +1791,12 @@
             "value": "almond"
           }
         }
-      ]
+      ],
+      "clue": "X3"
     },
     {
       "id": "R4",
-      "trail": "C6",
+      "trail": "color-6",
       "track": "color",
       "hops": [
         {
@@ -876,11 +1815,12 @@
             "value": "diamond"
           }
         }
-      ]
+      ],
+      "clue": "X1"
     },
     {
       "id": "R5",
-      "trail": "F5",
+      "trail": "geometer-4",
       "track": "frame",
       "hops": [
         {
@@ -899,11 +1839,12 @@
             "value": "brown"
           }
         }
-      ]
+      ],
+      "clue": "X2"
     },
     {
       "id": "R6",
-      "trail": "F6",
+      "trail": "geometer-5",
       "track": "frame",
       "hops": [
         {
@@ -920,6 +1861,73 @@
           "accept": {
             "category": "color",
             "value": "yellow"
+          }
+        }
+      ],
+      "clue": "X3"
+    },
+    {
+      "id": "R7",
+      "trail": "zoologist-12",
+      "track": "animal",
+      "collab": true,
+      "hops": [
+        {
+          "owner": "color",
+          "accept": {
+            "category": "color",
+            "value": "green"
+          }
+        },
+        {
+          "owner": "frame",
+          "accept": {
+            "category": "frame",
+            "value": "diamond"
+          }
+        }
+      ]
+    },
+    {
+      "id": "R8",
+      "trail": "color-7",
+      "track": "color",
+      "collab": true,
+      "hops": [
+        {
+          "owner": "animal",
+          "accept": {
+            "category": "animal",
+            "value": "owl"
+          }
+        },
+        {
+          "owner": "frame",
+          "accept": {
+            "category": "frame",
+            "value": "almond"
+          }
+        }
+      ]
+    },
+    {
+      "id": "R9",
+      "trail": "geometer-9",
+      "track": "frame",
+      "collab": true,
+      "hops": [
+        {
+          "owner": "animal",
+          "accept": {
+            "category": "animal",
+            "value": "zebra"
+          }
+        },
+        {
+          "owner": "color",
+          "accept": {
+            "category": "color",
+            "value": "brown"
           }
         }
       ]
@@ -1083,6 +2091,26 @@
         "term": "zinc white",
         "value": null,
         "note": "brilliant white made from zinc oxide"
+      },
+      {
+        "term": "orpiment",
+        "value": "yellow",
+        "note": "golden-yellow arsenic mineral"
+      },
+      {
+        "term": "cinnabar",
+        "value": "red",
+        "note": "red mercury mineral, ground for pigment"
+      },
+      {
+        "term": "carmine",
+        "value": "red",
+        "note": "crimson made from cochineal insects, which live on cactus"
+      },
+      {
+        "term": "Prussian blue",
+        "value": "blue",
+        "note": "deep blue synthetic pigment, first made in Berlin around 1704"
       }
     ],
     "frame": [
@@ -1150,6 +2178,36 @@
         "term": "pentagram",
         "value": null,
         "note": "a five-pointed star"
+      },
+      {
+        "term": "annulet",
+        "value": "ring",
+        "note": "in heraldry, a plain ring"
+      },
+      {
+        "term": "torus",
+        "value": "ring",
+        "note": "a three-dimensional ring, like an inner tube; seen from above, it looks like a flat ring"
+      },
+      {
+        "term": "Lamé curve",
+        "value": "squircle",
+        "note": "another name for the superellipse, after the French mathematician Gabriel Lamé"
+      },
+      {
+        "term": "orbiform",
+        "value": "curved triangle",
+        "note": "any curve of constant width; apart from the circle, the curved triangle is the most famous"
+      },
+      {
+        "term": "meniscus",
+        "value": "crescent",
+        "note": "a crescent shape, like the cross-section of a lens curved outward on one side and inward on the other; also the curved surface of water in a narrow tube"
+      },
+      {
+        "term": "navette",
+        "value": "almond",
+        "note": "French for \"little boat\": a gem cut pointed at both ends"
       }
     ]
   },
@@ -1273,20 +2331,20 @@
     }
   ],
   "messages": {
-    "opening": "You are all trying to solve the same question: What's in the box?",
-    "colorCheck": "This game can be played without the need to discriminate between colors. Would you like to opt out of the color discrimination tasks?",
+    "opening": "You are all trying to solve the same question:\n**What's in the box?**",
+    "colorCheck": "Accessibility notice: This game can be played in colorblind mode.\n\nWould you like to opt out of the color discrimination tasks?",
     "track_animal": "You have been assigned the role of ***Zoologist***.\n\nYour field guide will help you decode some of the puzzles into animals.",
     "track_color": "You have been assigned the role of ***Color Scientist***.\n\nYour field guide will help you decode some of the puzzles into colors.",
     "track_frame": "You have been assigned the role of ***Geometer***.\n\nYour field guide will help you decode some of the puzzles into shapes.",
     "firstPrompt_animal": "Begin by scanning your favorite of the animals in the room.",
-    "firstPrompt_color": "Begin by scanning your favorite of the colors in the room.",
-    "firstPrompt_frame": "Begin by scanning your favorite of the shapes in the room.",
-    "correct": "Yes, that seems right.",
+    "firstPrompt_color": "Begin by scanning any of the colors in the room.",
+    "firstPrompt_frame": "Begin by scanning any of the shapes in the room.",
+    "correct": "Yes, that seems right. Your trail continues...",
     "wrongInTrack": "Your trail goes cold. Go back to the {place} and scan it to try again or start a new trail.",
-    "localOptimum": "**You found a clue!** It's saved in your notebook for future reference.\n\n**Clue:** {clue}\n\nStart a new trail to learn more clues or submit your final answer if you think you know what's inside the box.",
+    "localOptimum": "**You found a clue!** It's saved in your notebook for future reference.\n\n**Clue {tag}:** {clue}\n\nStart a new trail to learn more clues or submit your final answer if you think you know what's inside the box.",
     "hop": "**{term}**",
     "wrongHop": "The trail goes cold. You'll need to start a new one.",
-    "found": "**You found a rare clue!** Only a team effort could unlock this one. It's saved in your notebook.\n\n**Clue:** It's made of chocolate.\n\nStart a new trail to learn more clues or submit your final answer if you think you know what's inside the box.",
+    "found": "**You found a rare clue!** Only a team effort could unlock this one. It's saved in your notebook.\n\n**Clue {tag}:** It's made of chocolate.\n\nStart a new trail to learn more clues or submit your final answer if you think you know what's inside the box.",
     "submitButton": "Submit final answer.",
     "submitEntry": "What's in the box? You get one answer.",
     "submitConfirm": "Submit \"{answer}\"? Submitting ends your search: you won't be able to scan any more. You can still talk with anyone and use your field guide to help them.",
@@ -1294,7 +2352,7 @@
     "projectorCount": "Run {r}: {k} of {n} have submitted.",
     "revealProjector": "Run {r} scores",
     "revealPhone": "You answered \"{answer}\": {score} points.",
-    "newRun": "Run {r} is starting. You're still a{an} {track}, and your notebook still has the clues you found.",
+    "newRun": "Run {r} is starting. You're still a{an} {track} inquirer, and your notebook still has the clues you found.",
     "guideButton": "Field Guide",
     "notebookButton": "Notebook",
     "notStarted": "The game is about to begin. Please wait.",
@@ -1308,7 +2366,7 @@
     "noSubmission": "You didn't submit an answer this run.",
     "notScored": "You answered \"{answer}\". The administrator will score it.",
     "submitClosed": "Answers can only be submitted while a run is in progress.",
-    "localOptimumRepeat": "Your trail ends here, at a clue you already have.\n\n**Clue:** {clue}",
+    "localOptimumRepeat": "Your trail ends here, at a clue you already have.\n\n**Clue {tag}:** {clue}",
     "projectorWaiting": "Scan to join. The game will start soon.",
     "scanButton": "Scan",
     "scanHelp": "Point your camera at a QR code.",
@@ -1317,7 +2375,7 @@
     "scanUnknown": "That code isn't part of this game.",
     "place": "{color} {animal} in the {frame}",
     "finalHeading": "What's in the box?",
-    "finalHint": "When you think you know what's in the box, submit your final answer. After that, you can't scan any more.",
+    "finalHint": "When you think you know what's in the box, submit your final answer.",
     "pathButton": "My path",
     "pathEmpty": "You haven't scanned anything yet.",
     "pathRun": "Run {r}",
@@ -1345,12 +2403,46 @@
     "cardButton": "Got it",
     "notebookNew": "New",
     "pathHint": "Used a hint",
-    "foundRecord": "**Rare clue:** It's made of chocolate.",
+    "foundRecord": "{tag} **Rare clue:** It's made of chocolate.",
     "joinNeedCode": "Scan the QR code on the classroom screen to join the game.",
     "joinTypeCode": "Can't scan it? Type the 4-letter code shown under it:",
     "joinCodeButton": "Continue",
     "joinBadCode": "That code doesn't match the game on the classroom screen. Check it and try again.",
-    "projectorCode": "Can't scan? Go to {site} and enter code {code}"
+    "projectorCode": "Can't scan? Go to {site} and enter code {code}",
+    "rareTag": "★",
+    "notebookEntry": "**{tag}** {clue}",
+    "trailDone": "You've already finished the trail that starts here. Scan a different sheet to start a new one.",
+    "pathDone": "Already finished this trail",
+    "colorYes": "Yes, opt out.",
+    "colorNo": "No",
+    "guideSearch": "Search",
+    "submitGo": "Submit",
+    "submitGoConfirm": "Yes, submit",
+    "submitCancel": "Cancel",
+    "submitEmpty": "Type an answer first.",
+    "submitTwice": "You've already submitted an answer this run.",
+    "projectorPoints": "{points} points",
+    "projectorNoAnswer": "No answer",
+    "projectorNotScored": "Not scored",
+    "collabCard": "**You need someone else to help you with this one!**\n\nFind a {role} and ask them to scan the code on your screen.",
+    "collabNeed": "Find a {role} and ask them to scan this code.",
+    "collabHelped": "{helper} scanned your code. Ask them where to go, then scan it.",
+    "collabNotYet": "No one has scanned your code yet. Find a {role} first.",
+    "collabWrong": "That isn't it. Ask a {role} to scan your code again.",
+    "collabHelperCard": "**You're helping {name}!**\n\nTell them to scan the **{answer}**.",
+    "collabReward": "As thanks, these clues from {name}'s notebook are now in yours: {tags}.",
+    "collabRewardNone": "You already have every clue {name} has found. Thanks for helping!",
+    "collabWrongRole": "This code needs a {role}.",
+    "collabExpired": "This code isn't active anymore.",
+    "collabQrAlt": "Code for your collaborator to scan",
+    "pathHelped": "Helped another expert",
+    "pathCollabWrong": "Not where your collaborator pointed",
+    "negativeClue": "**You learned something anyway.** It's saved in your notebook.\n\n**Clue {tag}:** {clue}",
+    "negativeRepeat": "You already have the clue this trail leaves behind.\n\n**Clue {tag}:** {clue}",
+    "secretFirst": "**You found a secret!**\n\nGo to the administrator and ask \"What's in the second box?\" for your prize.",
+    "secretClaimed": "**You found a secret!**\n\nSomeone else already claimed its prize.",
+    "secretRecord": "**Secret:** Ask the administrator \"What's in the second box?\" for your prize.",
+    "secretRecordClaimed": "**Secret:** found, but its prize was already claimed."
   },
   "messageLabels": {
     "opening": "Opening question (projector)",
@@ -1418,7 +2510,41 @@
     "joinTypeCode": "Join: type the code",
     "joinCodeButton": "Join: code button",
     "joinBadCode": "Join: wrong code",
-    "projectorCode": "Projector: code under the QR code"
+    "projectorCode": "Projector: code under the QR code",
+    "rareTag": "Rare clue: its ID (shown as {tag})",
+    "notebookEntry": "Notebook: one clue ({tag} = its ID, {clue} = its text)",
+    "trailDone": "Scanned the start of a trail already finished",
+    "pathDone": "My path: scanned the start of a finished trail",
+    "colorYes": "Color-vision check: Yes button",
+    "colorNo": "Color-vision check: No button",
+    "guideSearch": "Field guide: search box placeholder",
+    "submitGo": "Submit: send button",
+    "submitGoConfirm": "Submit: send button when confirming",
+    "submitCancel": "Submit: cancel button",
+    "submitEmpty": "Submit: no answer typed",
+    "submitTwice": "Submit: already submitted",
+    "projectorPoints": "Projector: score row ({points} = the score)",
+    "projectorNoAnswer": "Projector: row for players with no answer",
+    "projectorNotScored": "Projector: row for answers not yet scored",
+    "collabCard": "Card when a trail needs a collaborator ({role} = the expert needed)",
+    "collabNeed": "Prompt under the code, waiting for a collaborator",
+    "collabHelped": "Prompt once the collaborator has scanned ({helper} = their name)",
+    "collabNotYet": "Scanned a sheet before anyone scanned the code",
+    "collabWrong": "Scanned the wrong sheet after getting help",
+    "collabHelperCard": "Pop-up on the collaborator's phone ({name} = the player helped, {answer} = where to send them)",
+    "collabReward": "Collaborator's reward, under the pop-up ({tags} = the clue IDs they gained)",
+    "collabRewardNone": "Collaborator's reward when they already had every clue",
+    "collabWrongRole": "A player of the wrong type scanned someone's code",
+    "collabExpired": "Scanned a code that is no longer active",
+    "collabQrAlt": "Description of the code image (read aloud by screen readers)",
+    "pathHelped": "My path: scanned someone else's code to help them",
+    "pathCollabWrong": "My path: wrong scan after getting help",
+    "negativeClue": "Clue for a failed inquiry, added after the message (shown also as a card)",
+    "negativeRepeat": "Clue for a failed inquiry the player already has",
+    "secretFirst": "Secret: card for the first player in the class to scan 12 different sheets in a row",
+    "secretClaimed": "Secret: card for anyone who finds it after the prize was claimed",
+    "secretRecord": "Secret: line at the top of the notebook (first finder)",
+    "secretRecordClaimed": "Secret: line at the top of the notebook (prize already claimed)"
   },
   "guidesArchive": {
     "note": "Entries cut from the field guides on 2026-10-21. Move one back into guides to restore it.",

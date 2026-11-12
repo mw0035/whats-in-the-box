@@ -10,7 +10,7 @@
 <main>
   <!-- Joining -->
   <section id="intro" class="hidden">
-    <h1 id="opening">What's in the box?</h1>
+    <h1 id="opening" style="white-space:pre-line">What's in the box?</h1>
     <div id="codeStep" class="hidden">
       <p id="codeError" class="error hidden"></p>
       <p id="joinNeedCode" class="prompt"></p>
@@ -24,10 +24,10 @@
       <p><button id="nameGo" class="primary" style="width:100%"></button></p>
     </div>
     <div id="colorStep" class="hidden">
-      <p id="colorCheck"></p>
+      <p id="colorCheck" style="white-space:pre-line"></p>
       <div class="row">
-        <button id="colorYes">Yes</button>
-        <button id="colorNo">No</button>
+        <button id="colorYes"></button>
+        <button id="colorNo"></button>
       </div>
     </div>
   </section>
@@ -38,6 +38,7 @@
     <div id="result" class="box result hidden"></div>
     <p id="puzzleLabel" class="puzzle-label hidden"></p>
     <p id="prompt" class="prompt"></p>
+    <p id="helpQrBox" class="help-qr hidden"><img id="helpQr" alt=""></p>
     <div id="hintBox" class="box hint hidden"></div>
     <p><button id="scanBtn" class="primary big hidden"></button></p>
     <p><button id="hintBtn" class="hidden" style="width:100%"></button></p>
@@ -57,14 +58,14 @@
 
     <div id="guidePanel" class="box hidden">
       <h2 id="guideTitle"></h2>
-      <input id="guideSearch" type="search" placeholder="Search" autocomplete="off">
+      <input id="guideSearch" type="search" autocomplete="off">
       <dl id="guideList"></dl>
     </div>
 
     <div id="notebookPanel" class="box hidden">
       <h2 id="notebookTitle"></h2>
       <ul id="notebookList"></ul>
-      <p id="notebookEmpty" class="muted">No clues yet.</p>
+      <p id="notebookEmpty" class="muted"></p>
     </div>
 
     <div id="pathPanel" class="box hidden">
@@ -83,8 +84,8 @@
         <input id="answer" type="text" maxlength="120" autocomplete="off">
         <p id="submitConfirm" class="hidden"></p>
         <div class="row">
-          <button id="submitGo" class="primary">Submit</button>
-          <button id="submitCancel">Cancel</button>
+          <button id="submitGo" class="primary"></button>
+          <button id="submitCancel"></button>
         </div>
       </div>
     </div>
@@ -118,6 +119,9 @@ try { creds = JSON.parse(localStorage.getItem(KEY)); } catch (_) {}
 let pendingScan = null;
 const m = location.pathname.match(/^\/s\/([A-Za-z0-9]+)/);
 if (m) { pendingScan = m[1]; history.replaceState(null, "", "/"); }
+// Another player's collaboration code, scanned with the phone's own camera app, opens /h/<code>.
+const hm = location.pathname.match(/^\/h\/([A-Za-z0-9]+)/);
+if (hm) { pendingScan = { help: hm[1] }; history.replaceState(null, "", "/"); }
 
 // The projector's QR code opens /join/<class code>. Keep the code for this tab (it survives a refresh) and tidy the address.
 const JOIN_KEY = "witb-join-code";
@@ -166,9 +170,10 @@ function renderNotebook(v) {
   const fresh = v.notebook.length - seen;
   $("notebookBtn").textContent = labels.notebookButton + (v.notebook.length ? ` (${v.notebook.length})` : "");
   $("notebookBtn").classList.toggle("has-new", fresh > 0);
-  $("notebookList").innerHTML = (v.foundNote ? `<li class="found-note">${fmt(v.foundNote)}</li>` : "") + v.notebook.map((t, i) =>
-    `<li>${esc(t)}${i >= seen ? ` <span class="tag">${esc(labels.notebookNew)}</span>` : ""}</li>`).join("");
-  $("notebookEmpty").textContent = labels.notebookEmpty; show("notebookEmpty", v.notebook.length === 0 && !v.foundNote);
+  $("notebookList").innerHTML = (v.secretNote ? `<li class="found-note">${fmt(v.secretNote)}</li>` : "") +
+    (v.foundNote ? `<li class="found-note">${fmt(v.foundNote)}</li>` : "") + v.notebook.map((t, i) =>
+    `<li>${fmt(t)}${i >= seen ? ` <span class="tag">${esc(labels.notebookNew)}</span>` : ""}</li>`).join("");
+  $("notebookEmpty").textContent = labels.notebookEmpty; show("notebookEmpty", v.notebook.length === 0 && !v.foundNote && !v.secretNote);
 }
 
 function render(v) {
@@ -179,6 +184,11 @@ function render(v) {
   show("result", !!v.result); $("result").innerHTML = fmt(v.result);
   show("puzzleLabel", !!v.puzzleNum); $("puzzleLabel").textContent = v.puzzleNum ? labels.puzzleLabel.replace("{n}", v.puzzleNum) : "";
   $("prompt").innerHTML = fmt(v.prompt);
+  show("helpQrBox", !!v.helpCode);
+  if (v.helpCode && $("helpQr").dataset.code !== v.helpCode) {
+    $("helpQr").dataset.code = v.helpCode; $("helpQr").src = "/api/help-qr/" + encodeURIComponent(v.helpCode) + ".svg";
+  }
+  $("helpQr").alt = labels.collabQrAlt || "";
   show("hintBox", !!v.hint); $("hintBox").innerHTML = v.hint ? `<strong>${esc(labels.hintLabel)}</strong> ${fmt(v.hint)}` : "";
   $("hintBtn").textContent = labels.hintButton; show("hintBtn", ["available", "none", "cross"].includes(v.hintState));
   if (!["available", "none", "cross"].includes(v.hintState)) show("hintPanel", false);
@@ -195,7 +205,7 @@ function render(v) {
   renderPath(v.path || []);
   renderNotebook(v);
   $("guideTitle").textContent = `${v.trackLabel} ${labels.guideButton.toLowerCase()}`;
-  $("notebookTitle").textContent = labels.notebookButton;
+  $("notebookTitle").textContent = labels.notebookButton; $("guideSearch").placeholder = labels.guideSearch;
   if (v.error) { $("error").textContent = v.error; show("error", true); } else show("error", false);
 }
 
@@ -225,8 +235,9 @@ function askForCode(wrong) {
 
 async function showIntro() {
   const r = await api("/api/intro");
-  $("opening").textContent = r.data.opening; $("colorCheck").textContent = r.data.colorCheck;
+  $("opening").innerHTML = fmt(r.data.opening); $("colorCheck").innerHTML = fmt(r.data.colorCheck);
   $("namePrompt").textContent = labels.namePrompt; $("nameGo").textContent = labels.nameContinue;
+  $("colorYes").textContent = labels.colorYes; $("colorNo").textContent = labels.colorNo;
   $("colorYes").disabled = $("colorNo").disabled = false;
   show("card", false); show("play", false); show("intro", true);
   if (await codeOk(joinCode)) showStep("nameStep");
@@ -256,7 +267,7 @@ async function join(colorTrouble) {
 }
 
 async function scan(code) {
-  const r = await api("/api/scan", { code });
+  const r = code && code.help ? await api("/api/help", { code: code.help }) : await api("/api/scan", { code });
   if (r.status === 200) render(r.data); else refresh();
   show("guidePanel", false); show("notebookPanel", false); show("pathPanel", false); show("hintPanel", false);
   window.scrollTo(0, 0);
@@ -289,9 +300,13 @@ function loadJsQR() {
   });
 }
 
-// Sheet QR codes hold an address ending in /s/<code>.
+// Sheet QR codes hold an address ending in /s/<code>; another player's collaboration code ends in /h/<code>.
 function codeFrom(text) {
-  try { const m = new URL(text, location.href).pathname.match(/^\/s\/([A-Za-z0-9]+)/); if (m) return m[1]; } catch (_) {}
+  try {
+    const path = new URL(text, location.href).pathname;
+    const m = path.match(/^\/s\/([A-Za-z0-9]+)/); if (m) return m[1];
+    const h = path.match(/^\/h\/([A-Za-z0-9]+)/); if (h) return { help: h[1] };
+  } catch (_) {}
   return String(text).slice(0, 100);
 }
 
@@ -388,7 +403,7 @@ $("guideSearch").oninput = () => {
   for (const el of document.querySelectorAll("#guideList .entry")) el.classList.toggle("hidden", !!q && !el.dataset.t.includes(q));
 };
 $("submitBtn").onclick = () => {
-  confirming = false; show("submitConfirm", false); $("submitGo").textContent = "Submit";
+  confirming = false; show("submitConfirm", false); $("submitGo").textContent = labels.submitGo; $("submitCancel").textContent = labels.submitCancel;
   $("submitEntry").textContent = labels.submitEntry; toggle("submitPanel"); $("answer").focus();
 };
 $("submitCancel").onclick = () => { confirming = false; show("submitPanel", false); };
@@ -398,7 +413,7 @@ $("submitGo").onclick = async () => {
   if (!confirming) {
     confirming = true;
     $("submitConfirm").textContent = labels.submitConfirm.replace("{answer}", answer);
-    show("submitConfirm", true); $("submitGo").textContent = "Yes, submit";
+    show("submitConfirm", true); $("submitGo").textContent = labels.submitGoConfirm;
     return;
   }
   const r = await api("/api/submit", { answer });

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin · What's in the box?</title>
 <link rel="stylesheet" href="/static/common.css">
-<style> main { max-width: 900px; } td input { width: 5em; } .warn { border-color: #a00; } </style>
+<style> main { max-width: 900px; } td input { width: 4.5em; font-size: 16px; padding: 6px; } .scroll { overflow-x: auto; } @media (max-width: 600px) { #subs td, #subsHead th { padding: 6px 4px; } .col-track { display: none; } } .warn { border-color: #a00; } </style>
 </head>
 <body>
 <main>
@@ -25,6 +25,7 @@
       <p id="statusLine" class="prompt" style="margin:0 0 8px"></p>
       <p id="countLine"></p>
       <p id="trackLine" class="muted"></p>
+      <p id="secretLine" class="hidden"></p>
       <div class="row">
         <button id="startBtn" class="primary">Start run</button>
         <button id="revealBtn">Reveal scores</button>
@@ -37,11 +38,11 @@
     <table><tbody id="stats"></tbody></table>
 
     <h2>Submitted answers</h2>
-    <p class="muted">Answers the app couldn't score are marked. Type points (0–100) and press Enter. Scores appear on phones and the projector only when you press <b>Reveal scores</b>.</p>
-    <table>
-      <thead><tr><th>Player</th><th>Track</th><th>Answer</th><th>Points</th><th>Scored as</th></tr></thead>
+    <p class="muted">Answers the app couldn't score are marked. Type points (0–100), then tap Done or anywhere else to save. Scores appear on phones and the projector only when you press <b>Reveal scores</b>.</p>
+    <div class="scroll"><table>
+      <thead id="subsHead"><tr><th>Player</th><th class="col-track">Track</th><th>Answer</th><th>Points</th><th>Scored as</th></tr></thead>
       <tbody id="subs"></tbody>
-    </table>
+    </table></div>
 
     <h2>Debrief data</h2>
     <p><button id="downloadBtn">Download debrief data</button> <span id="logInfo" class="muted"></span></p>
@@ -110,25 +111,35 @@ async function tick() {
   $("statusLine").textContent = `Game ${v.game} · Run ${v.run}: ${words[v.status]}`;
   $("countLine").textContent = `${v.submitted} of ${v.players} have submitted` + (v.unscored ? ` · ${v.unscored} answer(s) need your score` : "");
   $("trackLine").textContent = `Zoologists ${v.byTrack.animal} · Color Scientists ${v.byTrack.color} · Geometers ${v.byTrack.frame}`;
+  show("secretLine", !!v.secret);
+  if (v.secret) $("secretLine").innerHTML = `<b>Secret found first by ${esc(v.secret.name)}</b> (player ${v.secret.num}${v.secret.at ? ", " + new Date(v.secret.at).toLocaleTimeString() : ""}). They may ask you "What's in the second box?"`;
   show("startBtn", v.status === "waiting"); show("revealBtn", v.status === "playing"); show("nextBtn", v.status === "revealed");
   $("nextBtn").textContent = `Start run ${v.run + 1}`;
   $("joinUrl").textContent = v.joinUrl; $("classCode").textContent = v.classCode;
   const s = v.stats;
   $("stats").innerHTML = [["Scans", s.scans], ["Clues found", s.clues], ["Cross-track routes reached", s.routesReached],
-    ["Cross-track hops answered correctly", s.hopCorrect], ["Cross-track hops answered wrongly", s.hopWrong], ["Rare clues found (cross-track routes solved)", s.found], ["Hints used", s.hints]]
+    ["Cross-track hops answered correctly", s.hopCorrect], ["Cross-track hops answered wrongly", s.hopWrong], ["Rare clues found (cross-track routes solved)", s.found], ["Collaboration codes scanned by the right expert", s.helps || 0], ["Hints used", s.hints]]
     .map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join("");
   if (!editing) {
     $("subs").innerHTML = v.submissions.map((x) => `<tr${x.points == null ? ' style="background:#fff3d6"' : ""}>
-      <td>${esc(x.name)}</td><td>${esc(x.track)}</td><td>${esc(x.answer)}</td>
-      <td><input type="number" min="0" max="100" data-num="${x.num}" value="${x.points == null ? "" : x.points}"></td>
+      <td>${esc(x.name)}</td><td class="col-track">${esc(x.track)}</td><td>${esc(x.answer)}</td>
+      <td><input type="number" inputmode="numeric" enterkeyhint="done" min="0" max="100" data-num="${x.num}" value="${x.points == null ? "" : x.points}"></td>
       <td class="muted">${x.points == null ? "Needs your score" : esc(x.label) + (x.auto ? "" : " (by hand)")}</td></tr>`).join("");
     for (const inp of document.querySelectorAll("#subs input")) {
+      // Phones often have no Enter key on the number pad, so save whenever the value changes
+      // (tapping Done, tapping elsewhere, or pressing Enter on a computer).
       inp.onfocus = () => { editing = true; };
       inp.onblur = () => { editing = false; };
-      inp.onkeydown = async (e) => {
-        if (e.key !== "Enter") return;
-        await api("/api/admin/score", { num: Number(inp.dataset.num), points: inp.value === "" ? null : Number(inp.value) });
-        editing = false; inp.blur(); tick();
+      inp.onkeydown = (e) => { if (e.key === "Enter") inp.blur(); };
+      inp.onchange = async () => {
+        const raw = inp.value.trim();
+        const points = raw === "" ? null : Math.max(0, Math.min(100, Math.round(Number(raw))));
+        if (raw !== "" && !Number.isFinite(Number(raw))) return;
+        const status = inp.closest("tr").querySelector("td:last-child");
+        status.textContent = "Saving…";
+        const r = await api("/api/admin/score", { num: Number(inp.dataset.num), points });
+        status.textContent = r.status === 200 && r.data.ok ? "Saved" : "Not saved, try again";
+        setTimeout(tick, 600); // redraws only if you're not already typing in another box
       };
     }
   }

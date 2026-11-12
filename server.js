@@ -48,6 +48,7 @@ const page = (f) => (req, res) => res.sendFile(path.join(pub, f));
 app.get("/", page("player.html"));
 app.get("/s/:code", page("player.html"));
 app.get("/join/:code", page("player.html"));
+app.get("/h/:code", page("player.html")); // a collaboration code scanned with a phone's own camera app
 app.get("/projector", page("projector.html"));
 app.get("/admin", page("admin.html"));
 app.use("/static", express.static(pub, { maxAge: 0 })); // browsers re-check after every deploy
@@ -136,6 +137,19 @@ app.post("/api/scan", (req, res) => {
   playerReply(res, p);
 });
 
+// Scanning another player's collaboration code
+app.post("/api/help", (req, res) => {
+  const p = player(req, res); if (!p) return;
+  game.help(p, String((req.body && req.body.code) || "").slice(0, 40));
+  playerReply(res, p);
+});
+// The code a player shows to the expert they need: it opens /h/<code>
+app.get("/api/help-qr/:code.svg", async (req, res) => {
+  const code = String(req.params.code).replace(/[^a-f0-9]/g, "").slice(0, 40);
+  res.set("Cache-Control", "no-store");
+  res.type("image/svg+xml").send(await QRCode.toString(baseUrl(req) + "/h/" + code, { type: "svg", margin: 1 }));
+});
+
 app.post("/api/hint", (req, res) => {
   const p = player(req, res); if (!p) return;
   game.useHint(p);
@@ -158,7 +172,8 @@ app.get("/api/labels", (req, res) => {
   const m = content.messages;
   const keys = ["guideButton", "notebookButton", "submitButton", "submitEntry", "submitConfirm", "abandonButton",
     "notebookEmpty", "notebookNew", "joinNeedCode", "joinTypeCode", "joinCodeButton", "joinBadCode", "namePrompt", "nameContinue", "puzzleLabel", "hintButton", "hintConfirm", "hintYes", "hintNo",
-    "hintLabel", "hintCrossTrack", "hintNone", "cardButton", "scanButton", "scanHelp", "scanCancel", "scanNoCamera", "finalHeading", "finalHint", "pathButton", "pathEmpty", "pathRun", "pathAsked"];
+    "hintLabel", "hintCrossTrack", "hintNone", "cardButton", "scanButton", "scanHelp", "scanCancel", "scanNoCamera", "finalHeading", "finalHint", "pathButton", "pathEmpty", "pathRun", "pathAsked",
+    "colorYes", "colorNo", "guideSearch", "submitGo", "submitGoConfirm", "submitCancel", "collabQrAlt"];
   res.json(Object.fromEntries(keys.map((k) => [k, m[k]])));
 });
 

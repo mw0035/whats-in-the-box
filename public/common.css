@@ -38,3 +38,6 @@ h3 { font-size: 1em; margin: 1em 0 0.4em; }
 .card-inner button { margin-top: 18px; white-space: normal; }
 @keyframes card-pop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .found-note { list-style: none; margin: 0 0 10px -1.2em; padding: 8px 10px; border-radius: 6px; background: #e5f4e4; }
+
+.help-qr { text-align: center; margin: 8px 0 14px; }
+.help-qr img { width: 72%; max-width: 280px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }

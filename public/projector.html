@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/static/common.css">
 <style>
   main { max-width: 1100px; text-align: center; }
-  #opening { font-size: 3.5em; margin-top: 0.4em; }
+  #opening { font-size: 3.5em; margin-top: 0.4em; white-space: pre-line; }
   #count { font-size: 2.2em; margin: 0.4em 0; }
   #qr img { width: min(46vh, 80vw); height: auto; }
   #codeLine { font-size: 1.5em; margin: 0.2em 0 0; }
@@ -65,7 +65,7 @@ async function tick() {
   }
   try { localStorage.setItem(GAME_KEY, JSON.stringify({ bootId: v.bootId, epoch: v.epoch, game: v.game, run: v.run, status: v.status, at: Date.now() })); } catch (_) {}
   show("login", false); show("screen", true);
-  $("opening").textContent = v.opening;
+  $("opening").innerHTML = esc(v.opening).replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>").replace(/\*([^*\n]+)\*/g, "<em>$1</em>");
   const img = document.querySelector("#qr img");
   // The code in the address makes the browser fetch a new QR code whenever the class code changes.
   const src = "/api/admin/join-qr.svg?key=" + encodeURIComponent(key) + "&c=" + encodeURIComponent(v.classCode);
@@ -78,8 +78,7 @@ async function tick() {
   if (v.distribution) {
     $("revealTitle").textContent = v.revealTitle;
     const max = Math.max(1, ...v.distribution.map((d) => d[1]));
-    $("dist").innerHTML = v.distribution.map(([label, n]) => {
-      const name = isNaN(Number(label)) ? label : label + " points";
+    $("dist").innerHTML = v.distribution.map(([key, n, name]) => {
       return `<tr><td style="white-space:nowrap">${esc(name)}</td><td style="width:60%"><span class="bar" style="width:${(n / max) * 100}%"></span></td><td>${n}</td></tr>`;
     }).join("");
   }
