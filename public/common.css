@@ -41,3 +41,6 @@ h3 { font-size: 1em; margin: 1em 0 0.4em; }
 
 .help-qr { text-align: center; margin: 8px 0 14px; }
 .help-qr img { width: 72%; max-width: 280px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+.prompt.poem { font-size: 1.12em; }
+.prompt.poem .pl { display: block; padding-left: 1.2em; text-indent: -1.2em; }
+.prompt.poem .pl-gap { display: block; height: 0.7em; }

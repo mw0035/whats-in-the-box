@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analysis · What's in the box?</title>
+<link rel="stylesheet" href="/static/common.css">
+<style>
+  main { max-width: 1200px; }
+  h1 { font-size: 2.2em; margin: 0.2em 0 0.2em; }
+  h2 { font-size: 1.7em; margin: 1.6em 0 0.2em; }
+  .lead { font-size: 1.25em; margin: 0.2em 0 0.8em; color: #333; }
+  .controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; font-size: 0.85em; color: #555; margin: 4px 0 8px; }
+  .controls select { font: inherit; padding: 4px 6px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 12px 0; }
+  .tile { border: 1px solid #ccc; border-radius: 10px; padding: 14px 16px; }
+  .tile .n { font-size: 2.6em; font-weight: 700; line-height: 1.1; }
+  .tile .l { font-size: 1.05em; color: #444; }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .note { color: #555; font-size: 1em; margin: 6px 0; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 1.05em; color: #333; margin: 6px 0; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+  .tip { position: fixed; z-index: 20; max-width: 520px; background: #fff; border: 1px solid #bbb; border-radius: 10px; padding: 14px 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2); font-size: 1.15em; line-height: 1.45; pointer-events: none; }
+  .tip .who { color: #555; font-size: 0.85em; margin-bottom: 6px; }
+  .tip .q { white-space: pre-line; font-weight: 600; }
+  .tip .n { color: #555; font-size: 0.85em; margin-top: 8px; }
+  .hit { cursor: help; }
+</style>
+</head>
+<body>
+<main>
+  <section id="login" class="hidden" style="max-width:420px;margin:40px auto">
+    <p>Admin password</p>
+    <input id="pw" type="password"><p><button id="go" class="primary">Open analysis</button></p>
+    <p id="err" class="error hidden">Wrong password.</p>
+  </section>
+
+  <section id="screen" class="hidden">
+    <h1>What happened in the room</h1>
+    <div class="controls">
+      <label>Session <select id="selSession"></select></label>
+      <label>Game <select id="selGame"></select></label>
+      <label>Run <select id="selRun"></select></label>
+      <button id="refresh">Refresh</button>
+      <label>or open a downloaded file <input id="file" type="file" accept=".json,application/json"></label>
+      <span id="source"></span>
+    </div>
+
+    <h2>Overview</h2>
+    <div id="tiles" class="tiles"></div>
+
+    <h2>Terrain of the problem space</h2>
+    <p class="lead" id="terrainLead"></p>
+    <div id="terrain"></div>
+
+    <h2>Cross-track steps over time</h2>
+    <p class="lead" id="crossLead"></p>
+    <div class="legend" id="crossLegend"></div>
+    <div id="cross"></div>
+
+    <h2>Answer quality and cross-track clues</h2>
+    <p class="lead" id="qualityLead"></p>
+    <div class="legend" id="qualityLegend"></div>
+    <div id="quality"></div>
+  </section>
+</main>
+<div id="tip" class="tip hidden"></div>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const show = (id, on) => $(id).classList.toggle("hidden", !on);
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+let key = null; try { key = localStorage.getItem("witb-admin"); } catch (_) {}
+let DATA = null, SUM = null, SOURCE = "";
+
+// Role colors (readable on a projector and for most color-vision types)
+const ROLE_COLOR = { animal: "#2563eb", color: "#c2410c", frame: "#047857" };
+const MUTED = "#a3a3a3", INK = "#111", GRID = "#e5e5e5", SUB = "#555";
+
+async function api(path) {
+  const res = await fetch(path, { headers: { "x-admin-key": key || "" } });
+  return { status: res.status, data: await res.json().catch(() => ({})) };
+}
+
+// Same data as "Download debrief data": the server's log plus the copy the admin page keeps in this browser.
+async function loadLive() {
+  const r = await api("/api/admin/export");
+  if (r.status === 401) return false;
+  let store = { boots: {} };
+  try { store = JSON.parse(localStorage.getItem("witb-admin-log")) || store; } catch (_) {}
+  const seen = new Set(r.data.events.map((e) => e.boot + ":" + e.seq));
+  const extra = Object.values(store.boots || {}).flat().filter((e) => !seen.has(e.boot + ":" + e.seq));
+  DATA = { events: extra.concat(r.data.events), players: r.data.players || [] };
+  SOURCE = "Live data from this class";
+  return true;
+}
+
+async function start() {
+  const s = await api("/api/admin/content-summary");
+  if (s.status === 401) { show("screen", false); show("login", true); return; }
+  SUM = s.data;
+  show("login", false); show("screen", true);
+  if (!DATA) await loadLive();
+  setupSelectors(); render();
+}
+
+// ---------------------------------------------------------------- scope
+// A session is one class: it starts at "Reset everything" or after a gap of more than 3 hours.
+// The admin page's own copy of the log can hold earlier sessions, so the latest is shown by default.
+const GAP = 3 * 3600 * 1000;
+let SESSIONS = [];
+function splitSessions() {
+  const ev = [...DATA.events].filter((e) => e && e.t).sort((a, b) => a.t.localeCompare(b.t) || (a.seq || 0) - (b.seq || 0));
+  SESSIONS = [];
+  let cur = null, last = 0;
+  for (const e of ev) {
+    const t = Date.parse(e.t);
+    if (!cur || e.type === "reset" || t - last > GAP) { cur = []; SESSIONS.push(cur); }
+    if (e.type !== "reset") cur.push(e);
+    last = t;
+  }
+  SESSIONS = SESSIONS.filter((s) => s.some((e) => e.type === "scan"));
+  const sel = $("selSession");
+  sel.innerHTML = SESSIONS.map((s, i) => {
+    const d = new Date(s[0].t), players = new Set(s.filter((e) => e.player != null).map((e) => e.player)).size;
+    return `<option value="${i}">${d.toLocaleDateString(undefined, { month: "short", day: "numeric" })}, ${d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })} · ${players} players</option>`;
+  }).reverse().join("");
+  sel.value = String(SESSIONS.length - 1);
+}
+function classEvents() { return SESSIONS[Number($("selSession").value)] || []; }
+const gameOf = (e) => e.game || 1;
+function setupSelectors() {
+  splitSessions();
+  const ev = classEvents();
+  const games = [...new Set(ev.map(gameOf))].sort((a, b) => a - b);
+  const g = $("selGame").value || "all";
+  $("selGame").innerHTML = `<option value="all">All</option>` + games.map((x) => `<option value="${x}">${x}</option>`).join("");
+  $("selGame").value = games.includes(Number(g)) ? g : "all";
+  fillRuns();
+}
+function fillRuns() {
+  const ev = classEvents(), g = $("selGame").value;
+  const runs = [...new Set(ev.filter((e) => g === "all" || gameOf(e) === Number(g)).map((e) => e.run))].filter((x) => x != null).sort((a, b) => a - b);
+  const r = $("selRun").value || "all";
+  $("selRun").innerHTML = `<option value="all">All</option>` + runs.map((x) => `<option value="${x}">${x}</option>`).join("");
+  $("selRun").value = runs.includes(Number(r)) ? r : "all";
+}
+function inSel(e) {
+  const g = $("selGame").value, r = $("selRun").value;
+  return (g === "all" || gameOf(e) === Number(g)) && (r === "all" || e.run === Number(r));
+}
+
+// ---------------------------------------------------------------- helpers
+const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y), n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; };
+const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
+const roleLabel = (t) => (SUM && SUM.tracks && SUM.tracks[t]) || t;
+const trailById = () => new Map(((SUM && SUM.trails) || []).map((t) => [t.id, t]));
+const routeById = () => new Map(((SUM && SUM.routes) || []).map((r) => [r.id, r]));
+const ms = (t) => Date.parse(t);
+
+// Start of each run (game|run), to place events on "minute of the run"
+function runStarts(ev) {
+  const st = {};
+  for (const e of ev) { const k = gameOf(e) + "|" + e.run; if (e.type === "run_start" && st[k] == null) st[k] = ms(e.t); }
+  for (const e of ev) { const k = gameOf(e) + "|" + e.run; if (st[k] == null) st[k] = ms(e.t); }
+  return st;
+}
+
+// ---------------------------------------------------------------- overview
+function overview(sel) {
+  const role = new Map();
+  for (const e of sel) if (e.player != null && e.track) role.set(e.player, e.track);
+  const byRole = { animal: 0, color: 0, frame: 0 };
+  for (const t of role.values()) byRole[t] = (byRole[t] || 0) + 1;
+  const n = (type, f) => sel.filter((e) => e.type === type && (!f || f(e))).length;
+  const tiles = [
+    [role.size, "players"],
+    [byRole.animal, roleLabel("animal") + "s"], [byRole.color, roleLabel("color") + "s"], [byRole.frame, roleLabel("frame") + "s"],
+    [n("scan"), "scans"],
+    [n("clue", (e) => !(e.detail && e.detail.repeat)) + n("negative_clue", (e) => !(e.detail && e.detail.repeat)), "clues found"],
+    [n("found"), "rare clues found"],
+    [n("secret"), "secret finders"],
+  ];
+  $("tiles").innerHTML = tiles.map(([v, l]) => `<div class="tile"><div class="n">${v}</div><div class="l">${esc(l)}</div></div>`).join("");
+}
+
+// ---------------------------------------------------------------- terrain
+function terrain(sel) {
+  const trails = trailById();
+  const rows = new Map();
+  const add = (trail, step, what) => {
+    if (!trail || step == null) return;
+    const k = trail + "|" + step;
+    const r = rows.get(k) || { trail, step, wrong: 0, restarts: 0 };
+    r[what]++; rows.set(k, r);
+  };
+  for (const e of sel) {
+    if (e.type === "wrong" && e.detail) add(e.detail.trail, e.detail.step, "wrong");
+    if (e.type === "abandon" && e.detail && e.detail.from && ["q", "qcold"].includes(e.detail.from.mode)) add(e.detail.from.trail, e.detail.from.step, "restarts");
+  }
+  const list = [...rows.values()].map((r) => ({ ...r, total: r.wrong + r.restarts })).sort((a, b) => b.total - a.total);
+  const total = list.reduce((s, r) => s + r.total, 0);
+  if (!total) { $("terrainLead").textContent = "No wrong scans or restarts yet."; $("terrain").innerHTML = ""; return; }
+  const TOP = Math.min(6, list.length), SHOW = Math.min(14, list.length), shown = list.slice(0, SHOW);
+  const topSum = list.slice(0, TOP).reduce((s, r) => s + r.total, 0);
+  const byRole = {};
+  for (const r of list) { const t = (trails.get(r.trail) || {}).track || "?"; byRole[t] = (byRole[t] || 0) + r.total; }
+  const roleParts = ["animal", "color", "frame"].filter((t) => byRole[t]).map((t) => `${roleLabel(t)}s' puzzles: ${byRole[t]}`);
+  $("terrainLead").textContent = `The ${TOP} hardest puzzles account for ${topSum} of ${total} wrong scans and restarts (${Math.round(100 * topSum / total)}%).` +
+    (roleParts.length ? " " + roleParts.join(" · ") + "." : "");
+  // A label people can read: the riddle's opening words and the role. Hovering shows the whole riddle.
+  const label = (r) => {
+    const t = trails.get(r.trail);
+    if (!t) return `${r.trail}, puzzle ${r.step + 1}`; // a puzzle from an older version of the game
+    const sn = t.steps[r.step] || "";
+    return `“${sn.length > 40 ? sn.slice(0, 40).replace(/\s+\S*$/, "") + "…" : sn}” · ${roleLabel(t.track)}`;
+  };
+  TIPS = shown.map((r) => {
+    const t = trails.get(r.trail);
+    const q = t ? String((t.full || [])[r.step] || t.steps[r.step] || "") : "";
+    return {
+      who: t ? `${roleLabel(t.track)} · trail from sheet ${t.sheet} · puzzle ${r.step + 1}` : `${r.trail}, puzzle ${r.step + 1} (older version of the game)`,
+      q: q.replace(/\n*\*?field guide[^\n]*$/i, "").trim() || "(text not available)",
+      fg: /field guide (?!not)/i.test(q),
+      n: `${r.wrong} wrong scan${r.wrong === 1 ? "" : "s"} · ${r.restarts} restart${r.restarts === 1 ? "" : "s"}`,
+    };
+  });
+  const W = 1100, x0 = 560, w = 470, y0 = 10, rh = 34;
+  const max = Math.max(...shown.map((r) => r.total)), sx = (v) => (v / max) * w;
+  let svg = `<svg viewBox="0 0 ${W} ${y0 + shown.length * rh + 40}" role="img" aria-label="Wrong scans and restarts by puzzle">`;
+  shown.forEach((r, i) => {
+    const y = y0 + i * rh, hot = i < TOP, col = hot ? ROLE_COLOR[(trails.get(r.trail) || {}).track] || INK : MUTED;
+    svg += `<g class="hit" data-tip="${i}"><rect x="0" y="${y}" width="${W}" height="${rh}" fill="transparent"/>`;
+    svg += `<text x="${x0 - 12}" y="${y + 22}" text-anchor="end" font-size="19" fill="${hot ? INK : SUB}" font-weight="${hot ? 600 : 400}">${esc(label(r))}</text>`;
+    svg += `<rect x="${x0}" y="${y + 6}" width="${sx(r.wrong)}" height="${rh - 12}" fill="${col}"/>`;
+    svg += `<rect x="${x0 + sx(r.wrong)}" y="${y + 6}" width="${sx(r.restarts)}" height="${rh - 12}" fill="${col}" fill-opacity="0.35"/>`;
+    svg += `<text x="${x0 + sx(r.total) + 8}" y="${y + 22}" font-size="19" fill="${SUB}">${r.total}</text></g>`;
+  });
+  svg += `<line x1="${x0}" x2="${x0}" y1="${y0}" y2="${y0 + shown.length * rh}" stroke="#999"/>`;
+  svg += `<text x="10" y="${y0 + shown.length * rh + 30}" font-size="17" fill="${SUB}">Solid: wrong scans. Pale: restarts at that puzzle. Point at a puzzle (or tap it) to read it in full.${list.length > SHOW ? ` ${list.length - SHOW} more not shown.` : ""}</text></svg>`;
+  $("terrain").innerHTML = svg;
+}
+
+// ---------------------------------------------------------------- cross-track over time
+function crossTrack(sel) {
+  const starts = runStarts(sel), routes = routeById();
+  const pending = new Map(), attempts = [], lastProg = new Map(), intrack = [];
+  const minOf = (e, t) => (t - starts[gameOf(e) + "|" + e.run]) / 60000;
+  for (const e of sel) {
+    const pk = gameOf(e) + "|" + e.player;
+    if (e.type === "hop_shown" && e.detail) pending.set(pk, { t: ms(e.t), e, route: e.detail.route, hop: e.detail.hop, collab: !!e.detail.collab });
+    else if ((e.type === "hop_correct" || e.type === "hop_wrong") && e.detail) {
+      const p = pending.get(pk);
+      if (p && p.route === e.detail.route && p.hop === e.detail.hop) {
+        attempts.push({ min: minOf(p.e, p.t), secs: (ms(e.t) - p.t) / 1000, ok: e.type === "hop_correct", key: p.route + "|" + p.hop, collab: p.collab, at: ms(e.t) });
+        if (e.type === "hop_wrong" && p.collab) pending.set(pk, { ...p, t: ms(e.t), e }); else pending.delete(pk);
+      }
+    } else if (e.type === "abandon" || e.type === "trail_start") pending.delete(pk);
+    // in-track pace: time from starting a trail (or the previous right answer) to the next right answer
+    if (e.type === "trail_start") lastProg.set(pk, ms(e.t));
+    if (e.type === "correct") {
+      const t0 = lastProg.get(pk);
+      if (t0 != null) intrack.push({ min: minOf(e, t0), secs: (ms(e.t) - t0) / 1000 });
+      lastProg.set(pk, ms(e.t));
+    }
+  }
+  // How many times the room had already solved that same step
+  const solved = new Map();
+  for (const a of [...attempts].sort((x, y) => x.at - y.at)) {
+    a.prior = solved.get(a.key) || 0;
+    if (a.ok) solved.set(a.key, a.prior + 1);
+  }
+  const right = attempts.filter((a) => a.ok);
+  if (!attempts.length) {
+    $("crossLead").textContent = "No cross-track steps yet."; $("cross").innerHTML = ""; $("crossLegend").innerHTML = ""; return;
+  }
+  const span = Math.max(3, Math.ceil(Math.max(...attempts.map((a) => a.min), ...intrack.map((a) => a.min), 1)));
+  const wins = [0, 1, 2].map((i) => ({ lo: (span * i) / 3, hi: (span * (i + 1)) / 3 }));
+  for (const w of wins) {
+    const r = right.filter((a) => a.min >= w.lo && a.min < w.hi + (w.hi === span ? 0.001 : 0)).map((a) => a.secs);
+    const it = intrack.filter((a) => a.min >= w.lo && a.min < w.hi + (w.hi === span ? 0.001 : 0)).map((a) => a.secs);
+    w.med = median(r); w.n = r.length; w.it = median(it);
+  }
+  const firstMed = median(right.filter((a) => a.prior === 0).map((a) => a.secs));
+  const reuseMed = median(right.filter((a) => a.prior > 0).map((a) => a.secs));
+  const a0 = wins[0], a2 = wins[2];
+  let verdict = "Not enough cross-track steps yet to see a trend";
+  if (a0.n >= 3 && a2.n >= 3) {
+    verdict = a2.med < a0.med * 0.8 ? "Cross-track steps got faster as the run went on"
+      : a2.med > a0.med * 1.2 ? "Cross-track steps got slower as the run went on" : "Cross-track steps took about as long late in the run as early on";
+  }
+  const f = (v) => (v == null ? "–" : Math.round(v) + " s");
+  $("crossLead").innerHTML = `<b>${esc(verdict)}.</b> Median time to answer: ` + wins.map((w) => `${f(w.med)} (min ${Math.round(w.lo)}–${Math.round(w.hi)}, ${w.n} steps)`).join(", ") +
+    `. First time the room solved a step: ${f(firstMed)}; a step someone had already solved: ${f(reuseMed)}.`;
+  $("crossLegend").innerHTML = `<span><i class="sw" style="background:${ROLE_COLOR.animal}"></i>first solve of that step in the room</span>` +
+    `<span><i class="sw" style="background:${MUTED}"></i>already solved by someone</span>` +
+    `<span><i class="sw" style="border:2px solid #b91c1c;width:12px;height:12px"></i>wrong answer</span>` +
+    `<span>◆ collaboration step · ● word step</span><span style="color:#777">- - - trail puzzles' median</span>`;
+  const W = 1100, x0 = 90, w = 980, y0 = 20, base = 440;
+  const ymax = Math.max(60, Math.ceil(Math.max(...attempts.map((a) => a.secs)) / 30) * 30);
+  const sx = (v) => x0 + (v / span) * w, sy = (v) => base - (Math.min(v, ymax) / ymax) * (base - y0);
+  let svg = `<svg viewBox="0 0 ${W} ${base + 70}" role="img" aria-label="Cross-track answer times by minute of the run">`;
+  const yt = []; for (let v = 0; v <= ymax; v += ymax > 240 ? 60 : 30) yt.push(v);
+  for (const v of yt) svg += `<line x1="${x0}" x2="${x0 + w}" y1="${sy(v)}" y2="${sy(v)}" stroke="${GRID}"/><text x="${x0 - 10}" y="${sy(v) + 6}" text-anchor="end" font-size="17" fill="${SUB}">${v}</text>`;
+  const xt = []; const step = span > 30 ? 10 : span > 12 ? 5 : span > 6 ? 2 : 1; for (let v = 0; v <= span; v += step) xt.push(v);
+  for (const v of xt) svg += `<text x="${sx(v)}" y="${base + 26}" text-anchor="middle" font-size="17" fill="${SUB}">${v}</text>`;
+  svg += `<text x="${x0 + w / 2}" y="${base + 58}" text-anchor="middle" font-size="18" fill="${SUB}">Minute of the run when the step appeared</text>`;
+  svg += `<text x="${x0 - 76}" y="${y0 + 6}" font-size="17" fill="${SUB}" transform="rotate(-90 ${x0 - 76} ${y0 + 6})" text-anchor="end">seconds to answer</text>`;
+  for (const wd of wins) {
+    if (wd.it != null) svg += `<line x1="${sx(wd.lo) + 6}" x2="${sx(wd.hi) - 6}" y1="${sy(wd.it)}" y2="${sy(wd.it)}" stroke="#777" stroke-dasharray="7 6"/>`;
+    if (wd.med != null) svg += `<line x1="${sx(wd.lo) + 6}" x2="${sx(wd.hi) - 6}" y1="${sy(wd.med)}" y2="${sy(wd.med)}" stroke="${ROLE_COLOR.animal}" stroke-width="3" stroke-opacity="0.6"/>` +
+      `<text x="${sx(wd.hi) - 10}" y="${sy(wd.med) - 8}" text-anchor="end" font-size="19" font-weight="700" fill="${ROLE_COLOR.animal}">${Math.round(wd.med)} s</text>`;
+  }
+  for (const a of attempts) {
+    const cx = sx(a.min), cy = sy(a.secs);
+    const fill = !a.ok ? "none" : a.prior === 0 ? ROLE_COLOR.animal : MUTED, stroke = a.ok ? "none" : "#b91c1c";
+    const tip = `${a.collab ? "Collaboration" : "Word"} step, minute ${a.min.toFixed(1)}: ${a.ok ? "right" : "wrong"} after ${Math.round(a.secs)} s`;
+    svg += a.collab
+      ? `<rect x="${cx - 7}" y="${cy - 7}" width="14" height="14" transform="rotate(45 ${cx} ${cy})" fill="${fill}" stroke="${stroke}" stroke-width="2.5"><title>${tip}</title></rect>`
+      : `<circle cx="${cx}" cy="${cy}" r="7" fill="${fill}" stroke="${stroke}" stroke-width="2.5"><title>${tip}</title></circle>`;
+  }
+  svg += `<line x1="${x0}" x2="${x0 + w}" y1="${base}" y2="${base}" stroke="#999"/></svg>`;
+  $("cross").innerHTML = svg;
+}
+
+// ---------------------------------------------------------------- answer quality
+function quality(all) {
+  // Rebuild each player's notebook through the class, game by game, to know what they held when they answered.
+  const clues = (SUM && SUM.clues) || {};
+  const held = new Map(); // game|player -> { keys:Set, rare:bool }
+  const get = (e, p) => { const k = gameOf(e) + "|" + p; if (!held.has(k)) held.set(k, { keys: new Set(), rare: false }); return held.get(k); };
+  const subs = new Map(); // game|run|player -> submission
+  for (const e of all) {
+    if (e.player == null) continue;
+    const h = () => get(e, e.player);
+    if ((e.type === "clue" || e.type === "negative_clue") && e.detail && e.detail.clue) h().keys.add(e.detail.clue);
+    if (e.type === "help" && e.detail && Array.isArray(e.detail.gained)) for (const k of e.detail.gained) h().keys.add(k);
+    if (e.type === "found") h().rare = true;
+    if (e.type === "submit" && e.detail) {
+      const x = h();
+      const cross = [...x.keys].filter((k) => clues[k] && clues[k].track === "cross").length + (x.rare ? 1 : 0);
+      subs.set(gameOf(e) + "|" + e.run + "|" + e.player, { e, track: e.track, cross, points: e.detail.points });
+    }
+    if (e.type === "hand_score" && e.detail) {
+      const s = subs.get(gameOf(e) + "|" + e.run + "|" + e.player);
+      if (s) s.points = e.detail.points;
+    }
+  }
+  const list = [...subs.values()].filter((s) => inSel(s.e));
+  const scored = list.filter((s) => s.points != null);
+  if (!scored.length) { $("qualityLead").textContent = "No scored answers yet."; $("quality").innerHTML = ""; $("qualityLegend").innerHTML = ""; return; }
+  const CAP = 4;
+  const groups = [...Array(CAP + 1).keys()].map((g) => ({ g, pts: scored.filter((s) => Math.min(s.cross, CAP) === g) }));
+  const none = scored.filter((s) => s.cross === 0).map((s) => s.points), some = scored.filter((s) => s.cross > 0).map((s) => s.points);
+  let lead = "";
+  if (none.length >= 2 && some.length >= 2) {
+    const a = mean(some), b = mean(none);
+    lead = `<b>${a > b + 5 ? "Players holding cross-track clues gave better answers" : a < b - 5 ? "Players holding cross-track clues did not give better answers" : "Cross-track clues made little difference to answers"}.</b> ` +
+      `Average score: ${Math.round(a)} with at least one cross-track clue (${some.length} answers) vs ${Math.round(b)} with none (${none.length} answers).`;
+  } else lead = `<b>Too few answers in one of the groups to compare yet.</b> ${some.length} answers with cross-track clues, ${none.length} without.`;
+  const unscored = list.length - scored.length;
+  $("qualityLead").innerHTML = lead + (unscored ? ` ${unscored} unscored answer(s) left out.` : "") + " Cross-track clues: the high-value clues from word routes plus the rare clue, counted when the player answered.";
+  $("qualityLegend").innerHTML = ["animal", "color", "frame"].map((t) => `<span><i class="sw" style="background:${ROLE_COLOR[t]}"></i>${esc(roleLabel(t))}</span>`).join("") +
+    `<span style="color:#111">▬ median</span>`;
+  const W = 1100, x0 = 90, w = 980, y0 = 20, base = 420, gw = w / (CAP + 1);
+  const sy = (v) => base - (v / 100) * (base - y0);
+  let svg = `<svg viewBox="0 0 ${W} ${base + 70}" role="img" aria-label="Answer scores by number of cross-track clues held">`;
+  for (const v of [0, 25, 50, 75, 100]) svg += `<line x1="${x0}" x2="${x0 + w}" y1="${sy(v)}" y2="${sy(v)}" stroke="${GRID}"/><text x="${x0 - 10}" y="${sy(v) + 6}" text-anchor="end" font-size="17" fill="${SUB}">${v}</text>`;
+  svg += `<text x="${x0 - 76}" y="${y0 + 6}" font-size="17" fill="${SUB}" transform="rotate(-90 ${x0 - 76} ${y0 + 6})" text-anchor="end">answer score</text>`;
+  for (const G of groups) {
+    const cx = x0 + gw * G.g + gw / 2;
+    svg += `<text x="${cx}" y="${base + 28}" text-anchor="middle" font-size="19" fill="${INK}">${G.g === CAP ? CAP + "+" : G.g}</text>` +
+      `<text x="${cx}" y="${base + 52}" text-anchor="middle" font-size="15" fill="${SUB}">${G.pts.length} answer${G.pts.length === 1 ? "" : "s"}</text>`;
+    G.pts.forEach((s, i) => {
+      const jitter = ((i * 37) % 11 - 5) * (gw / 40);
+      svg += `<circle cx="${cx + jitter}" cy="${sy(s.points)}" r="8" fill="${ROLE_COLOR[s.track] || INK}" fill-opacity="0.75"><title>${esc(roleLabel(s.track))}: ${s.points} points, ${s.cross} cross-track clue(s)</title></circle>`;
+    });
+    const md = median(G.pts.map((s) => s.points));
+    if (md != null) svg += `<line x1="${cx - gw * 0.3}" x2="${cx + gw * 0.3}" y1="${sy(md)}" y2="${sy(md)}" stroke="${INK}" stroke-width="4"/>`;
+  }
+  svg += `<text x="${x0 + w / 2}" y="${base + 68}" text-anchor="middle" font-size="18" fill="${SUB}"></text>`;
+  svg += `<line x1="${x0}" x2="${x0 + w}" y1="${base}" y2="${base}" stroke="#999"/></svg>`;
+  $("quality").innerHTML = svg + `<p class="note" style="text-align:center">Cross-track clues held when answering</p>`;
+}
+
+// ---------------------------------------------------------------- hover box for the terrain chart
+let TIPS = [], tipPinned = null;
+function showTip(i, x, y) {
+  const d = TIPS[i]; if (!d) return;
+  $("tip").innerHTML = `<div class="who">${esc(d.who)}</div><div class="q">${esc(d.q)}</div>${d.fg ? `<div class="n"><i>Field guide required</i></div>` : ""}<div class="n">${esc(d.n)}</div>`;
+  show("tip", true);
+  const b = $("tip").getBoundingClientRect();
+  $("tip").style.left = Math.max(8, Math.min(x + 18, innerWidth - b.width - 8)) + "px";
+  $("tip").style.top = Math.max(8, Math.min(y + 18, innerHeight - b.height - 8)) + "px";
+}
+$("terrain").addEventListener("mousemove", (e) => {
+  const g = e.target.closest("[data-tip]");
+  if (g) showTip(Number(g.dataset.tip), e.clientX, e.clientY); else if (tipPinned == null) show("tip", false);
+});
+$("terrain").addEventListener("mouseleave", () => { if (tipPinned == null) show("tip", false); });
+$("terrain").addEventListener("click", (e) => { // touch screens: tap to show, tap again to hide
+  const g = e.target.closest("[data-tip]");
+  if (!g || tipPinned === g.dataset.tip) { tipPinned = null; show("tip", false); return; }
+  tipPinned = g.dataset.tip; showTip(Number(g.dataset.tip), e.clientX, e.clientY);
+});
+addEventListener("scroll", () => { tipPinned = null; show("tip", false); }, { passive: true });
+
+// ---------------------------------------------------------------- render
+function render() {
+  if (!DATA) return;
+  if (!SESSIONS.length) { $("tiles").innerHTML = `<p class="note">No play recorded yet.</p>`; return; }
+  const all = classEvents();
+  const sel = all.filter(inSel);
+  $("source").textContent = SOURCE;
+  overview(sel); terrain(sel); crossTrack(sel); quality(all);
+}
+
+$("selSession").onchange = () => { $("selGame").value = "all"; $("selRun").value = "all"; const ev = classEvents();
+  const games = [...new Set(ev.map(gameOf))].sort((a, b) => a - b);
+  $("selGame").innerHTML = `<option value="all">All</option>` + games.map((x) => `<option value="${x}">${x}</option>`).join(""); fillRuns(); render(); };
+$("selGame").onchange = () => { fillRuns(); render(); };
+$("selRun").onchange = render;
+$("refresh").onclick = async () => { $("file").value = ""; await loadLive(); setupSelectors(); render(); };
+$("file").onchange = async () => {
+  const f = $("file").files[0]; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    DATA = { events: d.events || [], players: d.players || [] };
+    SOURCE = "From file: " + f.name;
+    setupSelectors(); render();
+  } catch (_) { alert("That file isn't a debrief download."); }
+};
+$("go").onclick = async () => {
+  key = $("pw").value; try { localStorage.setItem("witb-admin", key); } catch (_) {}
+  const r = await api("/api/admin/content-summary"); show("err", r.status === 401); if (r.status !== 401) start();
+};
+start();
+</script>
+</body>
+</html>

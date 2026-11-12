@@ -50,6 +50,7 @@ app.get("/s/:code", page("player.html"));
 app.get("/join/:code", page("player.html"));
 app.get("/h/:code", page("player.html")); // a collaboration code scanned with a phone's own camera app
 app.get("/projector", page("projector.html"));
+app.get("/analysis", page("analysis.html"));
 app.get("/admin", page("admin.html"));
 app.use("/static", express.static(pub, { maxAge: 0 })); // browsers re-check after every deploy
 app.get("/vendor/jsQR.js", (req, res) => res.sendFile(require.resolve("jsqr/dist/jsQR.js")));
@@ -208,6 +209,18 @@ app.get("/api/admin/export", admin, (req, res) => {
   res.json({ exportedAt: new Date().toISOString(), bootId: game.bootId, run: game.run, status: game.status,
     players: [...game.players.values()].map((p) => ({ num: p.num, name: p.name, track: p.track, hintsLeft: p.hintsLeft, colorTrouble: p.colorTrouble, notebook: p.notebook, submission: p.submission })),
     events: game.log, sheets: content.sheets.map(({ id, animal, color, frame }) => ({ id, animal, color, frame })) });
+});
+// What the analysis page needs to label puzzles, routes and clues (no answers to the box itself).
+app.get("/api/admin/content-summary", admin, (req, res) => {
+  const snippet = (q) => String(q || "").replace(/\*+/g, "").split("\n").map((l) => l.trim()).filter((l) => l && !/^field guide/i.test(l))[0] || "";
+  res.json({
+    tracks: Object.fromEntries(Object.entries(content.tracks).map(([k, v]) => [k, v.label])),
+    trails: content.trails.map((t) => ({ id: t.id, track: t.track, sheet: (t.sheets || [])[0], steps: t.steps.map((s) => snippet(s.question)),
+      full: t.steps.map((s) => String(s.question || "")) })),
+    routes: content.routes.map((r) => ({ id: r.id, track: r.track, trail: r.trail, collab: !!r.collab,
+      hops: r.hops.map((h) => ({ term: h.term || null, owner: h.owner, value: h.accept.value })) })),
+    clues: Object.fromEntries(Object.entries(content.clues).map(([k, v]) => [k, { tag: v.tag, track: v.track, negative: v.negative || null }])),
+  });
 });
 app.get("/api/admin/join-qr.svg", admin, async (req, res) => {
   res.set("Cache-Control", "no-store");

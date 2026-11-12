@@ -152,6 +152,16 @@ function fmt(s) {
     .replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>").replace(/\*([^*\n]+)\*/g, "<em>$1</em>");
 }
 
+// A puzzle of three or more lines (a poem, an acrostic) keeps each line as its own block: when a long line wraps,
+// the rest of it is indented, so the first letters still line up down the left edge.
+function poemLines(s) {
+  const lines = String(s || "").split("\n");
+  return lines.filter((l) => l.trim()).length >= 3;
+}
+function fmtPoem(s) {
+  return String(s || "").split("\n").map((l) => (l.trim() ? `<span class="pl">${fmt(l)}</span>` : `<span class="pl-gap"></span>`)).join("");
+}
+
 // Per-player memory on this phone: which card was last shown, how many clues were looked at.
 const seenKey = (k) => `witb-${k}-${creds && creds.id}`;
 const getSeen = (k) => { try { return Number(localStorage.getItem(seenKey(k))) || 0; } catch (_) { return 0; } };
@@ -183,7 +193,9 @@ function render(v) {
   $("who").textContent = `${v.name} · ${v.trackLabel} · Run ${v.run}`;
   show("result", !!v.result); $("result").innerHTML = fmt(v.result);
   show("puzzleLabel", !!v.puzzleNum); $("puzzleLabel").textContent = v.puzzleNum ? labels.puzzleLabel.replace("{n}", v.puzzleNum) : "";
-  $("prompt").innerHTML = fmt(v.prompt);
+  const poem = !!v.puzzleNum && poemLines(v.prompt);
+  $("prompt").classList.toggle("poem", poem);
+  $("prompt").innerHTML = poem ? fmtPoem(v.prompt) : fmt(v.prompt);
   show("helpQrBox", !!v.helpCode);
   if (v.helpCode && $("helpQr").dataset.code !== v.helpCode) {
     $("helpQr").dataset.code = v.helpCode; $("helpQr").src = "/api/help-qr/" + encodeURIComponent(v.helpCode) + ".svg";
